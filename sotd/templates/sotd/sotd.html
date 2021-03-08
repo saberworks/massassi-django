@@ -1,0 +1,5 @@
+<h2>{{ sotd.sotd_date }}</h2>
+<p><strong>Author:</strong> {{ sotd.author }}</p>
+<p><strong>{{ sotd.title }}</strong><br>{{ sotd.description }}</p>
+<img src="{{ sotd.image.url }}" />
+<p><a href="{% url 'sotd:index' %}">Back to SotD Index</a></p>
