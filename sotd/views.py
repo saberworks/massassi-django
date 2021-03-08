@@ -1,13 +1,14 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.views import generic
 
 from .models import SotD
 
-def index(request):
-    sotd_list = SotD.objects.order_by('-sotd_date')[:5]
-    context = {'sotd_list': sotd_list}
-    return render(request, 'sotd/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'sotd/index.html'
+    context_object_name = 'sotd_list'
 
-def sotd(request, sotd_id):
-    sotd = get_object_or_404(SotD, pk=sotd_id)
-    return render(request, 'sotd/sotd.html', {'sotd': sotd})
+    def get_queryset(self):
+        return SotD.objects.order_by('-sotd_date')
+
+class DetailView(generic.DetailView):
+    model = SotD
+    template_name = 'sotd/sotd.html'
