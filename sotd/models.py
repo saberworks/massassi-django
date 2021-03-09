@@ -8,8 +8,8 @@ class SotD(models.Model):
     admin_id = models.IntegerField(null=False)
     title = models.CharField(max_length=64, null=False)
     author = models.CharField(max_length=64, null=False)
-    author_email = models.EmailField(null=False)
-    url = models.URLField(null=False)
+    author_email = models.EmailField(null=True)
+    url = models.URLField(null=True)
     description = models.TextField(null=True)
     image = models.ImageField(upload_to='sotd', null=False)
     thumbnail = ImageSpecField(source='image',

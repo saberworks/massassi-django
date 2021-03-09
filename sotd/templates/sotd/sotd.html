@@ -1,5 +1,16 @@
-<h2>{{ sotd.sotd_date }}</h2>
-<p><strong>Author:</strong> {{ sotd.author }}</p>
-<p><strong>{{ sotd.title }}</strong><br>{{ sotd.description }}</p>
-<img src="{{ sotd.image.url }}" />
-<p><a href="{% url 'sotd:index' %}">Back to SotD Index</a></p>
+{% extends "outer.html" %}
+
+{% block content %}
+    <h1>{% block title %}Screenshot of the Day: {{ sotd.sotd_date }}{% endblock %}</h1>
+    <h2>{{ sotd.title }}</h2>
+    <p>{{ sotd.description }}</p>
+    <p><strong>Author:</strong> {{ sotd.author }}
+        {% if sotd.url %}
+            <br>
+            <strong>URL:</strong> <a href="{{ sotd.url }}">{{ sotd.url }}</a>
+        {% endif %}
+    </p>
+
+    <img src="{{ sotd.image.url }}" />
+    <p><a href="{% url 'sotd:index' %}">Back to SotD Index</a></p>
+{% endblock %}

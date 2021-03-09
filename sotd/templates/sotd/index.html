@@ -1,30 +1,23 @@
-<style>
-    div.sotd-list-entry {
+{% extends "outer.html" %}
 
-    }
+{% block content %}
+    <h1>{% block title %}Screenshot of the Day Archives{% endblock %}</h1>
 
-    img.sotd-list-entry {
-        float: left;
-    }
+    {% if sotd_list %}
+        {% for sotd in sotd_list %}
+            <div class="sotd-list-entry">
+                <a href="{% url 'sotd:sotd' sotd.id %}"><img class="sotd-list-thumbnail" src="{{ sotd.thumbnail.url }}" /></a>
 
-    p.sotd-list-description {
-        display: inline-block;
-    }
-</style>
-
-{% if sotd_list %}
-    {% for sotd in sotd_list %}
-        <div class="sotd-list-entry">
-            <a href="{% url 'sotd:sotd' sotd.id %}"><img class="sotd-list-thumbnail" src="{{ sotd.thumbnail.url }}" /></a>
-
-            <p class="sotd-list-description">
-                {{ sotd.sotd_date }}<br>
-                By: {{ sotd.author }}<br>
-                <strong>{{ sotd.title }}</strong><br>
-                {{ sotd.description }}
-            </p>
-        </div>
-    {% endfor %}
-{% else %}
-    <p>No Screenshots of the Day are available.</p>
-{% endif %}
+                <p class="sotd-list-description">
+                    {{ sotd.sotd_date }}<br>
+                    By: {{ sotd.author }}<br>
+                    <strong>{{ sotd.title }}</strong><br>
+                    {{ sotd.description }}
+                </p>
+                <br clear="both">
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No Screenshots of the Day are available.</p>
+    {% endif %}
+{% endblock %}
