@@ -1,0 +1,7 @@
+{% extends "outer.html" %}
+
+{% block content %}
+    <h1>{% block title %}403 Permission Denied{% endblock %}</h1>
+
+    <p>{{ exception }}</p>
+{% endblock %}

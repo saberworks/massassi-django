@@ -360,3 +360,38 @@ p.sotd-list-description {
     margin-top: 5px;
     display: inline-block;
 }
+
+.form-container {
+    margin: 10px;
+    width: 500px;
+    clear: both;
+    /* border: 1px solid blue; */
+}
+
+.form-container label {
+    margin-top: 5px;
+    color: silver;
+    font-weight: bold;
+    /* border: 1px solid red; */
+}
+
+.form-container input {
+    width: 100%;
+    clear: both;
+    border: 1px solid darkgray;
+    margin-bottom: 10px;
+    padding: 5px;
+    display: block;
+    background-color: #1b1b1b;
+    color: lightgray;
+    border-radius: 5px;
+}
+
+.form-container .field-error {
+    color: orange;
+}
+
+.required {
+    color: red;
+    font-weight: bold;
+}

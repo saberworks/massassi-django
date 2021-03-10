@@ -10,3 +10,4 @@ media
 # development db
 db.sqlite3
 
+.vscode

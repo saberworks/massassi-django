@@ -21,6 +21,8 @@ from django.urls import include, path
 urlpatterns = [
     path('sotd/', include('sotd.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/profile/', include('users.urls')),
 ]
 
 # Text to put at the end of each page's <title>.

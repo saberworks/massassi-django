@@ -1,0 +1,53 @@
+{% extends "outer.html" %}
+
+{% block content %}
+    <style type="text/css">
+
+    </style>
+
+    <h1>{% block title %}Register{% endblock %}</h1>
+
+    <p class="warning-message">
+        <strong>Note:</strong> this registers you for the main site (levels,
+        comments, rating, etc.), <strong>not</strong> the forums.
+        <a href="https://forums.massassi.net/">Forum Registration here.</a>
+    </p>
+
+    <p><strong>Privacy:</strong></p>
+    <ul>
+        <li>We do not share your personal information.</li>
+        <li>We don't want any of your personal information.</li>
+        <li>Email address is used to send password resets.</li>
+    </ul>
+
+    <p><strong>Acceptable Use Policy:</strong>
+        By registering and using this site, you agree to follow the rules:
+    </p>
+
+    <ul>
+        <li><strong>Do not reuse passwords from other sites here!</strong></li>
+        <li>No posting illegal files or material.</li>
+        <li>No sexist, racial, religious or otherwise discriminatory remarks.</li>
+        <li>No derogatory comments, insults, personal attacks, etc.</li>
+    </ul>
+
+    <div class="form-container">
+        <p><span class="required">*</span> denotes a required field.</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+                {{ field.label_tag }}{% if field.field.required %} <span class="required">*</span> {% endif %}
+                {% for error in field.errors %}
+                    <div class="field-error">{{ error }}</div>
+                {% endfor %}
+                {{ field }}
+
+            {% endfor %}
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+{% endblock %}

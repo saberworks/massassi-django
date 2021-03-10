@@ -1,0 +1,17 @@
+{% extends "outer.html" %}
+
+{% block content %}
+    <h1>{% block title %}User Profile{% endblock %}</h1>
+
+    <table>
+        <tr>
+            <td>Username:</td>
+            <td>{{ user.get_username }}</td>
+        </tr>
+        <tr>
+            <td>Email Address:</td>
+            <td>{{ user.email }}</td>
+        </tr>
+    </table>
+
+{% endblock %}
