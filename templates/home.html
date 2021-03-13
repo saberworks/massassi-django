@@ -1,0 +1,36 @@
+{% extends "outer.html" %}
+
+{% block title %}#1 Source for Everything Jedi Knight{% endblock %}
+
+{% block content %}
+    <p>Welcome home.</p>
+
+    {% if user.is_authenticated %}
+        <p>You're logged in as: {{ user.username }}</p>
+        <ul>
+            <li><a href="{% url "users:profile" %}">Profile</a></li>
+            <li><a href="{% url "logout" %}">Log Out</a></li>
+        </ul>
+        {% if user.is_staff %}
+            <ul>
+                <li><a href="{% url "admin:index" %}">Admin</a></li>
+            </ul>
+        {% endif %}
+    {% else %}
+        <p>You are not logged in.</p>
+        <ul>
+            <li><a href="{% url "login" %}">Log In</a></li>
+            <li><a href="{% url "users:register" %}">Register</a></li>
+            <li><a href="{% url "password_reset" %}">Reset Password</a></li>
+        </ul>
+    {% endif %}
+
+    <p>Links</p>
+    <ul>
+        <li><a href="{% url "sotd:index" %}">SotD</a></li>
+    </ul>
+
+{% endblock %}
+
+# path('password_change/', views.PasswordChangeView.as_view(), name='password_change'),
+# path('password_change/done/', views.PasswordChangeDoneView.as_view(), name='password_change_done'),

@@ -1,10 +1,11 @@
 from pprint import pprint
 
+import django
+
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from .forms import OurUserCreationForm
@@ -15,6 +16,12 @@ def index(request):
     context = {'user': request.user}
     pprint(dir(context))
     return render(request, 'users/profile.html', context)
+
+def logout(request):
+    if request.user.is_authenticated:
+        django.contrib.auth.logout(request)
+
+    return redirect('home')
 
 def register(request):
     # logged-in user can't re-register

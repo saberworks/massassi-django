@@ -16,24 +16,24 @@
         {% endif %}
     {% endif %}
 
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-        </table>
+    <div class="form-container">
+        <p><span class="required"></span> denotes a required field.</p>
 
-        <input type="submit" value="login">
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+                {{ field.label_tag }}{% if field.field.required %} <span class="required"></span> {% endif %}
+                {% for error in field.errors %}
+                    <div class="field-error">{{ error }}</div>
+                {% endfor %}
+                {{ field }}
+            {% endfor %}
+
+            <button type="submit" value="login">Log In</button>
         <input type="hidden" name="next" value="{{ next }}">
-    </form>
+        </form>
+    </div>
 
-    {# Assumes you setup the password_reset view in your URLconf #}
-    <p><a href="{% url 'password_reset' %}">Need to reset password?</a></p>
-
+    <p style="margin-top: 2em;"><a href="{% url 'password_reset' %}">Need to reset password?</a></p>
 {% endblock %}

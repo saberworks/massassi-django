@@ -395,3 +395,25 @@ p.sotd-list-description {
     color: red;
     font-weight: bold;
 }
+
+.required:after {
+    content: " *";
+    color: red;
+}
+
+button[type=submit] {
+    cursor: pointer;
+    color: #fff;
+    background: #333333;
+    border: 1px solid #1b1b1b;
+    border-radius: 5px;
+    padding: .67em;
+}
+
+button[type=submit]:active {
+    transform: translateY(1px);
+}
+
+button[type=submit]:hover {
+    border-color: darkgray;
+}
