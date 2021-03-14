@@ -8,6 +8,8 @@ urlpatterns = [
     path('', views.index, name='profile'),
     path('register/', views.register, name='register'),
     path('logout/', views.logout, name='logout'),
+    path('login/', views.login, name='login'),
+    path('password_reset/', views.password_reset, name='password_reset'),
 ]
 
 # below provided by django

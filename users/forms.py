@@ -1,10 +1,11 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 
 class OurUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True, label='Email')
+    required_css_class = 'required'
 
     class Meta:
         model = User
@@ -15,3 +16,6 @@ class OurUserCreationForm(UserCreationForm):
         user.email = self.cleaned_data["email"]
         user.save()
         return user
+
+class OurLoginForm(AuthenticationForm):
+    required_css_class = 'required';

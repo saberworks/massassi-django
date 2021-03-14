@@ -68,11 +68,11 @@
 
             <div id="content">
                 {% if messages %}
-                <div class="messages">
-                    {% for message in messages %}
-                    <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-                    {% endfor %}
-                </div>
+                    <div class="messages">
+                        {% for message in messages %}
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                        {% endfor %}
+                    </div>
                 {% endif %}
 
                 {% if original %}

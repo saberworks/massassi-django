@@ -417,3 +417,18 @@ button[type=submit]:active {
 button[type=submit]:hover {
     border-color: darkgray;
 }
+
+
+.error {
+    padding: 10px;
+    background-color: darkred;
+    width: 80ch;
+    border-radius: 5px;
+}
+
+.success {
+    padding: 10px;
+    background-color: darkgreen;
+    width: 80ch;
+    border-radius: 5px;
+}

@@ -3,9 +3,8 @@
 {% block content %}
     <h1>{% block title %}Log In{% endblock %}</h1>
 
-
     {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
+        <p class="error">Error with username and/or password. Please try again.</p>
     {% endif %}
 
     {% if next %}
@@ -23,7 +22,7 @@
             {% csrf_token %}
 
             {% for field in form %}
-                {{ field.label_tag }}{% if field.field.required %} <span class="required"></span> {% endif %}
+                {{ field.label_tag }}
                 {% for error in field.errors %}
                     <div class="field-error">{{ error }}</div>
                 {% endfor %}
@@ -35,5 +34,5 @@
         </form>
     </div>
 
-    <p style="margin-top: 2em;"><a href="{% url 'password_reset' %}">Need to reset password?</a></p>
+    <p style="margin-top: 2em;"><a href="{% url 'users:password_reset' %}">Need to reset password?</a></p>
 {% endblock %}
