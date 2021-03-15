@@ -6,11 +6,14 @@ import logging
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.views import PasswordResetConfirmView
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 
-from .forms import OurUserCreationForm, OurLoginForm
+from .forms import OurUserCreationForm, OurLoginForm, OurPasswordResetForm
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +62,8 @@ def register(request):
     if request.user.is_authenticated:
         raise PermissionDenied("You're already registered.")
 
+    form = OurUserCreationForm()
+
     if request.method == 'POST':
         form = OurUserCreationForm(request.POST)
 
@@ -67,10 +72,33 @@ def register(request):
             django.contrib.auth.login(request, user)
             messages.success(request, 'Registration successful!')
             return redirect('users:profile')
-    else:
-        form = OurUserCreationForm()
 
     return render(request, 'users/register.html', {'form': form})
 
 def password_reset(request):
-    return HttpResponse("OK");
+    if request.user.is_authenticated:
+        messages.info(request, "Please use the change password form.")
+        return redirect('users:profile')
+
+    form = OurPasswordResetForm()
+
+    if request.method == 'POST':
+        form = OurPasswordResetForm(request.POST)
+
+        if form.is_valid():
+            result = form.save(request=request, email_template_name='users/password_reset_email.html')
+            messages.success(request, 'If the address you entered has an associated account, password reset instructions have been sent.')
+            return redirect('home')
+
+    return render(request, 'users/password_reset.html', {'form': form})
+
+def password_reset_confirm(request, **kwargs):
+    form = SetPasswordForm()
+    form.required_css_class = 'required'
+
+    return render(request, 'users/password_reset_confirm.html', {'form': form})
+    return HttpResponse("OK")
+
+
+class OurPasswordResetConfirmView(PasswordResetConfirmView):
+    success_url = reverse_lazy('users:password_reset_complete')

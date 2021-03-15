@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
 from django.contrib.auth.models import User
 
 
@@ -18,4 +18,7 @@ class OurUserCreationForm(UserCreationForm):
         return user
 
 class OurLoginForm(AuthenticationForm):
-    required_css_class = 'required';
+    required_css_class = 'required'
+
+class OurPasswordResetForm(PasswordResetForm):
+    required_css_class = 'required'
