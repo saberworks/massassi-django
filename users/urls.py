@@ -1,5 +1,3 @@
-from django.contrib.auth.views import PasswordResetConfirmView, PasswordResetCompleteView, PasswordChangeView, \
-    PasswordChangeDoneView
 from django.urls import path
 
 from . import views
@@ -8,22 +6,40 @@ app_name = 'users'
 
 urlpatterns = [
     path('', views.index, name='profile'),
-    path('register/', views.register, name='register'),
     path('logout/', views.logout, name='logout'),
     path('login/', views.login, name='login'),
+
+    path('register/', views.register, name='register'),
+
+    ###
+    ## Password change (for logged-in users)
+    #
+
+    # Show password change form
     path('password_change/', views.OurPasswordChangeView.as_view(), name='password_change'),
-    path('password_change_done/', views.password_change_done, name='password_change_done'),
-    path('password_reset/', views.password_reset, name='password_reset'),
-    path('password_reset_confirm/<slug:uidb64>/<slug:token>', views.OurPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('password_reset_complete/', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    # Show password change confirmation page
+    path('password_change_done/', views.OurPasswordChangeDoneView.as_view(), name='password_change_done'),
+
+    ###
+    ## Password RESET ("forgot password")
+    #
+
+    # Show the password reset email address form ("forgot password")
+    path('password_reset/', views.OurPasswordResetView.as_view(), name='password_reset'),
+
+    # Show confirmation page that password reset email was sent
+    path('password_reset_sent/', views.OurPasswordResetDoneView.as_view(), name='password_reset_sent'),
+
+    # Show the password reset form that asks for new password once the reset email link is clicked
+    path('password_reset_confirm/<slug:uidb64>/<slug:token>', views.OurPasswordResetConfirmView.as_view(),
+         name='password_reset_confirm'),
+
+    # Show confirmation page that password was actually reset
+    path('password_reset_complete/', views.OurPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
 ]
 
 # TODO TODO TODO
-# implement password change form...
-# and email address form?
-
-# below provided by django
-# TODO: link to and/or implement each
-# path('password_change/', views.PasswordChangeView.as_view(), name='password_change'),
-# path('password_change/done/', views.PasswordChangeDoneView.as_view(), name='password_change_done'),
-#
+# add email address change form
+# fix register view, make it a class-based view and see if we can go back to using their view now that I know some stuff
