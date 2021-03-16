@@ -9,6 +9,7 @@
         <p>You're logged in as: {{ user.username }}</p>
         <ul>
             <li><a href="{% url "users:profile" %}">Profile</a></li>
+            <li><a href="{% url "users:password_change" %}">Change Password</a></li>
             <li><a href="{% url "users:logout" %}">Log Out</a></li>
         </ul>
         {% if user.is_staff %}

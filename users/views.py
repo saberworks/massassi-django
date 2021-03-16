@@ -1,5 +1,3 @@
-from pprint import pprint
-
 import django
 import logging
 
@@ -7,21 +5,21 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm
-from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.views import PasswordResetConfirmView, PasswordChangeView
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
-from .forms import OurUserCreationForm, OurLoginForm, OurPasswordResetForm
+from .forms import OurUserCreationForm, OurLoginForm, OurPasswordResetForm, OurPasswordChangeForm
 
 logger = logging.getLogger(__name__)
 
+
 @login_required
 def index(request):
-    context = {'user': request.user}
-    pprint(dir(context))
-    return render(request, 'users/profile.html', context)
+    return render(request, 'users/profile.html', {'user': request.user})
+
 
 def login(request):
     # logged-in user can't re-login
@@ -57,6 +55,7 @@ def logout(request):
 
     return redirect('home')
 
+
 def register(request):
     # logged-in user can't re-register
     if request.user.is_authenticated:
@@ -75,6 +74,7 @@ def register(request):
 
     return render(request, 'users/register.html', {'form': form})
 
+
 def password_reset(request):
     if request.user.is_authenticated:
         messages.info(request, "Please use the change password form.")
@@ -92,13 +92,29 @@ def password_reset(request):
 
     return render(request, 'users/password_reset.html', {'form': form})
 
+
 def password_reset_confirm(request, **kwargs):
     form = SetPasswordForm()
     form.required_css_class = 'required'
 
     return render(request, 'users/password_reset_confirm.html', {'form': form})
-    return HttpResponse("OK")
 
+
+@login_required
+def password_change_done(request):
+    messages.success(request, 'Password changed successfully.')
+    return redirect('users:profile')
+
+
+#
+# Class-based views follow
+#
 
 class OurPasswordResetConfirmView(PasswordResetConfirmView):
     success_url = reverse_lazy('users:password_reset_complete')
+
+
+@method_decorator(login_required, name='dispatch')
+class OurPasswordChangeView(PasswordChangeView):
+    form_class = OurPasswordChangeForm
+    success_url = reverse_lazy('users:password_change_done')

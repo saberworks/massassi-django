@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
 
@@ -22,3 +22,13 @@ class OurLoginForm(AuthenticationForm):
 
 class OurPasswordResetForm(PasswordResetForm):
     required_css_class = 'required'
+
+class OurPasswordChangeForm(PasswordChangeForm):
+    required_css_class = 'required'
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(user, *args, **kwargs)
+
+        # They're all fakking required, stupid stock forms suck
+        for field in self.fields:
+            self.fields[field].required = True
