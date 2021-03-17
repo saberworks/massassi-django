@@ -41,6 +41,9 @@ class Command(BaseCommand):
             fh = open(ss_file, 'rb')
             django_file = File(fh)
 
+            # original database had some quotes with backslashes ahead of them... grrr
+            description = row['description'].replace("\\", "")
+
             sotd = SotD(
                 sotd_date=row['sotd_date'],
                 admin_id=row['admin_id'],
@@ -48,7 +51,7 @@ class Command(BaseCommand):
                 author=row['author'],
                 author_email=row['author_email'],
                 url=row['url'],
-                description=row['description'],
+                description=description,
             )
 
             sotd.image.save("{}.jpg".format(date), django_file, save=True)

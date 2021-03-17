@@ -1,3 +1,10 @@
+:root {
+    --link-color: #52A54E;
+    --link-hover-color: #A6BA45;
+    --link-visited-color: #52A54E;
+    --link-active-color: #52A54E;
+}
+
 * {
     margin: 0px;
     padding: 0px;
@@ -31,10 +38,10 @@ li {
     margin-left: 10px;
 }
 
-a:link    { text-decoration: none;      color: #52A54E; }
-a:visited { text-decoration: none;      color: #52A54E; }
-a:active  { text-decoration: none;      color: #52A54E; }
-a:hover   { text-decoration: underline; color: #A6BA45; }
+a:link    { text-decoration: none;      color: var(--link-color); }
+a:visited { text-decoration: none;      color: var(--link-visited-color); }
+a:active  { text-decoration: none;      color: var(--link-active-color); }
+a:hover   { text-decoration: underline; color: var(--link-hover-color); }
 
 #layout-grid {
     display: grid;
@@ -364,11 +371,11 @@ p.mat-category > a {
 }
 
 img.sotd-list-thumbnail {
-    border: 1px solid #52A54E;
+    border: 1px solid var(--link-color);
 }
 
 img.sotd-list-thumbnail:hover {
-    border: 1px solid #A6BA45;
+    border: 1px solid var(--link-hover-color);
 }
 
 p.sotd-list-description {
@@ -389,6 +396,11 @@ p.sotd-list-description {
     padding: 8px;
     border-radius: 3px;
     background: #1b1b1b;
+    border: 1px solid var(--link-color);
+}
+
+.pagination-container a:hover {
+    border: 1px solid var(--link-hover-color);
 }
 
 .pagination-container span {
