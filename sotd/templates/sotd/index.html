@@ -4,19 +4,26 @@
     <h1>{% block title %}Screenshot of the Day Archives{% endblock %}</h1>
 
     {% if sotd_list %}
-        {% for sotd in sotd_list %}
-            <div class="sotd-list-entry">
-                <a href="{% url 'sotd:sotd' sotd.id %}"><img class="sotd-list-thumbnail" src="{{ sotd.thumbnail.url }}" /></a>
+        {% include "sotd/pager.html" %}
 
-                <p class="sotd-list-description">
-                    {{ sotd.sotd_date }}<br>
-                    By: {{ sotd.author }}<br>
-                    <strong>{{ sotd.title }}</strong><br>
-                    {{ sotd.description }}
-                </p>
-                <br clear="both">
+        <div class="sotd-grid-container">
+
+        {% for sotd in sotd_list %}
+            <div class="sotd-list-entry-image">
+                <a href="{% url 'sotd:sotd' sotd.id %}"><img class="sotd-list-thumbnail" src="{{ sotd.thumbnail.url }}" /></a>
             </div>
+
+            <p class="sotd-list-description">
+                {{ sotd.sotd_date }}<br>
+                By: {{ sotd.author }}<br>
+                <strong>{{ sotd.title }}</strong><br>
+                {{ sotd.description }}
+            </p>
         {% endfor %}
+
+        </div>
+
+        {% include "sotd/pager.html" %}
     {% else %}
         <p>No Screenshots of the Day are available.</p>
     {% endif %}

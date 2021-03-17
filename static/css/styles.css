@@ -353,9 +353,17 @@ p.mat-category > a {
     font-weight: bold;
 }
 
+
+/** SCREENSHOT OF THE DAY LIST **/
+
+.sotd-grid-container {
+    display: grid;
+    grid-template-columns: 400px auto;
+    row-gap: 1em;
+    column-gap: 1em;
+}
+
 img.sotd-list-thumbnail {
-    float: left;
-    margin: 5px;
     border: 1px solid #52A54E;
 }
 
@@ -367,6 +375,43 @@ p.sotd-list-description {
     margin-top: 5px;
     display: inline-block;
 }
+
+.pagination-container {
+    display: grid;
+    grid-template-columns: 33% auto 33%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.pagination-container a {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px;
+    border-radius: 3px;
+    background: #1b1b1b;
+}
+
+.pagination-container span {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px;
+}
+
+.paging-prev-links {
+    margin-right: auto;
+}
+
+.paging-current {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.paging-next-links {
+    margin-left: auto;
+}
+
+
+/** DJANGO FORM CRAP **/
 
 .form-container {
     margin: 10px;
@@ -425,6 +470,8 @@ button[type=submit]:hover {
     border-color: darkgray;
 }
 
+
+/** DJANGO MESSAGES **/
 
 .error {
     padding: 10px;
