@@ -114,6 +114,11 @@ LOGOUT_REDIRECT_URL = '/'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'loggers': {
+        'asyncio': {
+            'level': 'WARNING',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
@@ -127,3 +132,5 @@ LOGGING = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/home/brian/code/massassi-django/emails'  # change this to a proper location
+
+AUTH_USER_MODEL = 'users.User'
