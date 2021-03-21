@@ -35,7 +35,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ),
     )
 
-    date_joined = models.DateTimeField('date_joined', default=timezone.now)
+    date_joined = models.DateTimeField('date_joined', null=True, default=timezone.now)
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
