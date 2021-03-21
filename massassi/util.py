@@ -4,7 +4,7 @@ from django.core.management import BaseCommand
 from mysql.connector import connection
 
 
-class OurBaseCommand(BaseCommand, ABC):
+class OurMySqlImportBaseCommand(BaseCommand, ABC):
 
     def add_arguments(self, parser):
         parser.add_argument('--mysql_host', nargs='?', type=str, required=True)

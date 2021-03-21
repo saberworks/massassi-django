@@ -3,10 +3,10 @@ import os
 from django.core.files import File
 
 from sotd.models import SotD
-from massassi.util import OurBaseCommand
+from massassi.util import OurMySqlImportBaseCommand
 
 
-class Command(OurBaseCommand):
+class Command(OurMySqlImportBaseCommand):
     help = 'Imports SotD entries from mysql database and local screenshot directory'
 
     def add_arguments(self, parser):

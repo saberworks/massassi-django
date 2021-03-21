@@ -1,7 +1,7 @@
 from users.models import User
-from massassi.util import OurBaseCommand
+from massassi.util import OurMySqlImportBaseCommand
 
-class Command(OurBaseCommand):
+class Command(OurMySqlImportBaseCommand):
     help = 'Imports users from mysql database'
 
     # CREATE TABLE IF NOT EXISTS "auth_user" (
