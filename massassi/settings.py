@@ -22,6 +22,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'sotd.apps.SotdConfig',
     'users.apps.UsersConfig',
+    'levels.apps.LevelsConfig',
     'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',

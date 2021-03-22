@@ -422,6 +422,10 @@ p.sotd-list-description {
     margin-left: auto;
 }
 
+/** LEVELS **/
+.level-category-description {
+    padding-left: 2em;
+}
 
 /** DJANGO FORM CRAP **/
 

@@ -10,6 +10,7 @@ urlpatterns = [
     path('sotd/', include('sotd.urls')),
     path('admin/', admin.site.urls),
     path('account/', include('users.urls')),
+    path('levels/', include('levels.urls')),
 ]
 
 # Text to put at the end of each page's <title>.
