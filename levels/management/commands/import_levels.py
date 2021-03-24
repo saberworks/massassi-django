@@ -1,9 +1,8 @@
 import os
+import pytz
 import re
 
-import pytz
-
-from datetime import datetime
+from django.utils.datetime_safe import datetime
 from django.core.files import File
 
 from levels.models import Level, LevelCategory

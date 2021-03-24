@@ -5,6 +5,8 @@ from django.utils import timezone
 from imagekit.models import ImageSpecField
 from pilkit.processors import Thumbnail
 
+# from users.models import User
+from .util import get_level_upload_path, get_screenshot_1_upload_path, get_screenshot_2_upload_path
 
 class LevelCategory(models.Model):
     path = models.CharField(max_length=16, null=False)
@@ -18,31 +20,6 @@ class LevelCategory(models.Model):
 
     class Meta:
         verbose_name_plural = 'Level Categories'
-
-#
-# Dynamically calculate the proper upload path based on category path
-#
-def get_upload_path(instance, filename):
-    return os.path.join(
-        # "levels/files/{}/{}".format(instance.category.path, instance.file.file.name)
-        "levels/files/{}/{}".format(instance.category.path, filename)
-    )
-
-#
-# Dynamically calculate proper upload path for screenshots
-#
-def get_screenshot_upload_path(instance, filename, field_number):
-    name, ext = os.path.splitext(filename)
-
-    return os.path.join(
-        'levels/screenshots/{}_{}{}'.format(instance.id, field_number, ext)
-    )
-
-def get_screenshot_1_upload_path(instance, filename):
-    return get_screenshot_upload_path(instance, filename, 1)
-
-def get_screenshot_2_upload_path(instance, filename):
-    return get_screenshot_upload_path(instance, filename, 2)
 
 
 class Level(models.Model):
@@ -59,7 +36,7 @@ class Level(models.Model):
     rating = models.PositiveIntegerField(null=True, blank=True, default=None)
 
     # 1 file upload
-    file = models.FileField(upload_to=get_upload_path, null=True)
+    file = models.FileField(upload_to=get_level_upload_path, null=True)
 
     # 2 possible screenshots
     screenshot_1 = models.ImageField(upload_to=get_screenshot_1_upload_path, null=True)
@@ -90,3 +67,19 @@ class Level(models.Model):
 
     def __str__(self):
         return "{} ({})".format(self.name, self.id)
+
+
+class LevelComment(models.Model):
+    level = models.ForeignKey('Level', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    comment = models.TextField(blank=False)
+    ip = models.GenericIPAddressField(null=False, blank=False, default='0.0.0.0')
+    date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)
+
+
+class LevelRating(models.Model):
+    level = models.ForeignKey('Level', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    ip = models.GenericIPAddressField(null=False, blank=False, default='0.0.0.0')
+    rating = models.PositiveSmallIntegerField(null=False, blank=False)
+    date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)

@@ -17,10 +17,18 @@ class Command(OurMySqlImportBaseCommand):
         for row in cursor.fetchall():
             game = _get_game(row['category_path'])
 
+            path = row['category_path']
+
+            if path == 'jkmods':
+                path = 'jkmod'
+
+            if path == 'motsmods':
+                path = 'motsmod'
+
             cat = LevelCategory(
                 id=row['category_id'],
                 name=row['category_name'],
-                path=row['category_path'],
+                path=path,
                 enable_3dpreview=row['3dpreview'],
                 game=game,
             )
