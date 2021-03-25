@@ -114,24 +114,36 @@ STATICFILES_DIRS = [
 ]
 
 LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/account/login/'
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
     'loggers': {
         'asyncio': {
             'level': 'WARNING',
         },
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
         },
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-    },
+    # 'root': {
+    #     'handlers': ['console'],
+    #     'level': 'DEBUG',
+    # },
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'

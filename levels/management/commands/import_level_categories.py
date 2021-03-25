@@ -41,12 +41,10 @@ class Command(OurMySqlImportBaseCommand):
         cnx.close()
 
 def _get_game(path):
-    path
-
     if path.startswith('jk'): return 'jk'
     if path.startswith('mots'): return 'mots'
     if path.startswith('jo'): return 'jo'
     if path.startswith('ja'): return 'ja'
-    if path.startswith('mad'): return 'mad'
+    if path.startswith('mad'): return 'other'
 
     return 'unknown'

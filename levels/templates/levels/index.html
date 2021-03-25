@@ -1,5 +1,7 @@
 {% extends "outer.html" %}
 
+{%  load filters %}
+
 {% block content %}
     <h1>{% block title %}Levels/Maps/Mods{% endblock %}</h1>
 
@@ -9,86 +11,31 @@
             <li><a href="howto.shtml">Level/Mod Installation Instructions</a></li>
         </ul>
 
-        <p><strong>Note: </strong>Ratings and Comments are currently deactivated.</p>
+        {% for game,game_title in games.items %}
+            <h2>{{ game_title }}</h2>
 
-        <div class="level-category-grid-container">
-            <h2>Jedi Knight</h2>
-            {% for category in categories %}
-                {% if category.game == 'jk' %}
-                    <p class="level-category-description">
-                        <strong>
-                            <a href="{% url 'levels:category' category.path %}">
-                                {{ category.name }}{% if category.name|default:""|slice:"-1:" != "s" %}s{% endif %}
-                            </a>
-                        </strong><br>
-                        {% if category.description %}{{ category.description }}<br>{% endif %}
-                        <strong># of Levels: {{ category.num_levels }}</strong>
-                    </p>
-                {% endif %}
-            {% endfor %}
+            <div class="level-category-grid-container">
+                {% for category in categories %}
+                    {% if category.game == game %}
+                        <div class="level-category-grid-item">
+                            <strong>
+                                <a href="{% url 'levels:category' category.path %}">
+                                    {{ category.name|pluralize_string }}
+                                </a>
+                            </strong>
+                        </div>
+                        <div class="level-category-grid-count">
+                            {{ category.level_count }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
 
-            <h2>Mysteries of the Sith</h2>
-            {% for category in categories %}
-                {% if category.game == 'mots' %}
-                    <p class="level-category-description">
-                        <strong>
-                            <a href="{% url 'levels:category' category.path %}">
-                                {{ category.name }}{% if category.name|default:""|slice:"-1:" != "s" %}s{% endif %}
-                            </a>
-                        </strong><br>
-                        {% if category.description %}{{ category.description }}<br>{% endif %}
-                        <strong># of Levels: {{ category.num_levels }}</strong>
-                    </p>
-                {% endif %}
-            {% endfor %}
-
-            <h2>Jedi Outcast</h2>
-            {% for category in categories %}
-                {% if category.game == 'jo' %}
-                    <p class="level-category-description">
-                        <strong>
-                            <a href="{% url 'levels:category' category.path %}">
-                                {{ category.name }}{% if category.name|default:""|slice:"-1:" != "s" %}s{% endif %}
-                            </a>
-                        </strong><br>
-                        {% if category.description %}{{ category.description }}<br>{% endif %}
-                        <strong># of Levels: {{ category.num_levels }}</strong>
-                    </p>
-                {% endif %}
-            {% endfor %}
-
-            <h2>Jedi Academy</h2>
-            {% for category in categories %}
-                {% if category.game == 'ja' %}
-                    <p class="level-category-description">
-                        <strong>
-                            <a href="{% url 'levels:category' category.path %}">
-                                {{ category.name }}{% if category.name|default:""|slice:"-1:" != "s" %}s{% endif %}
-                            </a>
-                        </strong><br>
-                        {% if category.description %}{{ category.description }}<br>{% endif %}
-                        <strong># of Levels: {{ category.num_levels }}</strong>
-                    </p>
-                {% endif %}
-            {% endfor %}
-
-            <h2>Other</h2>
-            {% for category in categories %}
-                {% if category.game == 'mad' %}
-                    <p class="level-category-description">
-                        <strong>
-                            <a href="{% url 'levels:category' category.path %}">
-                                {{ category.name }}{% if category.name|default:""|slice:"-1:" != "s" %}s{% endif %}
-                            </a>
-                        </strong><br>
-                        {% if category.description %}{{ category.description }}<br>{% endif %}
-                        <strong># of Levels: {{ category.num_levels }}</strong>
-                    </p>
-                {% endif %}
-            {% endfor %}
-
+        <div class="level-category-grid-container level-category-grid-total">
+            <div class="level-category-grid-item"><strong>Total:</strong></div>
+            <div class="level-category-grid-count">{{ categories|sum_column:"level_count" }}</div>
         </div>
-
     {% else %}
         <p>No Categories are available.  (this is probably a bug... email us)</p>
     {% endif %}

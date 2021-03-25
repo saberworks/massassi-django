@@ -82,7 +82,7 @@ a:hover   { text-decoration: underline; color: var(--link-hover-color); }
 
 #content {
     margin: 10px;
-    max-width: 80ch;
+    max-width: 120ch;
 }
 
 #content h1 {
@@ -105,7 +105,7 @@ h2::after {
     left: 0;
     bottom: 0;
     height: 2px;
-    width: 50%;  /* or 100px */
+    width: 75%;  /* or 100px */
     background-image: linear-gradient(to right, #808080, #000000);
 }
 
@@ -142,21 +142,22 @@ h2::after {
 #footer {
     grid-column-start: 2;
     margin-bottom: 1em;
-    max-width: 80ch;
+    max-width: 100ch;
 }
 
 #footer p {
     color: #333333;
+    padding-left: 1em;
 }
 
 #footer p#copyright {
     margin-top: 30px;
-    text-align: center;
+    text-align: left;
     margin-bottom: 10px;
 }
 
 #footer p#disclaimer {
-    text-align: center;
+    text-align: left;
     font-size: .8em;
 }
 
@@ -422,9 +423,136 @@ p.sotd-list-description {
     margin-left: auto;
 }
 
-/** LEVELS **/
-.level-category-description {
-    padding-left: 2em;
+/** LEVEL CATEGORY LIST **/
+
+.level-category-grid-container {
+    display: grid;
+    grid-template-columns: minmax(250px, 36ch) 4ch;
+    row-gap: 1em;
+    column-gap: 1em;
+}
+
+.level-category-grid-title {
+    border: 1px solid red;
+}
+
+.level-category-grid-count {
+    text-align: right;
+}
+
+.level-category-grid-total {
+    padding-top: 1em;
+}
+
+/** LEVELS LIST **/
+
+.level-list-grid-container {
+    display: grid;
+    grid-template-columns: 400px auto 20ch;
+    row-gap: 1em;
+    column-gap: 1em;
+}
+
+.no-screenshot-available {
+    width: 400px;
+    height: 200px;
+    border: 1px solid var(--link-color);
+    text-align: center;
+    line-height: 200px;
+    font-family: monospace;
+}
+
+.no-screenshot-available:hover {
+    border: 1px solid var(--link-hover-color);
+}
+
+.mute {
+    color: gray;
+}
+
+.level-good {
+    color: lawngreen;
+}
+.level-ok {
+    color: steelblue;
+}
+.level-bad {
+    color: coral;
+}
+
+/** LEVEL DISPLAY **/
+
+p.crumb {
+    padding: 5px;
+    background-color: #003000;
+}
+
+.level-info-top-container {
+    display: grid;
+    grid-template-columns: minmax(800px, auto) auto;
+    row-gap: 1em;
+    column-gap: 1em;
+}
+
+.level-info {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: .5em;
+    column-gap: 1em;
+}
+
+.massassi_button {
+    margin-top: 10px;
+}
+
+.level-screenshots {
+
+}
+
+.level-screenshots img {
+    border: 1px solid var(--link-color);
+}
+
+.level-screenshots img:hover {
+    border: 1px solid var(--link-hover-color);
+}
+
+.level-comment-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: .5em;
+    column-gap: 1px;
+    margin: 10px;
+}
+
+.level-comment-container > div:nth-child(4n+5),
+.level-comment-container > div:nth-child(4n+6) {
+    background-color: #003000;
+}
+
+.level-comment-container .header {
+    background-color: #004100;
+    padding: 5px;
+}
+
+.level-comment-author {
+    padding: 2px 2em 2px 2px;
+}
+
+.level-comment {
+    padding-bottom: 1em;
+}
+
+.small {
+    font-size: 80%;
+    margin-top: 1px;
+    padding-top: 0px;
+}
+
+.rule {
+    border-top: 1px solid #808080;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
 
 /** DJANGO FORM CRAP **/

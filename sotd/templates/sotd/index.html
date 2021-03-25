@@ -4,7 +4,7 @@
     <h1>{% block title %}Screenshot of the Day Archives{% endblock %}</h1>
 
     {% if sotd_list %}
-        {% include "sotd/pager.html" %}
+        {% include "simple_pager.html" %}
 
         <div class="sotd-grid-container">
 
@@ -23,7 +23,7 @@
 
         </div>
 
-        {% include "sotd/pager.html" %}
+        {% include "simple_pager.html" %}
     {% else %}
         <p>No Screenshots of the Day are available.</p>
     {% endif %}

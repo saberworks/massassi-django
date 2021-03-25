@@ -1,0 +1,134 @@
+{% extends "outer.html" %}
+
+{% load filters %}
+
+{% block content %}
+    <h1>{% block title %}{{ level.name }}{% endblock %}</h1>
+
+    <p class="crumb">
+        <a href="/">The Massassi Temple</a> &raquo;
+        <a href="/levels/">Levels/Mods</a> &raquo;
+        <a href="{% url 'levels:category' level.category.path %}">{{ level.category.name}}</a>
+    </p>
+
+    <div class="level-info-top-container">
+        <div class="level-info-left-container">
+            <div class="level-description">
+                <h2>Description</h2>
+                <p>{{ level.description|safe }}</p>
+            </div>
+
+            <div class="level-screenshots">
+                <h2>Screenshots</h2>
+
+                {% if level.screenshot_1 %}
+                    <a href="{{ level.screenshot_1.url }}">
+                        <img src="{{ level.thumbnail_1.url }}" alt="screenshot 1">
+                    </a>
+
+                    <a href="{{ level.screenshot_2.url }}">
+                        <img src="{{ level.thumbnail_2.url }}" alt="screenshot 2">
+                    </a>
+                {% else %}
+                    <p class="mute">No screenshots available.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="level-info-right-container">
+            <h2>Level Info:</h2>
+
+            <div class="level-info">
+                <div class="level-info-item-name">Download:</div>
+                <div class="level-info-item-value">
+                    <a href="{% url 'levels:level_download' level.pk %}">{{ level.name }}</a>
+                </div>
+
+                <div class="level-info-item-name">File Size:</div>
+                <div class="level-info-item-value">{{ level.filesize|hr_file_size|safe }}</div>
+
+                <div class="level-info-item-name">Date:</div>
+                <div class="level-info-item-value">{{ level.date_created|date:"Y-m-d" }}</div>
+
+                <div class="level-info-item-name">Author:</div>
+                <div class="level-info-item-value">{{ level.author }}</div>
+
+                <div class="level-info-item-name">Downloads:</div>
+                <div class="level-info-item-value">4940</div>
+            </div>
+
+            <h2>Ratings:</h2>
+
+            <div class="level-info">
+                <div class="level-info-item-name">Score (0-10):</div>
+                <div class="level-info-item-value">{{ level.rating }}</div>
+
+                <div class="level-info-item-name"># of Ratings:</div>
+                <div class="level-info-item-value">{{ level.rate_count }}</div>
+
+                <div class="level-info-item-name">Rate:</div>
+                <div class="level-info-item-value"><a href="{% url 'levels:rate' level.pk %}">Click Here</a></div>
+            </div>
+
+            <div class="massassi_button">
+                <a href="/">
+                    <img src="/static/images/mas_but2.gif"
+                         alt="Logo By Rieekan"
+                         width="90"
+                         height="36">
+                </a>
+            </div>
+        </div>
+
+        {% if level.category.enable_3dpreview %}
+            <div class="level-3d-preview">
+                <h2>3D Preview</h2>
+
+                <p><a href="https://3dpreview.massassi.net/level/{{ level.pk }}/">Full Size 3D Preview for {{ level.name }}</a></p>
+                <iframe src="https://3dpreview.massassi.net/level/{{ level.pk }}/" width="640" height="480" scrolling="no"></iframe>
+            </div>
+        {% endif %}
+    </div>
+
+    <h2>User Comments:</h2>
+
+    <p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'levels:comment' level.pk %}">Add a Comment</a>
+        {% else %}
+            <a href="{% url 'users:register' %}">Register for Commenting System</a>
+        {% endif %}
+    </p>
+
+    <div class="level-comment-container">
+        <div class="header"><strong>Posted by</strong></div>
+        <div class="header"><strong>Comment</strong></div>
+
+        {% for comment in level.levelcomment_set.all %}
+            <div class="level-comment-author">{{ comment.user.username }}</div>
+            <div class="level-comment">
+                <span class="mute small">
+                    Posted: {{ level.date_created|date:"Y-m-d g:i a"}} &nbsp;
+                    <a href="{% url 'levels:report_comment' comment.pk %}">Report Abuse</a>
+                </span>
+                <div class="rule"></div>
+                {{ comment.comment }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'levels:comment' level.pk %}">Add a Comment</a>
+        {% else %}
+            <a href="{% url 'users:register' %}">Register for Commenting System</a>
+        {% endif %}
+    </p>
+
+    <p>&nbsp;</p>
+
+    {% if level.category.enable_3dpreview %}
+        <p>3D Preview developed by <a href="https://github.com/stephanreiter/jkview">Stephan Reiter</a></p>
+    {% endif %}
+
+{% endblock %}

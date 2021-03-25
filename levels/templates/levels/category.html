@@ -1,0 +1,44 @@
+{% extends "outer.html" %}
+
+{% load filters %}
+
+{% block content %}
+    <h1>{% block title %}{{ category.name|pluralize_string }}{% endblock %}</h1>
+
+    {% if levels %}
+        {% include "simple_pager.html" %}
+
+        <div class="level-list-grid-container">
+        {% for level in levels %}
+            <div class="level-list-screenshot">
+                <a href="{% url 'levels:level' level.pk %}">
+                    {% if level.screenshot_1 %}
+                        <img src="{{ level.thumbnail_1.url }}" border=1>
+                    {% else %}
+                        <div class="no-screenshot-available">
+                            No Screenshot Available
+                        </div>
+                    {% endif %}
+                </a>
+            </div>
+            <div class="level-list-item">
+                <strong><a href="{% url 'levels:level' level.pk %}">{{ level.name }}</a></strong><br>
+                <span class="mute">By:</span> {{ level.author }}<br>
+                <span class="mute">Added:</span> {{ level.date_created|date:"Y-m-d" }}<br>
+                <!-- <a href="{% url 'levels:level_download' level.pk %}">Download</a><br> -->
+            </div>
+            <div class="level-list-details">
+                <span class="mute">Rating:</span>
+                <strong>{{ level.rating|color_rating|safe }}</strong>
+                <span class="mute">({{ level.rate_count }} votes)</span><br>
+                <span class="mute">Downloads:</span> {{ level.dl_count }}
+            </div>
+        {% endfor %}
+        </div>
+
+        {% include "simple_pager.html" %}
+    {% else %}
+        <p>No levels are available.  (this is probably a bug... email us)</p>
+    {% endif %}
+
+{% endblock %}
