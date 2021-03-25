@@ -1,7 +1,7 @@
 from django.db.models import Count, Sum
 from django.views import generic
 
-from .models import Level, LevelCategory
+from .models import Level, LevelCategory, LevelComment
 
 #
 # CategoryIndexView shows all categories/descriptions/counts and links to the
@@ -63,6 +63,14 @@ class CategoryDetailView(generic.ListView):
 class LevelDetailView(generic.DetailView):
     model = Level
     template_name = 'levels/level.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['comments'] = LevelComment.objects \
+            .filter(level=context['level']).select_related('user')
+
+        return context
 
 #
 # LevelDownloadView is the actual download operation (simple page with meta

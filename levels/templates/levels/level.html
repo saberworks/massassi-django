@@ -104,11 +104,11 @@
         <div class="header"><strong>Posted by</strong></div>
         <div class="header"><strong>Comment</strong></div>
 
-        {% for comment in level.levelcomment_set.all %}
+        {% for comment in comments %}
             <div class="level-comment-author">{{ comment.user.username }}</div>
             <div class="level-comment">
                 <span class="mute small">
-                    Posted: {{ level.date_created|date:"Y-m-d g:i a"}} &nbsp;
+                    Posted: {{ comment.date_created|date:"Y-m-d g:i a"}} &nbsp;
                     <a href="{% url 'levels:report_comment' comment.pk %}">Report Abuse</a>
                 </span>
                 <div class="rule"></div>
