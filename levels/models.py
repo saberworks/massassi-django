@@ -5,10 +5,11 @@ from django.utils import timezone
 from imagekit.models import ImageSpecField
 from pilkit.processors import Thumbnail
 
-# from users.models import User
-from .util import get_level_upload_path, get_screenshot_1_upload_path, get_screenshot_2_upload_path
+from massassi.models import MassassiBaseModel, MassassiModelWithFile
 
-class LevelCategory(models.Model):
+from .util import get_screenshot_1_upload_path, get_screenshot_2_upload_path
+
+class LevelCategory(MassassiBaseModel):
     path = models.CharField(max_length=16, null=False)
     name = models.CharField(max_length=64, null=False)
     description = models.TextField(null=True, blank=True)
@@ -22,21 +23,16 @@ class LevelCategory(models.Model):
         verbose_name_plural = 'Level Categories'
 
 
-class Level(models.Model):
+class Level(MassassiBaseModel, MassassiModelWithFile):
     category = models.ForeignKey('LevelCategory', on_delete=models.CASCADE)
     name = models.CharField(max_length=128, blank=False)
     description = models.TextField(blank=False)
     author = models.CharField(max_length=128, blank=False)
     email = models.EmailField(blank=False)
-    filesize = models.PositiveIntegerField(null=True, blank=True)
-    date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)
     dl_count = models.PositiveIntegerField(null=False, blank=False, default=0)
     comment_count = models.PositiveIntegerField(null=False, blank=False, default=0)
     rate_count = models.PositiveIntegerField(null=False, blank=False, default=0)
     rating = models.PositiveIntegerField(null=True, blank=True, default=None)
-
-    # 1 file upload
-    file = models.FileField(upload_to=get_level_upload_path, null=True)
 
     # 2 possible screenshots
     screenshot_1 = models.ImageField(upload_to=get_screenshot_1_upload_path, null=True)
@@ -51,9 +47,12 @@ class Level(models.Model):
                                  format='JPEG',
                                  options={'quality': 85})
 
-    def save(self, *args, **kwargs):
-        self.filesize = self.file.file.size
+    def get_file_upload_to(self, filename):
+        return os.path.join(
+            "levels/files/{}/{}".format(self.category.path, filename)
+        )
 
+    def save(self, *args, **kwargs):
         if self.pk is None:
             saved_screenshot_1 = self.screenshot_1
             saved_screenshot_2 = self.screenshot_2
@@ -69,7 +68,7 @@ class Level(models.Model):
         return "{} ({})".format(self.name, self.id)
 
 
-class LevelComment(models.Model):
+class LevelComment(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
     comment = models.TextField(blank=False)
@@ -77,7 +76,7 @@ class LevelComment(models.Model):
     date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)
 
 
-class LevelRating(models.Model):
+class LevelRating(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
     ip = models.GenericIPAddressField(null=False, blank=False, default='0.0.0.0')

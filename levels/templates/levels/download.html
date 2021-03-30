@@ -1,0 +1,24 @@
+{% extends "outer.html" %}
+
+{% load filters %}
+
+{% block content %}
+    <h1>{% block title %}{{ level.name }}{% endblock %}</h1>
+
+    <p class="crumb">
+        <a href="/">The Massassi Temple</a> &raquo;
+        <a href="/levels/">Levels/Mods</a> &raquo;
+        <a href="{% url 'levels:category' level.category.path %}">{{ level.category.name }}</a> &raquo;
+        <a href="{% url 'levels:level' level.pk %}">{{ level.name }}</a>
+    </p>
+
+    <meta http-equiv="Refresh" content="2; URL={{ level.file.url }}">
+
+    <p>Your download should begin automatically in 2 seconds. If it doesn't, please <a
+            href="{{ level.file.url }}">click here</a>.</p>
+
+    <h2>- Notes -</h2>
+
+    <p><strong>Error Messages:</strong> If you get an error 404, File Not Found, please email us with the EXACT resource
+        you're trying to download.</p>
+{% endblock %}

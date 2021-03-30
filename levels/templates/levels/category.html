@@ -24,7 +24,7 @@
             <div class="level-list-item">
                 <strong><a href="{% url 'levels:level' level.pk %}">{{ level.name }}</a></strong><br>
                 <span class="mute">By:</span> {{ level.author }}<br>
-                <span class="mute">Added:</span> {{ level.date_created|date:"Y-m-d" }}<br>
+                <span class="mute">Added:</span> {{ level.created_at|date:"Y-m-d" }}<br>
                 <!-- <a href="{% url 'levels:level_download' level.pk %}">Download</a><br> -->
             </div>
             <div class="level-list-details">

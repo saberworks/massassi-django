@@ -1,4 +1,4 @@
-from django.db.models import Count, Sum
+from django.db.models import Count, Sum, F
 from django.views import generic
 
 from .models import Level, LevelCategory, LevelComment
@@ -78,6 +78,21 @@ class LevelDetailView(generic.DetailView):
 #
 class LevelDownloadView(generic.DetailView):
     template_name = 'levels/download.html'
+    model = Level
+
+    # This is a BS implementation to increment the counter; doesn't seem
+    # like django provides a generic place to actually put code in these
+    # generic views?
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        level = self.object
+
+        level.dl_count = F('dl_count') + 1
+        level.save()
+
+        return context
+
 
 #
 # LevelAddCommentView is the add comment form & handler

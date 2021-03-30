@@ -45,6 +45,8 @@ class Command(OurMySqlImportBaseCommand):
                 comment=strip_tags(row['comment_text']),
                 date_created=date_created,
                 ip=row['comment_ip'],
+                created_by=user,
+                last_modified_by=user,
             )
 
             comment.save()

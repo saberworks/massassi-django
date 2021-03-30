@@ -2,8 +2,10 @@ from django.db import models
 from imagekit.models import ImageSpecField
 from pilkit.processors import Thumbnail
 
+from massassi.models import MassassiBaseModel
 
-class SotD(models.Model):
+
+class SotD(MassassiBaseModel):
     sotd_date = models.DateField(null=False)
     admin_id = models.IntegerField(null=False)
     title = models.CharField(max_length=64, null=False)

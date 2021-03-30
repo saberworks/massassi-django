@@ -3,9 +3,11 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.utils import timezone
 
+from massassi.models import MassassiBaseModel
+
 from .validators import OurUnicodeUsernameValidator
 
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin, MassassiBaseModel):
     username = models.CharField(
         'username',
         blank=False,

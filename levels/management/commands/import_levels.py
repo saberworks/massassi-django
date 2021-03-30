@@ -59,7 +59,7 @@ class Command(OurMySqlImportBaseCommand):
             if not file:
                 continue
 
-            date_created = datetime.fromtimestamp(
+            created_at = datetime.fromtimestamp(
                 row['timestamp'], tz=pytz.timezone('America/Los_Angeles')
             )
 
@@ -72,7 +72,7 @@ class Command(OurMySqlImportBaseCommand):
                 description=row['description'],
                 author=row['author'],
                 email=row['email'],
-                date_created=date_created,
+                created_at=created_at,
                 dl_count=row['dl_count'],
                 comment_count=row['comment_count'],
                 rate_count=row['rate_count'],

@@ -1,15 +1,6 @@
 import os
 
 #
-# Dynamically calculate the proper upload path based on category path
-#
-def get_level_upload_path(instance, filename):
-    return os.path.join(
-        "levels/files/{}/{}".format(instance.category.path, filename)
-    )
-
-
-#
 # Dynamically calculate proper upload path for screenshots
 #
 # TODO: at some point need to just have a separate table for screenshots

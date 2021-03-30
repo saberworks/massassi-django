@@ -36,6 +36,8 @@ class Command(OurMySqlImportBaseCommand):
                 user=user,
                 ip=row['user_ip'],
                 rating=row['rating_score'],
+                created_by=user,
+                last_modified_by=user,
             )
 
             rating.save()
