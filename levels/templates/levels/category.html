@@ -5,6 +5,12 @@
 {% block content %}
     <h1>{% block title %}{{ category.name|pluralize_string }}{% endblock %}</h1>
 
+    <p class="crumb">
+        <a href="/">The Massassi Temple</a> &raquo;
+        <a href="/levels/">Levels/Mods</a> &raquo;
+        <a href="{% url 'levels:category' category.path %}">{{ category.name|pluralize_string }}</a>
+    </p>
+
     {% if levels %}
         {% include "simple_pager.html" %}
 

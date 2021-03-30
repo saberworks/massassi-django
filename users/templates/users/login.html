@@ -7,7 +7,7 @@
         <p class="error">Error with username and/or password. Please try again.</p>
     {% endif %}
 
-    {% if next %}
+    {% if redirect_to %}
         {% if user.is_authenticated %}
             <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
         {% else %}
@@ -30,7 +30,7 @@
             {% endfor %}
 
             <button type="submit" value="login">Log In</button>
-        <input type="hidden" name="next" value="{{ next }}">
+            <input type="hidden" name="redirect_to" value="{{ redirect_to }}">
         </form>
     </div>
 

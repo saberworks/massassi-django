@@ -26,6 +26,8 @@ def login(request):
     if request.user.is_authenticated:
         return redirect('users:profile')
 
+    redirect_to = request.GET.get('next')
+
     form = OurLoginForm()
 
     if request.method == 'POST':
@@ -44,9 +46,13 @@ def login(request):
                 form.confirm_login_allowed(user)
                 django.contrib.auth.login(request, user)
                 messages.success(request, 'Login successful.')
-                return redirect('users:profile')
 
-    return render(request, 'users/login.html', {'form': form})
+                if redirect_to:
+                    return redirect(redirect_to)
+                else:
+                    return redirect('users:profile')
+
+    return render(request, 'users/login.html', {'form': form, 'redirect_to': redirect_to})
 
 
 def logout(request):
