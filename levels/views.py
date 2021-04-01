@@ -1,7 +1,19 @@
-from django.db.models import Count, Sum, F
+import logging
+
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count, F
+from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views import generic
 
+from massassi.httputil import get_client_ip
+
+from .forms import CommentForm
 from .models import Level, LevelCategory, LevelComment
+
+logger = logging.getLogger(__name__)
+
 
 #
 # CategoryIndexView shows all categories/descriptions/counts and links to the
@@ -95,10 +107,43 @@ class LevelDownloadView(generic.DetailView):
 
 
 #
-# LevelAddCommentView is the add comment form & handler
+# CommentView is the add comment form & handler
 #
+@method_decorator(login_required, name='dispatch')
 class CommentView(generic.FormView):
-    pass
+    form_class = CommentForm
+    template_name = 'levels/comment.html'
+
+    def get_level(self, level_id):
+        return Level.objects.get(pk=level_id)
+
+    def get(self, request, level_id):
+        level = self.get_level(level_id)
+
+        form = self.form_class()
+
+        return render(request, self.template_name, {'form': form, 'level': level})
+
+    def post(self, request, level_id):
+        level = self.get_level(level_id)
+
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+
+            comment.level = level
+            comment.user = request.user
+            comment.ip = get_client_ip(request)
+
+            comment.save()
+
+            messages.success(request, 'Comment submission successful!')
+
+            return redirect('levels:level', comment.level_id)
+
+        return render(request, self.template_name, {'form': form})
+
 
 class RateView(generic.FormView):
     pass

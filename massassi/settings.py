@@ -140,10 +140,10 @@ LOGGING = {
             'filters': ['require_debug_true'],
         },
     },
-    # 'root': {
-    #     'handlers': ['console'],
-    #     'level': 'DEBUG',
-    # },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'

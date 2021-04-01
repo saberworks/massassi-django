@@ -71,7 +71,7 @@ class Level(MassassiBaseModel, MassassiModelWithFile):
 class LevelComment(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    comment = models.TextField(blank=False)
+    comment = models.TextField(blank=False, null=False)
     ip = models.GenericIPAddressField(null=False, blank=False, default='0.0.0.0')
     date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)
 
