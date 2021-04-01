@@ -69,7 +69,7 @@
                 <div class="level-info-item-name">Rate:</div>
                 <div class="level-info-item-value">
                     {% if user.is_authenticated %}
-                        <form method="post" action="{% url 'levels:rate' level.pk %}" novalidate>
+                        <form method="post" action="{% url 'levels:rate' level.pk %}">
                             {% csrf_token %}
                             {% for field in rating_form %}
                                 {{ field }}
