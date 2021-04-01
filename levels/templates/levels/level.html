@@ -69,7 +69,13 @@
                 <div class="level-info-item-name">Rate:</div>
                 <div class="level-info-item-value">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'levels:rate' level.pk %}">Click Here</a>
+                        <form method="post" action="{% url 'levels:rate' level.pk %}" novalidate>
+                            {% csrf_token %}
+                            {% for field in rating_form %}
+                                {{ field }}
+                            {% endfor %}
+                            <button type="submit">Rate</button>
+                        </form>
                     {% else %}
                         <a href="{% url 'users:login' %}?next={{ request.path|urlencode }}">Log In First</a>
                     {% endif %}
@@ -120,7 +126,7 @@
                         <a href="{% url 'levels:report_comment' comment.pk %}">Report Abuse</a>
                     </span>
                     <div class="rule"></div>
-                    {{ comment.comment }}
+                    {{ comment.comment|linebreaksbr }}
                 </div>
             {% endfor %}
         </div>

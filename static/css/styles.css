@@ -571,7 +571,7 @@ p.crumb {
     font-weight: bold;
 }
 
-.form-container input, textarea {
+.form-container input, textarea, select {
     width: 100%;
     clear: both;
     border: 1px solid darkgray;
@@ -582,6 +582,21 @@ p.crumb {
     background-color: #1b1b1b;
     color: lightgray;
     border-radius: 5px;
+}
+
+/*
+ * This is outside .form-container because level rating form embedded on level
+ * info page doesn't use .form-container (it makes the page too wide)
+ */
+select {
+    border: 1px solid darkgray;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #1b1b1b;
+    color: lightgray;
+    border-radius: 2px;
+    width: 5ch;
 }
 
 .form-container .field-error {
@@ -598,13 +613,32 @@ p.crumb {
     color: red;
 }
 
+.form-container button[type=submit] {
+    cursor: pointer;
+    color: #fff;
+    background: #333333;
+    border: 1px solid #4D4D4D;
+    border-radius: 5px;
+    padding: .67em;
+}
+
+.form-container button[type=submit]:active {
+    transform: translateY(1px);
+}
+
+.form-container button[type=submit]:hover {
+    border-color: darkgray;
+}
+
+
+/* for buttons not in a .form-container, render them smaller */
 button[type=submit] {
     cursor: pointer;
     color: #fff;
     background: #333333;
-    border: 1px solid #1b1b1b;
-    border-radius: 5px;
-    padding: .67em;
+    border: 1px solid #4D4D4D;
+    border-radius: 2px;
+    padding: .4em;
 }
 
 button[type=submit]:active {
@@ -614,7 +648,6 @@ button[type=submit]:active {
 button[type=submit]:hover {
     border-color: darkgray;
 }
-
 
 /** DJANGO MESSAGES **/
 

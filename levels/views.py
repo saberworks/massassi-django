@@ -2,6 +2,7 @@ import logging
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, F
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
@@ -9,11 +10,23 @@ from django.views import generic
 
 from massassi.httputil import get_client_ip
 
-from .forms import CommentForm
-from .models import Level, LevelCategory, LevelComment
+from .forms import CommentForm, RatingForm
+from .models import Level, LevelCategory, LevelComment, LevelRating
 
 logger = logging.getLogger(__name__)
 
+# Quick access to level object based on level id
+def get_level(level_id):
+    return Level.objects.get(pk=level_id)
+
+# Quick access to rating row, but check that it exists first
+def get_rating(level, user):
+    try:
+        rating = LevelRating.objects.get(level=level, user=user)
+    except ObjectDoesNotExist:
+        rating = None
+
+    return rating
 
 #
 # CategoryIndexView shows all categories/descriptions/counts and links to the
@@ -82,6 +95,10 @@ class LevelDetailView(generic.DetailView):
         context['comments'] = LevelComment.objects \
             .filter(level=context['level']).select_related('user')
 
+        rating = get_rating(context['level'], self.request.user)
+
+        context['rating_form'] = RatingForm(instance=rating)
+
         return context
 
 #
@@ -114,18 +131,15 @@ class CommentView(generic.FormView):
     form_class = CommentForm
     template_name = 'levels/comment.html'
 
-    def get_level(self, level_id):
-        return Level.objects.get(pk=level_id)
-
     def get(self, request, level_id):
-        level = self.get_level(level_id)
+        level = get_level(level_id)
 
         form = self.form_class()
 
         return render(request, self.template_name, {'form': form, 'level': level})
 
     def post(self, request, level_id):
-        level = self.get_level(level_id)
+        level = get_level(level_id)
 
         form = self.form_class(request.POST)
 
@@ -145,8 +159,39 @@ class CommentView(generic.FormView):
         return render(request, self.template_name, {'form': form})
 
 
+@method_decorator(login_required, name='dispatch')
 class RateView(generic.FormView):
-    pass
+    form_class = RatingForm
+    template_name = 'levels/rating.html'
+
+    def get(self, request, level_id):
+        level = get_level(level_id)
+        rating = get_rating(level, request.user)
+
+        form = self.form_class(instance=rating)
+
+        return render(request, self.template_name, {'rating_form': form, 'level': level})
+
+    def post(self, request, level_id):
+        level = get_level(level_id)
+        rating = get_rating(level, request.user)
+
+        form = self.form_class(request.POST, instance=rating)
+
+        if form.is_valid():
+            rating = form.save(commit=False)
+
+            rating.level = level
+            rating.user = request.user
+            rating.ip = get_client_ip(request)
+
+            rating.save()
+
+            messages.success(request, 'Rating submission successful!')
+
+            return redirect('levels:level', rating.level_id)
+
+        return render(request, self.template_name, {'rating_form': form, 'level': level})
 
 class ReportCommentView(generic.FormView):
     pass
