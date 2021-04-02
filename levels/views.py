@@ -154,6 +154,8 @@ class CommentView(LoginRequiredMixin, generic.FormView):
 
             comment.save()
 
+            level.update_comment_count()
+
             messages.success(request, 'Comment submission successful!')
 
             return redirect('levels:level', comment.level_id)
@@ -187,6 +189,8 @@ class RateView(LoginRequiredMixin, generic.FormView):
             rating.ip = get_client_ip(request)
 
             rating.save()
+
+            level.update_rating()
 
             messages.success(request, 'Rating submission successful!')
 

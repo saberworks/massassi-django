@@ -1,6 +1,7 @@
 import os
 
 from django.db import models
+from django.db.models import Avg
 from django.utils import timezone
 from imagekit.models import ImageSpecField
 from pilkit.processors import Thumbnail
@@ -63,6 +64,16 @@ class Level(MassassiBaseModel, MassassiModelWithFile):
             self.screenshot_2 = saved_screenshot_2
 
         super().save(*args, **kwargs)
+
+    def update_comment_count(self):
+        self.comment_count = LevelComment.objects.filter(level=self).count()
+        self.save()
+
+    def update_rating(self):
+        ratings = LevelRating.objects.filter(level=self)
+        self.rate_count = ratings.count()
+        self.rating = ratings.aggregate(average_rating=Avg('rating'))['average_rating']
+        self.save()
 
     def __str__(self):
         return "{} ({})".format(self.name, self.id)

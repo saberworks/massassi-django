@@ -35,8 +35,13 @@
             </div>
             <div class="level-list-details">
                 <span class="mute">Rating:</span>
-                <strong>{{ level.rating|color_rating|safe }}</strong>
-                <span class="mute">({{ level.rate_count }} votes)</span><br>
+                {% if level.rate_count > 0 %}
+                    <strong>{{ level.rating|color_rating|safe }}</strong>
+                {% else %}
+                    n/a
+                {% endif %}
+                <span class="mute">({{ level.rate_count }} vote{{ level.rate_count|pluralize }})</span><br>
+                <span class="mute">Comments: {{ level.comment_count }}</span><br>
                 <span class="mute">Downloads:</span> {{ level.dl_count }}
             </div>
         {% endfor %}

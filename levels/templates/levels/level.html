@@ -61,7 +61,13 @@
 
             <div class="level-info">
                 <div class="level-info-item-name">Score (0-10):</div>
-                <div class="level-info-item-value">{{ level.rating }}</div>
+                <div class="level-info-item-value">
+                    {% if level.rate_count > 0 %}
+                        {{ level.rating }}
+                    {% else %}
+                        n/a
+                    {% endif %}
+                </div>
 
                 <div class="level-info-item-name"># of Ratings:</div>
                 <div class="level-info-item-value">{{ level.rate_count }}</div>
