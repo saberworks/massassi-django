@@ -3,9 +3,11 @@ import logging
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.db.models import Count, F
 from django.shortcuts import render, redirect
-from django.views import generic
+from django.template.loader import render_to_string
+from django.views import generic, View
 
 from massassi.httputil import get_client_ip
 from .forms import CommentForm, RatingForm
@@ -19,6 +21,9 @@ def get_level(level_id):
 
 # Quick access to rating row, but check that it exists first
 def get_rating(level, user):
+    if not user.is_authenticated:
+        return None
+
     try:
         rating = LevelRating.objects.get(level=level, user=user)
     except ObjectDoesNotExist:
@@ -124,7 +129,7 @@ class LevelDownloadView(generic.DetailView):
 #
 # CommentView is the add comment form & handler
 #
-class CommentView(generic.FormView, LoginRequiredMixin):
+class CommentView(LoginRequiredMixin, generic.FormView):
     form_class = CommentForm
     template_name = 'levels/comment.html'
 
@@ -156,7 +161,7 @@ class CommentView(generic.FormView, LoginRequiredMixin):
         return render(request, self.template_name, {'form': form})
 
 
-class RateView(generic.FormView, LoginRequiredMixin):
+class RateView(LoginRequiredMixin, generic.FormView):
     form_class = RatingForm
     template_name = 'levels/rating.html'
 
@@ -189,5 +194,26 @@ class RateView(generic.FormView, LoginRequiredMixin):
 
         return render(request, self.template_name, {'rating_form': form, 'level': level})
 
-class ReportCommentView(generic.FormView, LoginRequiredMixin):
-    pass
+class ReportCommentView(LoginRequiredMixin, View):
+    def get(self, request, comment_id):
+        comment = LevelComment.objects.get(pk=comment_id)
+
+        context = {
+            'user': request.user,
+            'comment': comment,
+            'level': comment.level,
+        }
+
+        body = render_to_string("levels/abuse.txt", context=context)
+
+        send_mail(
+            'Comment Abuse Report',
+            body,
+            'abuse@massassi.net',
+            ['massassi.temple@gmail.com'],
+            fail_silently=False,
+        )
+
+        messages.success(request, 'Abuse report sent.  Staff will review and take action.')
+
+        return redirect('levels:level', comment.level_id)

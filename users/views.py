@@ -85,13 +85,13 @@ def register(request):
 ## Password change (logged-in user)
 #
 
-class OurPasswordChangeView(PasswordChangeView, LoginRequiredMixin):
+class OurPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     form_class = OurPasswordChangeForm
     success_url = reverse_lazy('users:password_change_done')
     template_name = 'users/password_change_form.html'
 
 
-class OurPasswordChangeDoneView(PasswordChangeDoneView, LoginRequiredMixin):
+class OurPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
     template_name = 'users/password_change_done.html'
 
 

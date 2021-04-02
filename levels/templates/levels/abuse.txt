@@ -1,0 +1,6 @@
+{{ user }} has reported comment {{ comment.pk }} for level {{ level.pk }}.
+
+Comment by {{ comment.user.username }}:
+{{ comment.comment }}
+
+(if it looks ok, just ignore, otherwise, go log in and fix/delete it)
