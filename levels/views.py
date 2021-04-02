@@ -1,15 +1,13 @@
 import logging
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Count, F
 from django.shortcuts import render, redirect
-from django.utils.decorators import method_decorator
 from django.views import generic
 
 from massassi.httputil import get_client_ip
-
 from .forms import CommentForm, RatingForm
 from .models import Level, LevelCategory, LevelComment, LevelRating
 
@@ -126,8 +124,7 @@ class LevelDownloadView(generic.DetailView):
 #
 # CommentView is the add comment form & handler
 #
-@method_decorator(login_required, name='dispatch')
-class CommentView(generic.FormView):
+class CommentView(generic.FormView, LoginRequiredMixin):
     form_class = CommentForm
     template_name = 'levels/comment.html'
 
@@ -159,8 +156,7 @@ class CommentView(generic.FormView):
         return render(request, self.template_name, {'form': form})
 
 
-@method_decorator(login_required, name='dispatch')
-class RateView(generic.FormView):
+class RateView(generic.FormView, LoginRequiredMixin):
     form_class = RatingForm
     template_name = 'levels/rating.html'
 
@@ -193,5 +189,5 @@ class RateView(generic.FormView):
 
         return render(request, self.template_name, {'rating_form': form, 'level': level})
 
-class ReportCommentView(generic.FormView):
+class ReportCommentView(generic.FormView, LoginRequiredMixin):
     pass

@@ -1,15 +1,15 @@
-import django
 import logging
 
+import django
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetConfirmView, PasswordChangeView, PasswordResetView, \
     PasswordResetDoneView, PasswordChangeDoneView, PasswordResetCompleteView
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 
 from .forms import OurUserCreationForm, OurLoginForm, OurPasswordResetForm, OurPasswordChangeForm
 
@@ -85,15 +85,13 @@ def register(request):
 ## Password change (logged-in user)
 #
 
-@method_decorator(login_required, name='dispatch')
-class OurPasswordChangeView(PasswordChangeView):
+class OurPasswordChangeView(PasswordChangeView, LoginRequiredMixin):
     form_class = OurPasswordChangeForm
     success_url = reverse_lazy('users:password_change_done')
     template_name = 'users/password_change_form.html'
 
 
-@method_decorator(login_required, name='dispatch')
-class OurPasswordChangeDoneView(PasswordChangeDoneView):
+class OurPasswordChangeDoneView(PasswordChangeDoneView, LoginRequiredMixin):
     template_name = 'users/password_change_done.html'
 
 
