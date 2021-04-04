@@ -1,14 +1,9 @@
 {% extends 'outer.html' %}
 
 {% block content %}
-    <h1>{% block title %}{{ level.name }} - Add Comment{% endblock %}</h1>
+    <h1>{% block title %}{{ level.name|safe }} - Add Comment{% endblock %}</h1>
 
-    <p class="crumb">
-        <a href="/">The Massassi Temple</a> &raquo;
-        <a href="/levels/">Levels/Mods</a> &raquo;
-        <a href="{% url 'levels:category' level.category.path %}">{{ level.category.name }}</a> &raquo;
-        <a href="{% url 'levels:level' level.pk %}">{{ level.name }}</a>
-    </p>
+    {% include "levels/level_crumb.html" %}
 
     <p>Please provide friendly, constructive comments.  No insults or other inappropriate behavior.</p>
 

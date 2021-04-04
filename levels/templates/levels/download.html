@@ -3,14 +3,9 @@
 {% load filters %}
 
 {% block content %}
-    <h1>{% block title %}{{ level.name }}{% endblock %}</h1>
+    <h1>{% block title %}{{ level.name|safe }}{% endblock %}</h1>
 
-    <p class="crumb">
-        <a href="/">The Massassi Temple</a> &raquo;
-        <a href="/levels/">Levels/Mods</a> &raquo;
-        <a href="{% url 'levels:category' level.category.path %}">{{ level.category.name }}</a> &raquo;
-        <a href="{% url 'levels:level' level.pk %}">{{ level.name }}</a>
-    </p>
+    {% include "levels/level_crumb.html" %}
 
     <meta http-equiv="Refresh" content="2; URL={{ level.file.url }}">
 

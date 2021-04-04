@@ -1,0 +1,6 @@
+<p class="crumb">
+    <a href="/">The Massassi Temple</a> &raquo;
+    <a href="/levels/">Levels/Mods</a> &raquo;
+    <a href="{% url 'levels:category' level.category.path %}">{{ level.category.name }}</a> &raquo;
+    <a href="{% url 'levels:level' level.pk %}">{{ level.name|safe }}</a>
+</p>
