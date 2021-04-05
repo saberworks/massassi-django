@@ -3,6 +3,11 @@
 {% block content %}
     <h1>{% block title %}Screenshot of the Day Archives{% endblock %}</h1>
 
+    <p>Screenshots of the day are chosen by staff members from posts on our
+    <a href="https://forums.massassi.net/vb3/forumdisplay.php?12-Showcase">Showcase forum</a>.
+    As you can see, we no longer update this daily but it might still be fun to scroll through
+    the old screenshots.</p>
+
     {% if sotd_list %}
         {% include "simple_pager.html" %}
 

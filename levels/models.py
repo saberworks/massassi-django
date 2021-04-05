@@ -39,13 +39,13 @@ class Level(MassassiBaseModel, MassassiModelWithFile):
     # 2 possible screenshots
     screenshot_1 = models.ImageField(upload_to=get_screenshot_1_upload_path, null=True)
     thumbnail_1 = ImageSpecField(source='screenshot_1',
-                                 processors=[Thumbnail(400, 200)],
+                                 processors=[Thumbnail(400, 300)],
                                  format='JPEG',
                                  options={'quality': 85})
 
     screenshot_2 = models.ImageField(upload_to=get_screenshot_2_upload_path, null=True)
     thumbnail_2 = ImageSpecField(source='screenshot_2',
-                                 processors=[Thumbnail(400, 200)],
+                                 processors=[Thumbnail(400, 300)],
                                  format='JPEG',
                                  options={'quality': 85})
 

@@ -15,7 +15,7 @@ class SotD(MassassiBaseModel):
     description = models.TextField(null=True)
     image = models.ImageField(upload_to='sotd', null=False)
     thumbnail = ImageSpecField(source='image',
-                               processors=[Thumbnail(400, 200)],
+                               processors=[Thumbnail(400, 300)],
                                format='JPEG',
                                options={'quality': 85})
 
