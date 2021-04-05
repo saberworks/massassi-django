@@ -22,6 +22,7 @@ class LevelCategory(MassassiBaseModel):
 
     class Meta:
         verbose_name_plural = 'Level Categories'
+        db_table = 'level_categories'
 
 
 class Level(MassassiBaseModel, MassassiModelWithFile):
@@ -78,6 +79,8 @@ class Level(MassassiBaseModel, MassassiModelWithFile):
     def __str__(self):
         return "{} ({})".format(self.name, self.id)
 
+    class Meta:
+        db_table = 'levels'
 
 class LevelComment(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
@@ -86,6 +89,8 @@ class LevelComment(MassassiBaseModel):
     ip = models.GenericIPAddressField(null=False, blank=False, default='0.0.0.0')
     date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)
 
+    class Meta:
+        db_table = 'level_comments'
 
 class LevelRating(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
@@ -93,3 +98,6 @@ class LevelRating(MassassiBaseModel):
     ip = models.GenericIPAddressField(null=False, blank=False, default='0.0.0.0')
     rating = models.PositiveSmallIntegerField(null=False, blank=False)
     date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)
+
+    class Meta:
+        db_table = 'level_ratings'

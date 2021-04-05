@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'sotd.apps.SotdConfig',
     'users.apps.UsersConfig',
     'levels.apps.LevelsConfig',
+    'lotw.apps.LotwConfig',
     'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',

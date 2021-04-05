@@ -46,3 +46,6 @@ class User(AbstractBaseUser, PermissionsMixin, MassassiBaseModel):
 
     def __str__(self):
         return "{} ({})".format(self.username, self.id)
+
+    class Meta:
+        db_table = 'users'

@@ -1,0 +1,41 @@
+{% extends "outer.html" %}
+
+{% block content %}
+    <h1>{% block title %}Level of the Week Archives{% endblock %}</h1>
+
+    <p>Archive of past Level of the Week winners.  These levels were chosen by user votes.</p>
+
+    <p>Note: user voting for level of the week is no longer supported, but previous winners are recorded here.</p>
+
+    {% if lotw_list %}
+        {% include "simple_pager.html" %}
+
+        <div class="sotd-grid-container">
+
+            {% for lotw in lotw_list %}
+                <div class="sotd-list-entry-image">
+                    <a href="{% url 'levels:level' lotw.level.id %}">
+                        {% if lotw.level.screenshot_1 %}
+                            <img class="sotd-list-thumbnail" src="{{ lotw.level.thumbnail_1.url }}"/>
+                        {% else %}
+                            <div class="no-screenshot-available">
+                                No Screenshot Available
+                            </div>
+                        {% endif %}
+
+                    </a>
+                </div>
+
+                <p class="sotd-list-description">
+                    {{ lotw.lotw_time|date:"Y-m-d" }}<br>
+                    <a href="{% url 'levels:level' lotw.level.id %}">{{ lotw.level.name|safe }}</a><br>
+                    By: {{ lotw.level.author|safe }}
+                </p>
+            {% endfor %}
+        </div>
+
+        {% include "simple_pager.html" %}
+    {% else %}
+        <p>No Levels of the Week are available.</p>
+    {% endif %}
+{% endblock %}

@@ -25,3 +25,4 @@ class SotD(MassassiBaseModel):
     class Meta:
         verbose_name = 'Screenshot of the Day'
         verbose_name_plural = 'Screenshots of the Day'
+        db_table = 'sotd'
