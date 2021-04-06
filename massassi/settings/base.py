@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'levels.apps.LevelsConfig',
     'lotw.apps.LotwConfig',
+    'news.apps.NewsConfig',
     'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',

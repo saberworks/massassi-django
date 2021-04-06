@@ -12,6 +12,7 @@ urlpatterns = [
     path('account/', include('users.urls')),
     path('levels/', include('levels.urls')),
     path('lotw/', include('lotw.urls')),
+    path('news/', include('news.urls')),
 ]
 
 # Text to put at the end of each page's <title>.
