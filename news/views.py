@@ -22,7 +22,7 @@ class IndexView(generic.ListView):
         context = super().get_context_data(**kwargs)
 
         context['recent_levels'] = Level.objects.order_by('-created_at')[:6]
-        context['lotw'] = LotwHistory.objects.latest('lotw_time')
+        context['lotw'] = LotwHistory.objects.select_related('level').latest('lotw_time')
         context['sotd'] = SotD.objects.latest('sotd_date')
 
         return context
