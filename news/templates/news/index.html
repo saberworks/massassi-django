@@ -1,0 +1,97 @@
+{% extends "outer.html" %}
+
+{% block title %}News{% endblock %}
+
+{% block content %}
+    <div id="logo"><img src="/static/images/logo1.jpg" height="154" width="384" alt="Logo By Ewok!"></div>
+
+    <div id="features-grid">
+        <div id="feature-recent-levels">
+            <div class="feature-title">Recent Levels</div>
+            <div class="feature-content">
+                {% for level in recent_levels %}
+                    {{ level.created_at|date:"Y-m-d" }}
+                    <a href="{% url 'levels:level' level.pk %}">{{ level.name|truncatechars:34 }}</a><br>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="feature-in-house">
+            <div class="feature-title">In-House</div>
+            <div class="feature-content">
+                <ul>
+                    <li><a href="/domlp/">Death of Massassi Level Pack</a><br>
+                    <li>Massassi MP Packs: <a href="/levelpack/">1</a>, <a href="/mlp2/">2</a>, <a href="/mlp3/">3</a>,
+                        <a href="/mlp4/">4</a>, <a href="/mlp5/">5</a>, <a href="/mlp6/">6</a></li>
+                    <li>Massassi <a href="/ctfpack/">Capture The Flag Pack</a></li>
+                    <li><a href="/jkarena/index.php?x=levelpack" target="_top">Jedi Knight Arena Level Pack</a></li>
+                    <li>SP Contest Winners: <a href="/levels/files/2999.shtml">1</a>, <a
+                            href="/levels/files/3105.shtml">2</a></li>
+                    <li>How to <a href="/submit/">submit your work</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="feature-hosted-sites">
+            <div class="feature-title">Hosted Sites</div>
+            <div class="feature-content">
+                <a href="http://tacc.massassi.net/" target="_top">Admiral's Command Chamber</a><br>
+                <a href="/jkarena/" target="_top">JK Arena</a>: MP Modification<br>
+                <a href="http://www.jkhub.net/" target="_top">JK Editing Hub</a><br>
+                <a href="http://millennium.massassi.net/" target="_top">Millennium</a>: Cog Resource<br>
+                <a href="http://rbots.massassi.net/" target="_top">Rbots</a>: JK/Mots Bots
+            </div>
+        </div>
+
+        <div id="feature-sotd">
+            <div class="feature-title-small">Screenshot of the Day</div>
+            <div class="feature-content">
+                <a href="{% url "sotd:sotd" sotd.pk %}">
+                    <img src="{{ sotd.thumbnail.url }}" alt="SotD for {{ sotd.sotd_date }}" height=150 width=200
+                         class="sotdimage"/></a>
+                <div class="caption">
+                    {{ sotd.title }}<br>
+                    <em>{{ sotd.description }}</em><br>
+                    <a href="/sotd/">Archives</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="feature-button">
+            <p><a href="/what/">What is this place?</a></p>
+            <a href="/"><img src="/static/images/mas_but2.gif" height="36" width="90"
+                             alt="Link to Us! [Button by Rieekan]"></a>
+        </div>
+
+        <div id="feature-lotw">
+            <div class="feature-title-small">Level of the Week</div>
+            <div class="feature-content">
+                <a href="{% url 'levels:level' lotw.level_id %}">
+                    <img src="{{ lotw.level.thumbnail_1.url }}" alt="LotW for {{ lotw.lotw_time|date:"Y-m-d" }}" height="150" width="200" class="lotwimage" />
+                </a>
+                <div class="caption">{{ lotw.level.name }}<br><a href="/lotw/">Archives</a></div>
+            </div>
+        </div>
+    </div>
+
+    <p id="testimonial"><em>BTW: Massassi is the best web site in the history of the universe!</em> - Otterbine</p>
+
+    {% if news %}
+        {% for post in news %}
+            {% ifchanged post.news_date %}
+                <h1 class="news-date" style="margin-top: 0px;">{{ post.news_date }}</h1>
+            {% endifchanged %}
+
+            <div class="news-block">
+                <div class="news-headline">{{ post.headline|safe }} -
+                    <span class="news-author">{{ post.user.username }} @ {{ post.date_posted|date:"g:i A" }}</span>
+                </div>
+                <div class="news-body">{{ post.story|safe }}</div>
+            </div>
+        {% endfor %}
+
+        {% include "news_pager.html" %}
+    {% else %}
+        <p>No news is available.</p>
+    {% endif %}
+{% endblock %}

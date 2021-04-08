@@ -196,6 +196,7 @@ div#logo {
 #features-grid div#feature-button {
     align-self: center;
     justify-self: center;
+    text-align: center;
 }
 
 #features-grid div#feature-lotw {
@@ -231,15 +232,15 @@ div#logo {
 p#testimonial {
     display: block;
     text-align: center;
-    padding-bottom: 0px;
-    margin-bottom: 0px;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 h1.news-date {
     display: block;
-    border: 2px solid gray;
-    border-style: ridge;
-    background: url("https://www.massassi.net/cellbg.gif");
+    border-style: groove;
+    background: url("https://www.massassi.net/cellbg.gif") repeat-x;
+    background-size: auto 100%;
     padding: 3px;
     font-weight: bold;
     text-align: center;
