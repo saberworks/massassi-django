@@ -1,0 +1,21 @@
+{% extends "outer.html" %}
+
+{% block content %}
+    <h1>{% block title %}Old News Search{% endblock %}</h1>
+
+    <p class="crumb">
+        <a href="/">The Massassi Temple</a> &raquo;
+        <a href="{% url 'news:oldnews' %}">Old News</a> &raquo;
+        <a href="{% url 'news:oldsearch' %}">Search</a>
+    </p>
+
+
+    <p><strong>Note:</strong> This form only searches news in the "modern"
+        system, anything posted since June 4, 2000.</p>
+
+    {% include "news/search_form.html" %}
+
+    <p>Searched news <em>headline</em> and <em>story</em> for terms: {{ terms }}
+
+    {% include "news/news_list.html" %}
+{% endblock %}

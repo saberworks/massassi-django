@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, PasswordChangeForm, \
-    SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
 
@@ -12,7 +11,7 @@ class OurUserCreationForm(UserCreationForm):
         model = User
         fields = ("username", "email", "password1", "password2")
 
-    def save(self):
+    def save(self, **kwargs):
         user = super(UserCreationForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
         user.save()

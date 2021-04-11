@@ -1,0 +1,14 @@
+<div class="form-container">
+    <p><span class="required"></span> denotes a required field.</p>
+
+    <form method="get" action="{% url 'news:oldsearch' %}">
+        {% for field in form %}
+            {{ field.label_tag }}
+            {% for error in field.errors %}
+                <div class="field-error">{{ error }}</div>
+            {% endfor %}
+            {{ field }}
+        {% endfor %}
+        <button type="submit">Search</button>
+    </form>
+</div>

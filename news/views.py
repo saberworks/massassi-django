@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.views import generic
 from django.db import connection
@@ -7,6 +8,7 @@ from massassi.dbutil import dictfetchall
 from levels.models import Level
 from lotw.models import LotwHistory
 from sotd.models import SotD
+from .forms import NewsSearchForm
 from .models import News
 
 
@@ -35,8 +37,9 @@ class OldNewsView(generic.View):
     template_name = 'news/old.html'
 
     def get(self, request):
+        form = NewsSearchForm()
         years = self.fetch_news_years()
-        return render(request, self.template_name, {'years': years})
+        return render(request, self.template_name, {'years': years, 'form': form})
 
     @staticmethod
     def fetch_news_years():
@@ -84,7 +87,7 @@ class MonthView(generic.ListView):
             ) \
             .select_related('user') \
             .extra(select={'news_date': 'DATE(date_posted)'}) \
-            .order_by('-date_posted')
+            .order_by('date_posted')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -93,3 +96,26 @@ class MonthView(generic.ListView):
         context['month'] = self.kwargs['month']
 
         return context
+
+class SearchView(generic.View):
+    template_name = 'news/search.html'
+
+    def get(self, request):
+        form = NewsSearchForm()
+        results = []
+        terms = None
+
+        # form was submitted???
+        if 'terms' in request.GET:
+            form = NewsSearchForm(request.GET)
+
+            if form.is_valid():
+                terms = form.cleaned_data['terms']
+
+                results = News.objects\
+                    .filter(Q(story__search=terms) | Q(headline__search=terms)) \
+                    .select_related('user') \
+                    .extra(select={'news_date': 'DATE(date_posted)'}) \
+                    .order_by('-date_posted')
+
+        return render(request, self.template_name, {'form': form, 'news': results, 'terms': terms})
