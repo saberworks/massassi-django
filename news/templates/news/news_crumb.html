@@ -1,8 +1,9 @@
 {% load filters %}
 
 <p class="crumb">
-    <a href="/">The Massassi Temple</a> &raquo;
-    <a href="{% url 'news:oldnews' %}">Old News</a> &raquo;
-    <a href="{% url 'news:oldyear' year %}">{{ year }}</a> &raquo;
-    <a href="{% url 'news:oldmonth' year month %}">{{ month|month_name }}</a>
+    <a href="/">The Massassi Temple</a>
+    &raquo; <a href="{% url 'news:oldnews' %}">Old News</a>
+    {% if search %}&raquo; <a href="">Search</a>{% endif %}
+    {% if year %}&raquo; <a href="{% url 'news:oldyear' year %}">{{ year }}</a>{% endif %}
+    {% if month %}&raquo; <a href="{% url 'news:oldmonth' year month %}">{{ month|month_name }}</a>{% endif %}
 </p>

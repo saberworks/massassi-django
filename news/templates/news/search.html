@@ -3,12 +3,7 @@
 {% block content %}
     <h1>{% block title %}Old News Search{% endblock %}</h1>
 
-    <p class="crumb">
-        <a href="/">The Massassi Temple</a> &raquo;
-        <a href="{% url 'news:oldnews' %}">Old News</a> &raquo;
-        <a href="{% url 'news:oldsearch' %}">Search</a>
-    </p>
-
+    {% include "news/news_crumb.html" %}
 
     <p><strong>Note:</strong> This form only searches news in the "modern"
         system, anything posted since June 4, 2000.</p>

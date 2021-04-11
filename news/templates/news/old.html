@@ -3,6 +3,8 @@
 {% block content %}
     <h1>{% block title %}Old News{% endblock %}</h1>
 
+    {% include "news/news_crumb.html" %}
+
     <h2>Preface</h2>
 
     {% include 'news/disclaimer.html' %}

@@ -118,4 +118,9 @@ class SearchView(generic.View):
                     .extra(select={'news_date': 'DATE(date_posted)'}) \
                     .order_by('-date_posted')
 
-        return render(request, self.template_name, {'form': form, 'news': results, 'terms': terms})
+        return render(request, self.template_name, {
+            'form': form,
+            'news': results,
+            'terms': terms,
+            'search': True, # <-- silly signal for breadcrumb nav :(
+        })

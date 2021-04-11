@@ -5,12 +5,7 @@
 {% block content %}
     <h1>{% block title %}Old News - {{ year }}{% endblock %}</h1>
 
-    <p class="crumb">
-        <a href="/">The Massassi Temple</a> &raquo;
-        <a href="{% url 'news:oldnews' %}">Old News</a> &raquo;
-        <a href="{% url 'news:oldyear' year %}">{{ year }}</a>
-    </p>
-
+    {% include 'news/news_crumb.html' %}
 
     {% include 'news/disclaimer.html' %}
 
