@@ -1,0 +1,232 @@
+{% extends "outer.html" %}
+
+{% block content %}
+    <h1>{% block title %}Old News{% endblock %}</h1>
+
+    <h2>Preface</h2>
+
+    {% include 'news/disclaimer.html' %}
+
+    <h2>"Modern" system</h2>
+
+    <p>Starting June 4, 2000 we started putting our news into a database.
+        You can browse this news here:</p>
+
+    {% if years %}
+        <table class="news-oldnewstable">
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Posts</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for year in years %}
+                    <tr>
+                        <td><a href="{% url 'news:oldyear' year.the_year %}">{{ year.the_year }}</a></td>
+                        <td align="right">{{ year.the_count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    <h2>Old System</h2>
+
+    <p>Prior to June 2000 news was posted manually (editing HTML files).
+        This news is not easily searchable but you can read through it:</p>
+
+    <table class="news-oldnewstable">
+        <tr>
+            <td><a href="/static/oldnews/old1.htm">March 27 - May 3, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old2.htm">May 12 - May 28, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old3.htm">June 10 - June 16, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old4.htm">June 17 - July 5, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old5.htm">July 8 - August 10, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old6.htm">August 11 - September 7, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old7.htm">September 9 - October 4, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old8.htm">October 5 - October 28, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old9.htm">October 29 - November 2, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old10.htm">November 3 - November 16, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old11.htm">November 17 - December 6, 1998</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old12.htm">December 7, 1998 - January 2, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old13.htm">January 4 - January 27, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old14.htm">January 28 - February 8, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old15.htm">February 9 - February 19, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old16.htm">February 20 - March 13, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old17.htm">March 14 - March 28, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old18.htm">March 29 - April 26, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old19.htm">March 27 - May 10, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old20.htm">May 11 - May 15, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old21.htm">May 16 - June 3, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old22.htm">June 4 - June 18, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old23.htm">June 18 - July 11, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old24.htm">June 12 - July 21, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old25.htm">July 22 - August 3, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old26.htm">August 4 - August 8, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old27.htm">August 9 - August 13, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old28.htm">August 14 - August 22, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old29.htm">August 23 - September 2, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old30.htm">September 3 - September 9, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old31.htm">September 10 - September 21, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old32.htm">September 23 - October 6, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old33.shtml">October 7 - October 18, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old34.shtml">October 19 - November 5, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old35.shtml">November 6 - November 20, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old36.shtml">November 21 - November 27, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old37.shtml">November 28 - December 4, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old38.shtml">December 5 - December 11, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old39.shtml">December 12 - December 18, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old40.shtml">December 20 - December 25, 1999</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old41.shtml">December 26, 1999 - January 1, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old42.shtml">January 2 - January 8, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old43.shtml">January 9 - January 15, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old44.shtml">January 16 - January 22, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old45.shtml">January 23 - January 29, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old46.shtml">January 30 - February 5, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old47.shtml">February 6 - February 12, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old48.shtml">February 13 - February 19, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old49.shtml">February 20 - February 26, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old50.shtml">February 27 - March 4, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old51.shtml">March 5 - March 11, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old52.shtml">March 12 - March 18, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old53.shtml">March 19 - March 25, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old54.shtml">March 26 - April 1, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old55.shtml">April 2 - April 8, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old56.shtml">April 9 - April 15, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old57.shtml">April 16 - April 22, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old58.shtml">April 23 - April 29, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old59.shtml">April 30 - May 6, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old60.shtml">May 7 - May 12, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old61.shtml">May 14 - May 20, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old62.shtml">May 21 - May 27, 2000</a></td>
+        </tr>
+        <tr>
+            <td><a href="/static/oldnews/old63.shtml">May 28 - June 3, 2000</a></td>
+        </tr>
+    </table>
+
+{% endblock %}

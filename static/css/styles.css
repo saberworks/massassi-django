@@ -6,8 +6,8 @@
 }
 
 * {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 
 ul {
@@ -25,8 +25,8 @@ html {
 body {
     font-size: 1.1rem;
     font-family: verdana, arial, helvetica, sans-serif;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     background-color: #000000;
     color: lightgray;
     min-height: 100%;
@@ -110,7 +110,7 @@ h2::after {
 }
 
 #content p {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     margin-top: 10px;
 }
 
@@ -279,6 +279,23 @@ span.news-author {
 .news-oldnews {
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+.news-oldnewstable {
+    margin-left: 1em;
+}
+
+.news-oldnewstable td {
+    padding: 5px 1em 5px 1em;
+
+}
+.news-oldnewstable th {
+    background-color: #004000;
+    padding: 5px;
+}
+
+.news-oldnewstable tr:nth-child(odd) {
+    background-color: #001800;
 }
 
 .caption {

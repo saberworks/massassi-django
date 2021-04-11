@@ -76,22 +76,5 @@
 
     <p id="testimonial"><em>BTW: Massassi is the best web site in the history of the universe!</em> - Otterbine</p>
 
-    {% if news %}
-        {% for post in news %}
-            {% ifchanged post.news_date %}
-                <h1 class="news-date" style="margin-top: 0px;">{{ post.news_date }}</h1>
-            {% endifchanged %}
-
-            <div class="news-block">
-                <div class="news-headline">{{ post.headline|safe }} -
-                    <span class="news-author">{{ post.user.username }} @ {{ post.date_posted|date:"g:i A" }}</span>
-                </div>
-                <div class="news-body">{{ post.story|safe }}</div>
-            </div>
-        {% endfor %}
-
-        {% include "news_pager.html" %}
-    {% else %}
-        <p>No news is available.</p>
-    {% endif %}
+    {% include "news/news_list.html" %}
 {% endblock %}

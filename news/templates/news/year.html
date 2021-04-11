@@ -1,0 +1,30 @@
+{% extends "outer.html" %}
+
+{% load filters %}
+
+{% block content %}
+    <h1>{% block title %}Old News - {{ year }}{% endblock %}</h1>
+
+    {% include 'news/disclaimer.html' %}
+
+    {% if months %}
+        <table class="news-oldnewstable">
+            <thead>
+            <tr>
+                <th>Month</th>
+                <th>Posts</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for month in months %}
+                <tr>
+                    <td><a href="{% url 'news:oldmonth' year month.the_month %}">{{ month.the_month|month_name }}</a></td>
+                    <td align="right">{{ month.the_count }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}

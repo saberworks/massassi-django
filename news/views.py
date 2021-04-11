@@ -1,4 +1,8 @@
+from django.shortcuts import render
 from django.views import generic
+from django.db import connection
+
+from massassi.dbutil import dictfetchall
 
 from levels.models import Level
 from lotw.models import LotwHistory
@@ -27,6 +31,65 @@ class IndexView(generic.ListView):
 
         return context
 
-# TODO: MonthArchiveView (instead of simple pagination)
-class DetailView(generic.View):
-    template_name = 'sotd/sotd.html'
+class OldNewsView(generic.View):
+    template_name = 'news/old.html'
+
+    def get(self, request):
+        years = self.fetch_news_years()
+        return render(request, self.template_name, {'years': years})
+
+    @staticmethod
+    def fetch_news_years():
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT CAST(EXTRACT(YEAR FROM date_posted) AS INTEGER) AS the_year
+                     , COUNT(*) as the_count
+                  FROM news
+              GROUP BY the_year
+              ORDER BY the_year
+            """)
+
+            return dictfetchall(cursor)
+
+class YearView(generic.View):
+    template_name = 'news/year.html'
+
+    def get(self, request, year):
+        months = self.fetch_news_months(year)
+        return render(request, self.template_name, {'year': year, 'months': months})
+
+    @staticmethod
+    def fetch_news_months(year):
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT CAST(EXTRACT(MONTH FROM date_posted) AS INTEGER) AS the_month
+                     , COUNT(*) as the_count
+                  FROM news
+                  WHERE DATE_PART('year', date_posted) = %s
+              GROUP BY the_month
+              ORDER BY the_month
+            """, [year])
+
+            return dictfetchall(cursor)
+
+class MonthView(generic.ListView):
+    template_name = 'news/month.html'
+    context_object_name = 'news'
+
+    def get_queryset(self):
+        return News.objects\
+            .filter(
+                date_posted__year=self.kwargs['year'],
+                date_posted__month=self.kwargs['month']
+            ) \
+            .select_related('user') \
+            .extra(select={'news_date': 'DATE(date_posted)'}) \
+            .order_by('-date_posted')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+
+        context['year'] = self.kwargs['year']
+        context['month'] = self.kwargs['month']
+
+        return context

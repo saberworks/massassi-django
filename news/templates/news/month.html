@@ -1,0 +1,12 @@
+{% extends "outer.html" %}
+
+{% load filters %}
+
+{% block content %}
+    <h1>{% block title %}Old News - {{ month|month_name }} {{ year }}{% endblock %}</h1>
+    {% include 'news/news_crumb.html' %}
+
+    {% include 'news/disclaimer.html' %}
+
+    {% include 'news/news_list.html' %}
+{% endblock %}
