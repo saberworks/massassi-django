@@ -1,6 +1,6 @@
 {% extends "outer.html" %}
 
-{% load filters %}
+{% load news_filters %}
 
 {% block content %}
     <h1>{% block title %}Old News - {{ month|month_name }} {{ year }}{% endblock %}</h1>

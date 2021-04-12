@@ -9,6 +9,8 @@ SECRET_KEY = 'hs$kf9ho&fkofdhx-1hjc-2dad!fm_wpbi9viop5=x42#kzo)!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = ['*']
+
 # SECURITY WARNING: don't allow this many fields in production
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 

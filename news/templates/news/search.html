@@ -10,7 +10,9 @@
 
     {% include "news/search_form.html" %}
 
-    <p>Searched news <em>headline</em> and <em>story</em> for terms: {{ terms }}
+    {% if terms %}
+        <p>Searched news <em>headline</em> and <em>story</em> for terms: {{ terms }}
 
-    {% include "news/news_list.html" %}
+        {% include "news/news_list.html" %}
+    {% endif %}
 {% endblock %}
