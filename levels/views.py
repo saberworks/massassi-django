@@ -4,13 +4,13 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.views import generic, View
 
 from massassi.httputil import get_client_ip
-from .forms import CommentForm, RatingForm
+from .forms import CommentForm, RatingForm, SearchForm
 from .models import Level, LevelCategory, LevelComment, LevelRating
 
 logger = logging.getLogger(__name__)
@@ -55,7 +55,41 @@ class CategoryIndexView(generic.ListView):
             "other": "Other",
         }
 
+        context['form'] = SearchForm()
+
         return context
+
+
+class SearchView(generic.View):
+    template_name = 'levels/search.html'
+
+    def get(self, request):
+        form = SearchForm()
+        results = []
+        terms = None
+
+        # form was submitted???
+        if 'terms' in request.GET:
+            form = SearchForm(request.GET)
+
+            if form.is_valid():
+                terms = form.cleaned_data['terms']
+
+                results = Level.objects \
+                    .filter(
+                        Q(name__search=terms) |
+                        Q(description__search=terms) |
+                        Q(file__contains=terms) |
+                        Q(author__search=terms)
+                    ) \
+                    .select_related('category')
+
+        return render(request, self.template_name, {
+            'form': form,
+            'levels': results,
+            'terms': terms,
+            'search': True,  # <-- silly signal for breadcrumb nav :(
+        })
 
 #
 # CategoryDetailView lists all levels in the specified category ID

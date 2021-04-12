@@ -5,13 +5,24 @@
 {% block content %}
     <h1>{% block title %}Levels/Maps/Mods{% endblock %}</h1>
 
-    {% if categories %}
-        <ul>
-            <li><a href="/submit/">Submission Instructions</a></li>
-            <li><a href="howto.shtml">Level/Mod Installation Instructions</a></li>
-        </ul>
+    <ul>
+        <li><a href="/submit/">Submission Instructions</a></li>
+        <li><a href="howto.shtml">Level/Mod Installation Instructions</a></li>
+    </ul>
 
-        {% for game,game_title in games.items %}
+    <h2>Search</h2>
+
+    <p>The following form will search level name, level description, author
+        name, level file name, etc. It does not search comments!</p>
+
+    <div class="form-container-inline">
+        <form method="get" action="{% url 'levels:search' %}">
+        <input type="text" name="terms" required id="id_terms" placeholder="search terms">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if categories %}
+        {% for game, game_title in games.items %}
             <h2>{{ game_title }}</h2>
 
             <div class="level-category-grid-container">

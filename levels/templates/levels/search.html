@@ -1,0 +1,24 @@
+{% extends "outer.html" %}
+
+{% block content %}
+    <h1>{% block title %}Levels Search{% endblock %}</h1>
+
+    {% include "levels/level_crumb.html" %}
+
+    {% include "levels/search_form.html" %}
+
+    {% if terms %}
+        <p>Searched levels/maps/mods for terms: <em>{{ terms }}</em>
+
+        {% for level in levels %}
+            <div class="level-search-result">
+                <a href="{% url 'levels:level' level.pk %}">{{ level.category.name }}: {{ level.name|safe }}</a>
+                <div class="level-search-result-description">
+                    {{ level.description|safe|truncatechars:128 }}<br>
+                    <em>{{ level.created_at|date:"d M Y" }}</em>
+                </div>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+{% endblock %}

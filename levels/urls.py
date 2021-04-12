@@ -6,6 +6,7 @@ app_name = 'levels'
 
 urlpatterns = [
     path('', views.CategoryIndexView.as_view(), name='index'),
+    path('search/', views.SearchView.as_view(), name='search'),
     path('<path>/', views.CategoryDetailView.as_view(), name='category'),
     path('files/<pk>.shtml', views.LevelDetailView.as_view(), name='level'),
     path('download/<pk>/', views.LevelDownloadView.as_view(), name='level_download'),

@@ -97,6 +97,7 @@ a:hover   { text-decoration: underline; color: var(--link-hover-color); }
     margin-top: 20px;
     margin-bottom: 10px;
     position: relative;
+    font-size: 1.25em;
 }
 
 h2::after {
@@ -574,6 +575,19 @@ p.crumb {
     margin-bottom: 10px;
 }
 
+.level-search-result {
+    margin: 1em;
+}
+
+.level-search-result a {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.level-search-result-description {
+    margin-left: 1em;
+}
+
 /** DJANGO FORM CRAP **/
 
 .form-container {
@@ -597,6 +611,16 @@ p.crumb {
     margin-bottom: 10px;
     padding: 5px;
     display: block;
+    background-color: #1b1b1b;
+    color: lightgray;
+    border-radius: 5px;
+}
+
+.form-container-inline input {
+    border: 1px solid darkgray;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    padding: 5px;
     background-color: #1b1b1b;
     color: lightgray;
     border-radius: 5px;
