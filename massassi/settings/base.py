@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'levels.apps.LevelsConfig',
     'lotw.apps.LotwConfig',
     'news.apps.NewsConfig',
+    'holiday.apps.HolidayConfig',
     'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',
