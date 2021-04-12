@@ -91,7 +91,6 @@ class Command(OurMySqlImportBaseCommand):
         self.stdout.write("checking {}".format(options['newer_files_path']))
 
         year_pattern = re.compile(r'(\d\d\d\d)$')
-        author_pattern = re.compile(r'^([^-]+)-*\.')
 
         for dirpath, dirnames, files in os.walk(options['newer_files_path']):
             self.stdout.write(f'Found directory: {dirpath}')
@@ -104,8 +103,6 @@ class Command(OurMySqlImportBaseCommand):
                 continue
 
             year = year_result.group(1)
-
-            # text_after = re.sub(regex_search_term, regex_replacement, text_before)
 
             for file_name in files:
                 self.stdout.write("Processing: {}".format(file_name))
