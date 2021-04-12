@@ -1,0 +1,28 @@
+{% extends "outer.html" %}
+
+{% block content %}
+    <h1>{% block title %}Holiday Logo Contest - {{ year }}{% endblock %}</h1>
+
+    {% include "holiday/holiday_crumb.html" %}
+
+    {% if logos %}
+        <table class="news-oldnewstable">
+            <thead>
+            <tr>
+                <th>Logo</th>
+                <th>Author</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for logo in logos %}
+                <tr>
+                    <td><img src="{{ logo.logo.url }}"></td>
+                    <td>{{ logo.author }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}

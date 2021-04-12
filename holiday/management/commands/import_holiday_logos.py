@@ -62,8 +62,8 @@ class Command(OurMySqlImportBaseCommand):
             holiday_logo = HolidayLogo(
                 author=author,
                 year=year,
-                is_enabled=row['enabled'],
-                is_in_rotation=row['rotation'],
+                is_enabled=True,
+                is_in_rotation=True,
                 created_at=row['date'],
             )
 
