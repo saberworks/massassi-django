@@ -1,4 +1,8 @@
+from pprint import pprint
+
+from django.core import management
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import connection
 from django.utils import timezone
 
 from users.models import User
@@ -9,6 +13,23 @@ class Command(OurMySqlImportBaseCommand):
 
     def handle(self, *args, **kwargs):
         self.import_users(*args, **kwargs)
+
+        # Reset user sequence... blargh
+        # This results in a huge blob of SQL that contains BEGIN, a bunch
+        # of separate sql commands, and then COMMIT.  cursor.execute()
+        # doesn't seem to be able to handle multiple commands.  Will need
+        # to split it up.
+        sql = management.call_command('sqlsequencereset', 'users')
+
+        commands = sql.split(';')
+        commands.pop(0) # remove first element ("BEGIN")
+        commands.pop()  # remove last element ("COMMIT")
+
+        with connection.cursor() as cursor:
+            cursor.execute('BEGIN')
+            for command in commands:
+                cursor.execute(command)
+
         self.import_staff(*args, **kwargs)
 
     def import_users(self, *args, **options):

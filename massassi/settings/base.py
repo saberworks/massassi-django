@@ -129,3 +129,13 @@ LOGGING = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+
+# S3 INFORMATION
+DEFAULT_FILE_STORAGE = 'massassi.storages.CustomS3Boto3Storage'
+
+AWS_S3_ENDPOINT_URL = 'https://massassi.us-east-1.linodeobjects.com'
+AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'massassi'
+AWS_DEFAULT_ACL = 'public-read'
+AWS_QUERYSTRING_AUTH = False
