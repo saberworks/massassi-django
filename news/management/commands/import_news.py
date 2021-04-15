@@ -48,7 +48,7 @@ class Command(OurMySqlImportBaseCommand):
                 date_posted=date_posted,
             )
 
-            post.save()
+            post.save(force_insert=True)
 
             self.stdout.write("Done with post {}".format(row['post_id']))
 

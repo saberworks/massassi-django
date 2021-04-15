@@ -33,7 +33,7 @@ class Command(OurMySqlImportBaseCommand):
                 game=game,
             )
 
-            cat.save()
+            cat.save(force_insert=True)
 
             self.stdout.write("Processed {}".format(row['category_name']))
 

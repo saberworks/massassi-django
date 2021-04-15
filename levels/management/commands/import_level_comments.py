@@ -49,7 +49,7 @@ class Command(OurMySqlImportBaseCommand):
                 last_modified_by=user,
             )
 
-            comment.save()
+            comment.save(force_insert=True)
 
             self.stdout.write("Processed {}".format(row['comment_id']))
 

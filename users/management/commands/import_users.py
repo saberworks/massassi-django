@@ -37,7 +37,7 @@ class Command(OurMySqlImportBaseCommand):
                 is_active=True,
             )
 
-            user.save()
+            user.save(force_insert=True)
 
             self.stdout.write("Processed {}".format(row['user_name']))
 

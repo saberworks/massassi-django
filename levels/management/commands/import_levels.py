@@ -87,7 +87,7 @@ class Command(OurMySqlImportBaseCommand):
             if screenshot_2:
                 level.screenshot_2.save("{}_{}.jpg".format(level_id, 2), screenshot_2, save=False)
 
-            level.save()
+            level.save(force_insert=True)
 
         cursor.close()
         cnx.close()

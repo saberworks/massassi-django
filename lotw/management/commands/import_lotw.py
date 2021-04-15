@@ -35,7 +35,7 @@ class Command(OurMySqlImportBaseCommand):
                 lotw_time=row['lotw_time'],
             )
 
-            lotw.save()
+            lotw.save(force_insert=True)
 
             self.stdout.write("Done with lotw {}".format(row['lotw_time']))
 
@@ -74,7 +74,7 @@ class Command(OurMySqlImportBaseCommand):
                 ip=ip,
             )
 
-            vote.save()
+            vote.save(force_insert=True)
 
             self.stdout.write("Done with lotw {}".format(row['vote_id']))
 
