@@ -40,7 +40,7 @@ class Command(OurMySqlImportBaseCommand):
                 last_modified_by=user,
             )
 
-            rating.save()
+            rating.save(force_insert=True)
 
             self.stdout.write("Done with rating {}".format(row['rating_id']))
 
