@@ -23,7 +23,7 @@ class IndexView(generic.View):
                      , COUNT(*) as the_count
                   FROM holiday_logos
               GROUP BY the_year
-              ORDER BY the_year
+              ORDER BY the_year DESC
             """)
 
             return dictfetchall(cursor)

@@ -1,4 +1,8 @@
 {% if news %}
+    {% if page_obj.number > 1 and paginator %}
+        {% include "news/news_pager.html" %}
+    {% endif %}
+
     {% for post in news %}
         {% ifchanged post.news_date %}
             <h1 class="news-date" style="margin-top: 0px;">{{ post.news_date }}</h1>
@@ -13,7 +17,7 @@
     {% endfor %}
 
     {% if paginator %}
-        {% include "news_pager.html" %}
+        {% include "news/news_pager.html" %}
     {% endif %}
 {% else %}
     <p>No news found.</p>

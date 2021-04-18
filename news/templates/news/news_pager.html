@@ -1,0 +1,19 @@
+<div class="pagination-container">
+    <div class="paging-prev-links">
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.paginator.num_pages }}">&laquo; oldest</a>
+            <a href="?page={{ page_obj.next_page_number }}">&lsaquo; older</a>
+        {% endif %}
+    </div>
+
+    <div class="paging-current">
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    </div>
+
+    <div class="paging-next-links">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">newer &rsaquo;</a>
+            <a href="?page=1">newest &raquo;</a>
+        {% endif %}
+    </div>
+</div>
