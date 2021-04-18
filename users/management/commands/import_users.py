@@ -1,9 +1,7 @@
 from pprint import pprint
 
-from django.core import management
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import connection
 from django.utils import timezone
+from django.utils.datetime_safe import datetime
 
 from users.models import User
 from massassi.util import OurMySqlImportBaseCommand
@@ -23,8 +21,16 @@ class Command(OurMySqlImportBaseCommand):
 
         cursor.execute(query)
 
+        current_tz = timezone.get_current_timezone()
+
         for row in cursor.fetchall():
-            reg_date = row['registration_date'] if row['registration_date'] else None
+            self.stdout.write("Processing {}...".format(row['user_name']), ending='')
+
+            reg_date = None
+
+            if row['registration_date'] is not None:
+                reg_date = datetime.strptime(str(row['registration_date']), "%Y-%m-%d %H:%M:%S")
+                reg_date = current_tz.localize(reg_date)
 
             user = User(
                 id=row['user_id'],
@@ -39,7 +45,7 @@ class Command(OurMySqlImportBaseCommand):
 
             user.save(force_insert=True)
 
-            self.stdout.write("Processed {}".format(row['user_name']))
+            self.stdout.write("Done")
 
         cursor.close()
         cnx.close()

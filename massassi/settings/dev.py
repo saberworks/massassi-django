@@ -45,7 +45,7 @@ LOGGING = {
             'level': 'WARNING',
         },
         'django.db.backends': {
-            'level': 'DEBUG',
+            'level': 'WARNING', # change to debug to see queries
             'handlers': ['console'],
         }
     },

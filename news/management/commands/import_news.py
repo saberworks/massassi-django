@@ -1,3 +1,5 @@
+from functools import lru_cache
+
 import pytz
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.datetime_safe import datetime
@@ -29,7 +31,7 @@ class Command(OurMySqlImportBaseCommand):
         cursor.execute(query)
 
         for row in cursor.fetchall():
-            self.stdout.write("Processing post {}".format(row['headline']))
+            self.stdout.write("Processing post {}...".format(row['headline']), ending='')
 
             user = get_staff_user(row['user_name'])
             if not user:
@@ -50,21 +52,17 @@ class Command(OurMySqlImportBaseCommand):
 
             post.save(force_insert=True)
 
-            self.stdout.write("Done with post {}".format(row['post_id']))
+            self.stdout.write("Done")
 
         cursor.close()
         cnx.close()
 
 
-user_cache = {}
-
 # Note that all users and staff members must be imported first using:
 #   python manage.py import_users
+@lru_cache(maxsize=None)
 def get_staff_user(staff_user_name):
-    if staff_user_name not in user_cache:
-        try:
-            user_cache[staff_user_name] = User.objects.get(username=staff_user_name)
-        except ObjectDoesNotExist:
-            user_cache[staff_user_name] = None
-
-    return user_cache[staff_user_name]
+    try:
+        return User.objects.get(username=staff_user_name)
+    except ObjectDoesNotExist:
+        return None

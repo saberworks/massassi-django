@@ -1,10 +1,6 @@
-from django.core.exceptions import ObjectDoesNotExist
-
+from massassi.importutil import get_level, get_user
 from massassi.util import OurMySqlImportBaseCommand
-
-from levels.models import Level
 from lotw.models import LotwHistory, LotwVote
-from users.models import User
 
 class Command(OurMySqlImportBaseCommand):
     help = 'Imports lotw & votes from mysql database'
@@ -23,7 +19,7 @@ class Command(OurMySqlImportBaseCommand):
         cursor.execute(query)
 
         for row in cursor.fetchall():
-            self.stdout.write("Processing lotw {}".format(row['lotw_time']))
+            self.stdout.write("Processing lotw {}...".format(row['lotw_time']), ending='')
 
             level = get_level(row['level_id'])
             if not level:
@@ -37,7 +33,7 @@ class Command(OurMySqlImportBaseCommand):
 
             lotw.save(force_insert=True)
 
-            self.stdout.write("Done with lotw {}".format(row['lotw_time']))
+            self.stdout.write("Done")
 
         cursor.close()
         cnx.close()
@@ -80,27 +76,3 @@ class Command(OurMySqlImportBaseCommand):
 
         cursor.close()
         cnx.close()
-
-
-level_cache = {}
-
-def get_level(level_id):
-    if level_id not in level_cache:
-        try:
-            level_cache[level_id] = Level.objects.get(pk=level_id)
-        except ObjectDoesNotExist:
-            level_cache[level_id] = None
-
-    return level_cache[level_id]
-
-
-user_cache = {}
-
-def get_user(user_id):
-    if user_id not in user_cache:
-        try:
-            user_cache[user_id] = User.objects.get(pk=user_id)
-        except ObjectDoesNotExist:
-            user_cache[user_id] = None
-
-    return user_cache[user_id]

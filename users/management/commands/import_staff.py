@@ -1,8 +1,6 @@
 from pprint import pprint
 
-from django.core import management
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import connection
 from django.utils import timezone
 
 from users.models import User
