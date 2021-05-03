@@ -6,13 +6,13 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', include('news.urls')),
     path('sotd/', include('sotd.urls')),
     path('admin/', admin.site.urls),
     path('account/', include('users.urls')),
     path('levels/', include('levels.urls')),
     path('lotw/', include('lotw.urls')),
-    path('news/', include('news.urls')),
+    # path('news/', include('news.urls')),
     path('holiday/', include('holiday.urls')),
 ]
 

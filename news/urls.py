@@ -6,8 +6,8 @@ app_name = 'news'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('old/', views.OldNewsView.as_view(), name='oldnews'),
-    path('old/search/', views.SearchView.as_view(), name='oldsearch'),
-    path('old/<int:year>/', views.YearView.as_view(), name='oldyear'),
-    path('old/<int:year>/<int:month>/', views.MonthView.as_view(), name='oldmonth'),
+    path('news_archive.html', views.OldNewsView.as_view(), name='oldnews'),
+    path('news_search.html', views.SearchView.as_view(), name='oldsearch'),
+    path('news_archive_<int:year>.html', views.YearView.as_view(), name='oldyear'),
+    path('news_archive_<int:year>-<int:month>.html', views.MonthView.as_view(), name='oldmonth'),
 ]
