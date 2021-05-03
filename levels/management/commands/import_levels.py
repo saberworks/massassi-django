@@ -1,7 +1,10 @@
 import os
+from pprint import pprint
+
 import pytz
 import re
 
+from django.core.files.base import ContentFile
 from django.utils.datetime_safe import datetime
 from django.core.files import File
 
@@ -87,7 +90,8 @@ class Command(OurMySqlImportBaseCommand):
             if screenshot_2:
                 level.screenshot_2.save("{}_{}.jpg".format(level_id, 2), screenshot_2, save=False)
 
-            level.save(force_insert=True)
+            level.save()
+            file.close()
 
         cursor.close()
         cnx.close()
@@ -110,7 +114,7 @@ class Command(OurMySqlImportBaseCommand):
             return None
 
         fh = open(file, 'rb')
-        return File(fh)
+        return File(fh, name=file_name)
 
 
 def get_category_hash(cnx):

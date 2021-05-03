@@ -3,9 +3,6 @@ from .base import *
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'hs$kf9ho&fkofdhx-1hjc-2dad!fm_wpbi9viop5=x42#kzo)!'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -64,5 +61,3 @@ LOGGING = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = '/home/brian/code/massassi-django/emails'  # change this to a proper location
-
-# MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]

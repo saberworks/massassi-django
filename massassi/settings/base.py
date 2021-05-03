@@ -16,6 +16,9 @@ def get_env_variable(var_name):
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
+
 DEBUG = False
 
 ALLOWED_HOSTS = []
@@ -132,12 +135,10 @@ AUTH_USER_MODEL = 'users.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# # S3 INFORMATION
-# DEFAULT_FILE_STORAGE = 'massassi.storages.CustomS3Boto3Storage'
-#
-# AWS_S3_ENDPOINT_URL = 'https://massassi.us-east-1.linodeobjects.com'
-# AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = 'massassi'
-# AWS_DEFAULT_ACL = 'public-read'
-# AWS_QUERYSTRING_AUTH = False
+DEFAULT_FILE_STORAGE = "django_s3_storage.storage.S3Storage"
+AWS_REGION = "us-west-2"
+AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
+AWS_S3_BUCKET_NAME = "massassi-media-storage"
+AWS_S3_BUCKET_AUTH = False
+AWS_S3_FILE_OVERWRITE = True
