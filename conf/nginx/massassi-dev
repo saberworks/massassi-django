@@ -1,0 +1,33 @@
+server {
+    listen 80;
+    server_name localhost;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /static/favicon.ico { access_log off; log_not_found off; }
+
+    location ~ ^/(static|media)/ {
+        root /home/brian/code/m2/massassi-django;
+    }
+
+    location ~ ^/(sotd|admin|account|levels|lotw|holiday) {
+        #include proxy_params;
+        proxy_pass http://localhost:8000;
+    }
+
+    # annoying root-level news stuff
+    location ~ ^/(news_archive.html|news_search.html|news_archive_.*.html) {
+        proxy_pass http://localhost:8000;
+    }
+
+    # exact '/' pass to "news" app
+    location = / {
+        proxy_pass http://localhost:8000;
+    }
+
+    # catch-all, everything else
+    location / {
+        root /home/brian/code/massassi/output;
+    }
+}
+
+
