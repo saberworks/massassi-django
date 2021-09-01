@@ -2,12 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="utf-8"/>
-        <!-- <link rel="stylesheet" type="text/css" href="/static/css/reset.css"> -->
         <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
         <link rel="stylesheet" type="text/css" media="screen and (max-width: 1024px)" href="/static/css/smallstyles.css">
 
         <title>
-            {% block title %}Home{% endblock %} - The Massassi Temple
+            {% block title %}
+                {% if title %}{{title}}{% else %}Home{% endif %}
+            {% endblock %} - The Massassi Temple
         </title>
 
         <meta name="description" content="{{ description }}">
@@ -80,7 +81,10 @@
                     <p class="note">Note: This is an old page that has been updated/formatted, you can view the original <a href="{{ original }}">here</a>.
                 {% endif %}
 
-                {% block content %}{% endblock %}
+                {% block content %}
+                    {% if title %}<h1>{{ title }}</h1>{% endif %}
+                    {{ content }}
+                {% endblock %}
             </div> <!-- end "content" -->
 
             <div id="footer">
