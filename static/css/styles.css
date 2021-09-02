@@ -309,18 +309,27 @@ span.news-author {
  */
 
 p.tutorial-list-item {
-    padding-bottom: 10px;
+    margin-bottom: 0px !important;
 }
 
-span.tutorial-author {
+p.tutorial-author {
     font-weight: normal;
     color: gray;
+    margin: 0px !important;
+    margin-left: 25px !important;
 }
 
-span.tutorial-date {
+p.tutorial-date {
     font-weight: normal;
     font-size: .75em;
     color: gray;
+}
+
+p.tutorial-description {
+    font-weight: normal;
+    margin: 0px !important;
+    margin-left: 25px !important;
+    margin-bottom: 15px !important;
 }
 
 div.tutorial-table table {
