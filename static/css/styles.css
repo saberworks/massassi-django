@@ -16,6 +16,12 @@ ul {
 
 ol {
     padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 html {
@@ -24,11 +30,9 @@ html {
 
 body {
     font-size: 1.1rem;
-    font-family: verdana, arial, helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
+    font-family: helvetica, arial, sans-serif;
     background-color: #000000;
-    color: lightgray;
+    color: silver;
     min-height: 100%;
     background-image: url("/static/images/bground.gif");
     background-repeat: repeat-y;
@@ -49,8 +53,6 @@ a:hover   { text-decoration: underline; color: var(--link-hover-color); }
     grid-template-rows: auto;
     grid-column-gap: 0px;
     min-height: 100%;
-    margin: 0px;
-    padding: 0px;
     width: 100%;
 }
 
@@ -88,13 +90,12 @@ a:hover   { text-decoration: underline; color: var(--link-hover-color); }
 #content h1 {
     font-weight: bold;
     font-size: 1.5em;
-    margin-top: 20px;
     margin-bottom: 10px;
     border-bottom: 3px solid #808080;
 }
 
 #content h2 {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 10px;
     position: relative;
     font-size: 1.25em;
@@ -178,7 +179,6 @@ div#logo {
     grid-template-rows: auto;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
-    padding-bottom: 10px;
     max-width: 100%;
 }
 
@@ -207,13 +207,16 @@ div#logo {
     display: block;
     font-weight: bold;
     background: url("https://www.massassi.net/cellbg.gif");
-    padding: 2px;
+    margin-bottom: 2px;
     text-align: center;
+    padding-top: 4px;
+    color: silver;
 }
 
 .feature-title-small {
     font-weight: bold;
     padding: 2px;
+    color: silver;
 }
 
 #feature-lotw {
@@ -238,14 +241,15 @@ p#testimonial {
 }
 
 h1.news-date {
-    display: block;
-    border-style: groove;
+    border: 1px solid gray !important;
     background: url("https://www.massassi.net/cellbg.gif") repeat-x;
     background-size: auto 100%;
-    padding: 3px;
+    padding: 5px;
+    padding-bottom: 0px;
     font-weight: bold;
     text-align: center;
     font-size: 1.25em;
+    color: silver;
 }
 
 .news-block {
@@ -308,32 +312,25 @@ span.news-author {
  * Tutorials
  */
 
-p.tutorial-list-item {
-    margin-bottom: 0px !important;
+.tutorial-list-item {
+    padding: 7px;
+    border-bottom: 1px solid #333333;
 }
 
-p.tutorial-author {
+.tutorial-author {
     font-weight: normal;
     color: gray;
-    margin: 0px !important;
-    margin-left: 25px !important;
 }
 
-p.tutorial-date {
+.tutorial-date {
     font-weight: normal;
-    font-size: .75em;
+    font-size: .85em;
     color: gray;
-}
-
-p.tutorial-description {
-    font-weight: normal;
-    margin: 0px !important;
-    margin-left: 25px !important;
-    margin-bottom: 15px !important;
 }
 
 div.tutorial-table table {
     border-collapse: collapse;
+    margin-bottom: 10px;
 }
 
 div.tutorial-table td {
@@ -355,6 +352,13 @@ div.tutorial-table th {
     background-color: #202020;
 }
 
+div.tutorial-table-bordered td,
+div.tutorial-table-bordered th,
+div.tutorial-table-bordered table {
+    border: 1px solid #333333;
+    margin-bottom: 10px;
+}
+
 .tutorial-blue {
     color: deepskyblue;
 }
@@ -364,7 +368,7 @@ div.tutorial-table th {
 }
 
 .note {
-    border: 1px solid #101010;
+    border: 1px solid #333333;
     margin: 1em;
     padding: 1em;
 }
@@ -512,6 +516,8 @@ p.sotd-list-description {
 
 p.crumb {
     padding: 5px;
+    margin: 0;
+    padding-top: 7px;
     background-color: #003000;
 }
 
