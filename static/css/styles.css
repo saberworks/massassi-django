@@ -398,6 +398,10 @@ div.tutorial-table-bordered table {
     color: red;
 }
 
+.tutorial-orange {
+    color: orange;
+}
+
 .note {
     border: 1px solid #333333;
     margin: 1em;
@@ -416,6 +420,7 @@ pre {
 
 code {
     color: #808080;
+    font-size: 1em;
 }
 
 div.mat-category-list {
