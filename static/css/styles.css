@@ -56,6 +56,37 @@ a:hover   { text-decoration: underline; color: var(--link-hover-color); }
     width: 100%;
 }
 
+/**
+ * Hide page nav altogether when printing.
+ *
+ * Also turn off the grid, just let the content / footer divs print
+ * one after the other.
+ */
+@media print {
+    body {
+        margin: 0;
+        color: #000;
+        background-color: #fff;
+    }
+
+    #page-nav {
+        display: none;
+    }
+
+    #layout-grid {
+        display: block;
+        width: 100%;
+    }
+
+    p {
+        page-break-inside: avoid;
+    }
+
+    p.note {
+        display: none;
+    }
+}
+
 /* Hide Hamburger */
 #page-nav label, #hamburger {
     display: none;
@@ -373,11 +404,18 @@ div.tutorial-table-bordered table {
     padding: 1em;
 }
 
-code {
+code.old {
     color: #808080;
-    font-size: 1.2em;
     margin-left: 20px;
     display: block;
+}
+
+pre {
+    font-size: .75em;
+}
+
+code {
+    color: #808080;
 }
 
 div.mat-category-list {

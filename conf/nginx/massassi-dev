@@ -5,8 +5,12 @@ server {
     error_page 404 /404.html;
     error_page 500 /500.html;
 
-    location = /favicon.ico { access_log off; log_not_found off; }
-    location = /static/favicon.ico { access_log off; log_not_found off; }
+    #location = /favicon.ico { access_log off; log_not_found off; }
+    #location = /static/favicon.ico { access_log off; log_not_found off; }
+
+    location ~ tutorial_print.shtml$ {
+        alias /home/brian/code/massassi.net/output/tutorial_print.html;
+    }
 
     location ~ ^/(static|media)/ {
         root /home/brian/code/m2/massassi-django;
@@ -29,7 +33,7 @@ server {
 
     # catch-all, everything else
     location / {
-        root /home/brian/code/massassi/output;
+        root /home/brian/code/massassi.net/output;
     }
 }
 
