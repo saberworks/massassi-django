@@ -374,13 +374,14 @@ div.tutorial-table td {
     border: 1px solid #000000;
 }
 
-div.tutorial-table tr:nth-child(even) {
+div.tutorial-table tr:nth-child(odd) {
     background-color: #101010;
 }
 
 div.tutorial-table th {
     font-size: 1em;
     background-color: #202020;
+    padding: 10px;
 }
 
 div.tutorial-table-bordered td,
@@ -400,6 +401,10 @@ div.tutorial-table-bordered table {
 
 .tutorial-orange {
     color: orange;
+}
+
+.tutorial-gray {
+    color: gray;
 }
 
 .note {
