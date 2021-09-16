@@ -384,6 +384,10 @@ div.tutorial-table th {
     padding: 10px;
 }
 
+div.no-headers th {
+    display: none;
+}
+
 div.tutorial-table-bordered td,
 div.tutorial-table-bordered th,
 div.tutorial-table-bordered table {
