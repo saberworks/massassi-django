@@ -5,11 +5,20 @@ server {
     error_page 404 /404.html;
     error_page 500 /500.html;
 
-    #location = /favicon.ico { access_log off; log_not_found off; }
-    #location = /static/favicon.ico { access_log off; log_not_found off; }
-
     location ~ tutorial_print.shtml$ {
         alias /home/brian/code/massassi.net/output/tutorial_print.html;
+    }
+
+    location ~ /levels/files/screenshots {
+        proxy_pass http://localhost:8000;
+    }
+    
+    location ~ /levels/files/thumbnails {
+        proxy_pass http://localhost:8000;
+    }
+
+    location ~ /cgi-bin/screenshot.cgi {
+        proxy_pass http://localhost:8000;
     }
 
     location ~ ^/(static|media)/ {
@@ -17,7 +26,6 @@ server {
     }
 
     location ~ ^/(sotd|admin|account|levels|lotw|holiday) {
-        #include proxy_params;
         proxy_pass http://localhost:8000;
     }
 
@@ -36,5 +44,3 @@ server {
         root /home/brian/code/massassi.net/output;
     }
 }
-
-

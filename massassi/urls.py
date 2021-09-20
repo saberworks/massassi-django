@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from . import views
+from screenshots import views as screenshots_views
 
 urlpatterns = [
     path('', include('news.urls')),
@@ -12,8 +12,10 @@ urlpatterns = [
     path('account/', include('users.urls')),
     path('levels/', include('levels.urls')),
     path('lotw/', include('lotw.urls')),
-    # path('news/', include('news.urls')),
     path('holiday/', include('holiday.urls')),
+    path('cgi-bin/screenshot.cgi', screenshots_views.old_cgi_screenshot_view),
+    path('levels/files/thumbnails/<int:level_id>_<int:num>.<str:ext>', screenshots_views.thumbnail_view),
+    path('levels/files/screenshots/<int:level_id>_<int:num>.<str:ext>', screenshots_views.screenshot_view),
 ]
 
 # Text to put at the end of each page's <title>.
