@@ -705,7 +705,7 @@ select {
     background-color: #1b1b1b;
     color: lightgray;
     border-radius: 2px;
-    width: 5ch;
+    width: 6ch;
 }
 
 .form-container .field-error {

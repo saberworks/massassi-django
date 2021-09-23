@@ -60,4 +60,4 @@ LOGGING = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = '/home/brian/code/massassi-django/emails'  # change this to a proper location
+EMAIL_FILE_PATH = '/home/brian/code/m2/emails'  # change this to a proper location
