@@ -99,7 +99,7 @@ USE_TZ = True
 
 # media files (uploaded images???)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = '/massassi-user-data/media/'
 
 # css, main site images, etc.
 STATIC_URL = '/static/'
@@ -135,10 +135,3 @@ AUTH_USER_MODEL = 'users.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEFAULT_FILE_STORAGE = "django_s3_storage.storage.S3Storage"
-AWS_REGION = "us-west-2"
-AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
-AWS_S3_BUCKET_NAME = "massassi-media-storage"
-AWS_S3_BUCKET_AUTH = False
-AWS_S3_FILE_OVERWRITE = True

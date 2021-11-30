@@ -20,13 +20,9 @@ DATABASES = {
         'NAME': 'massassi',
         'USER': 'massassi',
         'PASSWORD': get_env_variable('MASSASSI_DATABASE_PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': get_env_variable('MASSASSI_DATABASE_HOST'),
         'PORT': '',
     },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
 }
 
 LOGGING = {
