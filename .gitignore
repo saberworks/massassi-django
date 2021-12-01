@@ -12,4 +12,5 @@ db.sqlite3
 
 .vscode
 
-bin
+env
+database_info.sh

@@ -40,7 +40,7 @@ class Command(OurMySqlImportBaseCommand):
 
     def import_lotw_votes(self, *args, **options):
         cnx = self.get_connection(options)
-
+        timezone = get_current_timezone();
         cursor = cnx.cursor(dictionary=True)
 
         query = "SELECT * FROM lotw_votes ORDER BY vote_id"
@@ -62,11 +62,13 @@ class Command(OurMySqlImportBaseCommand):
 
             ip = row['vote_ip'] if row['vote_ip'] else '0.0.0.0'
 
+            voted_at_with_tz = make_aware(row['vote_time'], timezone, is_dst=False)
+
             vote = LotwVote(
                 id=row['vote_id'],
                 user=user,
                 level=level,
-                voted_at=row['vote_time'],
+                voted_at=voted_at_with_tz,
                 ip=ip,
             )
 

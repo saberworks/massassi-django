@@ -13,7 +13,7 @@ EXPOSE 8000
 RUN apt update \
     && apt -y upgrade \
     && apt -y install libpq-dev build-essential python3-virtualenv \
-                      virtualenv postgresql-client
+                      virtualenv postgresql-client vim
 
 RUN mkdir /massassi-user-data && chown massassi:massassi /massassi-user-data
 
