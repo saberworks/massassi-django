@@ -1,3 +1,5 @@
+from django.utils.timezone import get_current_timezone, make_aware
+
 from massassi.importutil import get_level, get_user
 from massassi.util import OurMySqlImportBaseCommand
 from lotw.models import LotwHistory, LotwVote
@@ -11,7 +13,7 @@ class Command(OurMySqlImportBaseCommand):
 
     def import_lotw_history(self, *args, **options):
         cnx = self.get_connection(options)
-
+        timezone = get_current_timezone();
         cursor = cnx.cursor(dictionary=True)
 
         query = "SELECT * FROM lotw_history ORDER BY lotw_time"
@@ -26,6 +28,7 @@ class Command(OurMySqlImportBaseCommand):
                 self.stderr.write("unable to find level {}".format(row['level_id']))
                 continue
 
+            lotw_time = make_aware(row['lotw_time'], timezone, is_dst=False)
             lotw = LotwHistory(
                 level=level,
                 lotw_time=row['lotw_time'],
