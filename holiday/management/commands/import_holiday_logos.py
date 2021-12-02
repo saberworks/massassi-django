@@ -41,7 +41,6 @@ class Command(OurMySqlImportBaseCommand):
             SELECT * FROM hlclogos l
               JOIN hlcauthors a ON l.authorid = a.id
           ORDER BY l.id;
-
         """
 
         cursor.execute(query)
@@ -64,7 +63,6 @@ class Command(OurMySqlImportBaseCommand):
                 year=year,
                 is_enabled=True,
                 is_in_rotation=True,
-                created_at=row['date'],
             )
 
             holiday_logo.logo.save(filename, logo)
