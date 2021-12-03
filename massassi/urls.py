@@ -33,4 +33,10 @@ admin.site.index_title = 'Main'
 #
 ## Serve static files during development
 #if settings.DEBUG:
-#    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+#    document_root=settings.STATIC_ROOT) <-- this line is messed up, wtf?
+
+# Serve static files always.  This will generally only serve admin files.  
+# nginx should serve all the static files belonging to massassi, but these 
+# static files are provided by django and this seems the easiest way.
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+

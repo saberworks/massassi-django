@@ -103,10 +103,7 @@ MEDIA_ROOT = '/massassi-user-data/media/'
 
 # css, main site images, etc.
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATIC_ROOT = '/app/massassi-django/static/';
 
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'

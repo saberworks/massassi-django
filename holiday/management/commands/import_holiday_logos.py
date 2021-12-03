@@ -102,6 +102,13 @@ class Command(OurMySqlImportBaseCommand):
 
             year = year_result.group(1)
 
+            # getting duplicate imports from the older stuff, just grab the 
+            # newer stuff because it seems like some logos were removed on copy 
+            # from older years, maybe someone didn't like them? or they weren't 
+            # marked "in_rotation" or something?
+            if int(year) < 2007:
+                continue
+
             for file_name in files:
                 self.stdout.write("Processing: {}".format(file_name))
 

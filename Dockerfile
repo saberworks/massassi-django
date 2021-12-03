@@ -23,13 +23,19 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
-
 ENV DJANGO_SETTINGS_MODULE massassi.settings.dev
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+RUN mkdir /app/massassi-django/static && chown massassi:massassi /app/massassi-django/static
 
 COPY . ./massassi-django
 
 RUN chown -R massassi:massassi /app/massassi-django/massassi-django
 
 USER ${APP_USER}:${APP_USER}
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["gunicorn", "--chdir", "/app/massassi-django/massassi-django", "massassi.wsgi:application", "--bind", "0.0.0.0:8000"]
