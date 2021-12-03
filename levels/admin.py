@@ -11,6 +11,7 @@ admin.site.register(LevelCategory, LevelCategoryAdmin)
 
 class LevelAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'author')
+    search_fields = ('id', 'name', 'author')
 
 
 admin.site.register(Level, LevelAdmin)
