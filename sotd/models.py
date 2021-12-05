@@ -6,8 +6,8 @@ from massassi.models import MassassiBaseModel
 
 
 class SotD(MassassiBaseModel):
-    sotd_date = models.DateField(null=False)
-    admin_id = models.IntegerField(null=False) # TODO change this to a `user` field
+    sotd_date = models.DateField(null=False, unique=True)
+    user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     title = models.CharField(max_length=64, null=False)
     author = models.CharField(max_length=64, null=False)
     author_email = models.EmailField(null=True)

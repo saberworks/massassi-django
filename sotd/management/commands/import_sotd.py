@@ -1,9 +1,13 @@
+from functools import lru_cache
 import os
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
 
-from sotd.models import SotD
 from massassi.util import OurMySqlImportBaseCommand
+
+from users.models import User
+from sotd.models import SotD
 
 
 class Command(OurMySqlImportBaseCommand):
@@ -19,7 +23,12 @@ class Command(OurMySqlImportBaseCommand):
 
         cursor = cnx.cursor(dictionary=True)
 
-        query = "SELECT * FROM sotd ORDER BY sotd_date"
+        query = """
+            SELECT *
+              FROM sotd
+              JOIN massassi_staff ms on sotd.admin_id = ms.user_id
+            ORDER BY sotd_date
+        """
 
         cursor.execute(query)
 
@@ -37,9 +46,14 @@ class Command(OurMySqlImportBaseCommand):
             # original database had some quotes with backslashes ahead of them... grrr
             description = row['description'].replace("\\", "")
 
+            user = get_staff_user(row['user_name'])
+            if not user:
+                self.stderr.write("unable to find user {}: {}".format(row['user_id'], row['user_name']))
+                continue
+
             sotd = SotD(
                 sotd_date=row['sotd_date'],
-                admin_id=row['admin_id'],
+                user=user,
                 title=row['title'],
                 author=row['author'],
                 author_email=row['author_email'],
@@ -54,3 +68,12 @@ class Command(OurMySqlImportBaseCommand):
 
         cursor.close()
         cnx.close()
+
+# Note that all users and staff members must be imported first using:
+#   python manage.py import_users
+@lru_cache(maxsize=None)
+def get_staff_user(staff_user_name):
+    try:
+        return User.objects.get(username=staff_user_name)
+    except ObjectDoesNotExist:
+        return None
