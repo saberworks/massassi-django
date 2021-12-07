@@ -130,7 +130,9 @@ class LevelDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
 
         context['comments'] = LevelComment.objects \
-            .filter(level=context['level']).select_related('user')
+            .filter(level=context['level']) \
+            .order_by('date_created') \
+            .select_related('user')
 
         rating = get_rating(context['level'], self.request.user)
 
