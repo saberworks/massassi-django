@@ -102,6 +102,7 @@ class OurPasswordChangeDoneView(LoginRequiredMixin, PasswordChangeDoneView):
 # Show reset form that asks for email address
 class OurPasswordResetView(PasswordResetView):
     email_template_name = 'users/password_reset_email.html'
+    subject_template_name = 'users/password_reset_subject.txt'
     form_class = OurPasswordResetForm
     success_url = reverse_lazy('users:password_reset_sent')
     template_name = 'users/password_reset.html'
