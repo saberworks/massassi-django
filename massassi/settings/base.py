@@ -136,6 +136,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 SENDGRID_API_KEY = get_env_variable('SENDGRID_API_KEY')
 
+DEFAULT_FROM_EMAIL = 'The Massassi Temple <massassi.temple@gmail.com>'
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
