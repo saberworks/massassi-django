@@ -5,6 +5,11 @@
 {% block content %}
     <h1>{% block title %}{{ level.name|safe }}{% endblock %}</h1>
 
+    <!-- This is here so 3dpreview can download the level without incrementing
+         the counter.  It caches levels anyway so it was only 1 download per
+         level, but make it easy anyway. -->
+    <!-- DIRECT DOWNLOAD: {{ level.pk }} {{ level.file.url }} -->
+
     {% include "levels/level_crumb.html" %}
 
     <div class="level-info-top-container">
@@ -98,8 +103,8 @@
             <div class="level-3d-preview">
                 <h2>3D Preview</h2>
 
-                <p><a href="https://3dpreview.massassi.net/level/{{ level.pk }}/">Full Size 3D Preview for {{ level.name|safe }}</a></p>
-                <iframe src="https://3dpreview.massassi.net/level/{{ level.pk }}/" width="640" height="480" scrolling="no"></iframe>
+                <p><a href="https://3dpreview.massassi.net/level/{{ level.pk }}/?ownsgame=1">Full Size 3D Preview for {{ level.name|safe }}</a></p>
+                <iframe src="https://3dpreview.massassi.net/level/{{ level.pk }}/?ownsgame=1" width="640" height="480" scrolling="no"></iframe>
             </div>
         {% endif %}
     </div>
