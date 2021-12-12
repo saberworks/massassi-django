@@ -40,6 +40,3 @@ urlpatterns = [
 
 ]
 
-# TODO TODO TODO
-# add email address change form
-# fix register view, make it a class-based view and see if we can go back to using their view now that I know some stuff
