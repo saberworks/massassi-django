@@ -81,6 +81,23 @@
                     <p class="note">Note: This is an old page that has been updated/formatted, you can view the original <a href="{{ original }}">here</a>.
                 {% endif %}
 
+                {% if user.is_authenticated %}
+                    <div id="user-block">Logged in as: {{ user.username }}
+                        &nbsp; <a href="{% url "users:profile" %}">Profile</a>
+                        &bull; <a href="{% url "users:password_change" %}">Change Password</a>
+                    {% if user.is_staff %}
+                        &bull; <a href="{% url "admin:index" %}">Admin</a>
+                    {% endif %}
+                    &bull; <a href="{% url "users:logout" %}">Log Out</a>
+                    </div>
+                {% else %}
+                    <div id="user-block">Not logged in.
+                        <a href="{% url "users:login" %}">Log In</a> or
+                        <a href="{% url "users:register" %}">Register</a>
+
+                    </div>
+                {% endif %}
+
                 {% block content %}
                     {% if title %}<h1>{{ title }}</h1>{% endif %}
                     {{ content }}

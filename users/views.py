@@ -58,8 +58,9 @@ def login(request):
 def logout(request):
     if request.user.is_authenticated:
         django.contrib.auth.logout(request)
+        messages.success(request, "You're logged out.")
 
-    return redirect('home')
+    return redirect('news:index')
 
 
 def register(request):

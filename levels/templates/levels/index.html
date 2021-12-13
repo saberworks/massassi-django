@@ -10,6 +10,14 @@
         <li><a href="/jediknight/howto.html">Level/Mod Installation Instructions</a></li>
     </ul>
 
+    {% if not user.is_authenticated %}
+    <p>
+        A user account is required to post comments and rate levels.
+        <a href="{% url 'users:login' %}?next={{ request.path|urlencode }}">Log In</a> or
+        <a href="{% url 'users:register' %}">Register</a>
+    </p>
+    {% endif %}
+
     <h2>Search</h2>
 
     <p>The following form will search level name, level description, author
