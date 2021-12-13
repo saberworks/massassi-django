@@ -1,13 +1,12 @@
 import hashlib
 
 from django.db import models
+from django.utils import timezone
+
 #
 # All models should inherit from this, it adds fields for tracking
 # creation/modification time and creation/modification user.
 #
-from django.utils import timezone
-
-
 class MassassiBaseModel(models.Model):
     created_at = models.DateTimeField(null=False, blank=False, default=timezone.now)
     created_by = models.ForeignKey('users.User', related_name='+', on_delete=models.CASCADE, null=True, blank=True)

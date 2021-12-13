@@ -1,3 +1,4 @@
+from datetime import date
 from django.db.models import Q
 from django.shortcuts import render
 from django.views import generic
@@ -5,6 +6,7 @@ from django.db import connection
 
 from massassi.dbutil import dictfetchall
 
+from holiday.models import HolidayLogo
 from levels.models import Level
 from lotw.models import LotwHistory
 from sotd.models import SotD
@@ -30,6 +32,9 @@ class IndexView(generic.ListView):
         context['recent_levels'] = Level.objects.order_by('-created_at')[:6]
         context['lotw'] = LotwHistory.objects.select_related('level').latest('lotw_time')
         context['sotd'] = SotD.objects.latest('sotd_date')
+
+        if date.today().month == 12:
+            context['holiday_logo'] = HolidayLogo.objects.random()
 
         return context
 

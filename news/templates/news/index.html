@@ -3,7 +3,11 @@
 {% block title %}The Massassi Temple: #1 Source For Everything Jedi Knight{% endblock %}
 
 {% block content %}
-    <div id="logo"><img src="/static/images/logo1.jpg" height="154" width="384" alt="Logo By Ewok!"></div>
+    {% if holiday_logo %}
+        <div id="logo"><img src="{{ holiday_logo.logo.url }}" alt="Holiday Logo" title="Logo by {{ holiday_logo.author }}!"></div>
+    {% else %}
+        <div id="logo"><img src="/static/images/logo1.jpg" height="154" width="384" alt="Massassi Logo" title="Logo By Ewok!"></div>
+    {% endif %}
 
     <div id="features-grid">
         <div id="feature-recent-levels">
