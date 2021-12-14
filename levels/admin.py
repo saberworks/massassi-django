@@ -10,7 +10,7 @@ class LevelCategoryAdmin(admin.ModelAdmin):
 admin.site.register(LevelCategory, LevelCategoryAdmin)
 
 class LevelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'category', 'author')
+    list_display = ('id', 'name', 'category', 'author', 'last_modified_at')
     search_fields = ('id', 'name', 'author')
 
 

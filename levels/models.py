@@ -18,7 +18,7 @@ class LevelCategory(MassassiBaseModel):
     game = models.CharField(max_length=16, null=True)
 
     def __str__(self):
-        return "{} (/{}/ id:{})".format(self.name, self.path, self.id)
+        return self.name
 
     class Meta:
         verbose_name_plural = 'Level Categories'

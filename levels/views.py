@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db.models import Count, F, Q
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
@@ -116,6 +117,27 @@ class CategoryDetailView(generic.ListView):
         context = super().get_context_data(**kwargs)
 
         context['category'] = self._category
+    
+        levels = self.get_queryset()
+
+        page = self.request.GET.get('page', 1)
+        paginator = Paginator(levels, self.paginate_by)
+        page_range = list(paginator.get_elided_page_range(
+            page, on_each_side=3, on_ends=2
+        ))
+
+        try:
+            levels = paginator.page(page)
+        except PageNotAnInteger:
+            levels = paginator.page(1)
+            page = 1
+        except EmptyPage:
+            levels = paginator.page(paginator.num_pages)
+        
+        logger = logging.getLogger(__name__)
+        logger.warn(page_range)
+        context['page_range'] = page_range
+        context['levels'] = levels
 
         return context
 

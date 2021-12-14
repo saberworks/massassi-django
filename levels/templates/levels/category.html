@@ -12,7 +12,7 @@
     </p>
 
     {% if levels %}
-        {% include "simple_pager.html" %}
+        {% include "fancy_pager.html" %}
 
         <div class="level-list-grid-container">
         {% for level in levels %}
@@ -47,7 +47,7 @@
         {% endfor %}
         </div>
 
-        {% include "simple_pager.html" %}
+        {% include "fancy_pager.html" %}
     {% else %}
         <p>No levels are available.  (this is probably a bug... email us)</p>
     {% endif %}

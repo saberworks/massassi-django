@@ -16,7 +16,7 @@ from django.utils.deconstruct import deconstructible
 
 @deconstructible
 class OurUnicodeUsernameValidator(validators.RegexValidator):
-    regex = r'^\S.+\S\Z'
+    regex = r'^(?! ).*(?<! )$'
     message = (
         'Enter a valid username. It may not start or end with whitespace.'
     )

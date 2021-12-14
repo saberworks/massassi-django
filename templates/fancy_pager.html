@@ -1,0 +1,32 @@
+<div class="pagination-container pagination-container-fancy">
+    <div class="paging-prev-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; previous</a>
+        {% else %}
+            <span class="disabled">&laquo; first</span>
+            <span class="disabled">&lsaquo; previous</span>
+        {% endif %}
+    </div>
+
+    <div class="paging-current">
+        {% for i in page_range %}
+            {% if page_obj.number == i %}
+                <span class="page-link">{{ i }}</span>
+            {% else %}
+                {% if i == page_obj.paginator.ELLIPSIS %}
+                    <span class="page-link">{{ i }}</span>
+                {% else %}
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="paging-next-links">
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next &rsaquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </div>
+</div>
