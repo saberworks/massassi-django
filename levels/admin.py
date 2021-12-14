@@ -4,13 +4,13 @@ from .models import LevelCategory, Level
 
 
 class LevelCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'path', 'game', 'enable_3dpreview')
+    list_display = ('id', 'name', 'path', 'game', 'enable_3dpreview')
 
 
 admin.site.register(LevelCategory, LevelCategoryAdmin)
 
 class LevelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'author')
+    list_display = ('id', 'name', 'category', 'author')
     search_fields = ('id', 'name', 'author')
 
 
