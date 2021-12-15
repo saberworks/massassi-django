@@ -32,4 +32,4 @@ rm -rf ../media/*
 ./import_holiday_logos.sh
 
 # SET SEQUENCES
-python ../manage.py sqlsequencereset users sotd levels | python ../manage.py dbshell
+python ../manage.py sqlsequencereset users sotd levels news | python ../manage.py dbshell
