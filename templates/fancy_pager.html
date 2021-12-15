@@ -12,12 +12,12 @@
     <div class="paging-current">
         {% for i in page_range %}
             {% if page_obj.number == i %}
-                <span class="page-link">{{ i }}</span>
+                <span>{{ i }}</span>
             {% else %}
                 {% if i == page_obj.paginator.ELLIPSIS %}
-                    <span class="page-link">{{ i }}</span>
+                    <span>{{ i }}</span>
                 {% else %}
-                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    <a href="?page={{ i }}">{{ i }}</a>
                 {% endif %}
             {% endif %}
         {% endfor %}
@@ -27,6 +27,9 @@
         {% if page_obj.has_next %}
             <a href="?page={{ page_obj.next_page_number }}">next &rsaquo;</a>
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% else %}
+            <span class="disabled">next &rsaquo;</span>
+            <span class="disabled">last &raquo;</span>
         {% endif %}
     </div>
 </div>

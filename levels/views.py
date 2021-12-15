@@ -125,19 +125,8 @@ class CategoryDetailView(generic.ListView):
         page_range = list(paginator.get_elided_page_range(
             page, on_each_side=3, on_ends=2
         ))
-
-        try:
-            levels = paginator.page(page)
-        except PageNotAnInteger:
-            levels = paginator.page(1)
-            page = 1
-        except EmptyPage:
-            levels = paginator.page(paginator.num_pages)
         
-        logger = logging.getLogger(__name__)
-        logger.warn(page_range)
         context['page_range'] = page_range
-        context['levels'] = levels
 
         return context
 
