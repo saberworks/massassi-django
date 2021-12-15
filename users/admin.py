@@ -10,7 +10,8 @@ class UserAdmin(BaseUserAdmin):
         'date_joined', 'created_at', 'last_modified_at'
     )
     list_filter = ('is_staff', 'is_superuser',)
-    filter_horizontal = ('is_staff', 'is_superuser')
+    # I don't know what filter_horizontal was for but it's crashing
+    #filter_horizontal = ('is_staff', 'is_superuser')
     readonly_fields = ('date_joined', 'created_at',)
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password',)}),
