@@ -111,20 +111,25 @@ LOGIN_URL = '/account/login/'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'loggers': {
-        'asyncio': {
-            'level': 'WARNING',
+    'formatters': {
+        'default': {
+            'format': '[DJANGO] %(levelname)s %(asctime)s %(module)s '
+                        '%(name)s.%(funcName)s:%(lineno)s: %(message)s'
         },
     },
     'handlers': {
         'console': {
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
-            'level': 'WARNING',
-        },
+            'formatter': 'default',
+        }
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'WARNING',
+    'loggers': {
+        '*': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        }
     },
 }
 
