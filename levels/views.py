@@ -117,11 +117,19 @@ class CategoryDetailView(generic.ListView):
         context = super().get_context_data(**kwargs)
 
         context['category'] = self._category
-    
-        levels = self.get_queryset()
 
-        page = self.request.GET.get('page', 1)
-        paginator = Paginator(levels, self.paginate_by)
+        # django documentation doesn't make this very clear and online tutorials
+        # seem to have it wrong.  In order to use get_elided_page_range you have
+        # to have access to the paginator that is automatically created in the
+        # ListView when paginate_by is defined, and also the current page
+        # number.  You can get the paginator from the context and the page
+        # number from the context's page_obj, using the number attribute.  If
+        # you do it the way online tutorials say, it kinda works but you end up
+        # with a new paginator object and that makes a bunch of duplicate
+        # queries to the database for count and the list of objects.
+        paginator = context['paginator']
+        page = context['page_obj'].number
+
         page_range = list(paginator.get_elided_page_range(
             page, on_each_side=3, on_ends=2
         ))
