@@ -28,25 +28,23 @@ DATABASES = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        }
+    'formatters': {
+        'default': {
+            'format': '[DJANGO] %(asctime)s %(levelname)s %(name)s.%(funcName)s:%(lineno)s: %(message)s'
+        },
     },
     'loggers': {
-        'asyncio': {
-            'level': 'WARNING',
-        },
         'django.db.backends': {
-            'level': 'WARNING', # change to debug to see queries
+            'level': 'DEBUG', # change to debug to see queries
             'handlers': ['console'],
+            'propagate': False,
         }
     },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
             'level': 'DEBUG',
-            'filters': ['require_debug_true'],
+            'formatter': 'default',
         },
     },
     'root': {
