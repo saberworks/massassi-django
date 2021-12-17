@@ -14,7 +14,7 @@ class HolidayLogoManager(models.Manager):
     def random(self):
         count = self.count()
         random_index = randint(0, count - 1)
-        return self.all()[random_index]
+        return self.filter(is_in_rotation=True)[random_index]
 
 class HolidayLogo(MassassiBaseModel):
     author = models.CharField(max_length=32, null=False, blank=False)
@@ -25,6 +25,17 @@ class HolidayLogo(MassassiBaseModel):
 
     objects = HolidayLogoManager()
 
+    def __str__(self):
+        return "{}-{} ({})".format(self.year, self.author, self.pk)
+
+    def admin_image(self):
+        return '<img src="%s"/>' % self.logo
+
+    admin_image.allow_tags = True
+
     class Meta:
         verbose_name_plural = 'Holiday Logos'
         db_table = 'holiday_logos'
+        indexes = [
+            models.Index(fields=['is_in_rotation']),
+        ]
