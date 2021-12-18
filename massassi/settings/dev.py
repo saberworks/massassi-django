@@ -11,20 +11,6 @@ ALLOWED_HOSTS = ['*']
 # SECURITY WARNING: don't allow this many fields in production
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'massassi',
-        'USER': 'massassi',
-        'PASSWORD': get_env_variable('MASSASSI_DATABASE_PASSWORD'),
-        'HOST': get_env_variable('MASSASSI_DATABASE_HOST'),
-        'PORT': '',
-    },
-}
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

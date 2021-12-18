@@ -108,6 +108,20 @@ STATIC_ROOT = '/app/massassi-django/static/';
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'
 
+# Database
+# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'massassi',
+        'USER': 'massassi',
+        'PASSWORD': get_env_variable('MASSASSI_DATABASE_PASSWORD'),
+        'HOST': get_env_variable('MASSASSI_DATABASE_HOST'),
+        'PORT': '',
+    },
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
