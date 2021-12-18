@@ -1,5 +1,6 @@
 from django.conf import settings
-from django.conf.urls.static import static
+from django.conf.urls import url
+from django.conf.urls.static import serve
 from django.contrib import admin
 from django.urls import include, path
 
@@ -26,17 +27,3 @@ admin.site.site_header = 'Massassi Administration'
 
 # Text to put at the top of the admin index page.
 admin.site.index_title = 'Main'
-
-## Serve media files during development
-#if settings.DEBUG:
-#    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-#
-## Serve static files during development
-#if settings.DEBUG:
-#    document_root=settings.STATIC_ROOT) <-- this line is messed up, wtf?
-
-# Serve static files always.  This will generally only serve admin files.  
-# nginx should serve all the static files belonging to massassi, but these 
-# static files are provided by django and this seems the easiest way.
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-

@@ -102,8 +102,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = '/massassi-user-data/media/'
 
 # css, main site images, etc.
-STATIC_URL = '/static/'
-STATIC_ROOT = '/app/massassi-django/static/';
+STATIC_URL = '/jedibird-static/'
+STATIC_ROOT = '/jedibird-static/';
 
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/account/login/'
