@@ -16,6 +16,7 @@ RUN apt update \
                       virtualenv postgresql-client vim
 
 RUN mkdir /massassi-user-data && chown massassi:massassi /massassi-user-data
+RUN mkdir /jedibird-static && chown massassi:massassi /jedibird-static
 
 ENV VIRTUAL_ENV=/app/massassi-django
 RUN virtualenv -p python3 /app/massassi-django
@@ -27,8 +28,6 @@ ENV DJANGO_SETTINGS_MODULE massassi.settings.dev
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-
-RUN mkdir /app/massassi-django/static && chown massassi:massassi /app/massassi-django/static
 
 COPY . ./massassi-django
 
