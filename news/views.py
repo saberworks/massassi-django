@@ -22,7 +22,7 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return News.objects \
                    .select_related('user') \
-                   .extra(select={'news_date': 'DATE(date_posted)'}) \
+                   .extra(select={'news_date': 'DATE(date_posted AT TIME ZONE \'America/Los_Angeles\')'}) \
                    .order_by('-date_posted')
 
     # Look up things like recent levels list, sotd, lotw
