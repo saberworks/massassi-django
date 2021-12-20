@@ -35,14 +35,16 @@ class MassassiModelWithFile(models.Model):
     def save(self, *args, **kwargs):
         self.file_size = self.file.file.size
 
-        f = self.file.file
-        f.open('rb')
-
-        self.file_hash = hashlib.sha1(f.read()).hexdigest()
-
-        f.close()
-
         super().save(*args, **kwargs)
+
+        with open(self.file.path, "rb") as f:
+            file_hash = hashlib.sha1()
+            while chunk := f.read(8192):
+                file_hash.update(chunk)
+
+        self.file_hash = file_hash.hexdigest()
+
+        super().save()
 
     class Meta:
         abstract = True

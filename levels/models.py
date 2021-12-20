@@ -55,6 +55,8 @@ class Level(MassassiBaseModel, MassassiModelWithFile):
         )
 
     def save(self, *args, **kwargs):
+        # If this block isn't here, the screenshot name ends up as None_1.jpg,
+        # None_2.jpg; can't remember why this fixes that.
         if self.pk is None:
             saved_screenshot_1 = self.screenshot_1
             saved_screenshot_2 = self.screenshot_2
