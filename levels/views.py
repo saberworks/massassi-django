@@ -173,10 +173,8 @@ class LevelDownloadView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        level = self.object
-
-        level.dl_count = F('dl_count') + 1
-        level.save()
+        level = Level.objects.filter(pk=self.object.pk)
+        level.update(dl_count=F('dl_count') + 1)
 
         return context
 
