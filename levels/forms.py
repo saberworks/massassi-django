@@ -37,9 +37,20 @@ class SearchForm(forms.Form):
     )
 
 class LevelSortForm(forms.Form):
-    sortby = forms.ChoiceField(choices=(
+    sortby = forms.ChoiceField(
+        widget=forms.Select(attrs={"style": "width: 16ch"}),
+        choices=(
             ("name", "Level Name"),
             ("author", "Author"),
             ("dl_count", "Downloads"),
             ("rating", "Rating"),
-        ))
+    ))
+
+    num = forms.ChoiceField(
+        widget=forms.Select(attrs={"style": "width: 8ch"}),
+        choices=(
+        ("25", "25"),
+        ("50", "50"),
+        ("100", "100"),
+        ("9999", "all"),
+    ))

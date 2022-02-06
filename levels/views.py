@@ -99,7 +99,6 @@ class CategoryDetailView(generic.ListView):
     model = Level
     template_name = 'levels/category.html'
     context_object_name = 'levels'
-    paginate_by = 25
     _category = None
 
     def get_queryset(self):
@@ -109,6 +108,16 @@ class CategoryDetailView(generic.ListView):
         # avoids a second db query
         self._category = LevelCategory.objects.get(path=path)
 
+        sort_by = self.get_sort_by()
+
+        self.set_paginate_by()
+
+        return Level.objects \
+            .filter(category=self._category) \
+            .order_by(sort_by)
+
+    # based on the "sortby" GET param, return the sort order
+    def get_sort_by(self):
         valid_sort_options = ("name", "author", "dl_count", "rating")
 
         sort_key = self.request.GET.get('sortby', 'name')
@@ -118,12 +127,16 @@ class CategoryDetailView(generic.ListView):
         if(sort_key in valid_sort_options):
             sort_by = sort_key
 
+        # descending sort for downloads and rating
         if sort_by == 'dl_count' or sort_by == 'rating':
             sort_by = '-' + sort_by
 
-        return Level.objects \
-            .filter(category=self._category) \
-            .order_by(sort_by)
+        return sort_by
+
+    # based on the "num" GET param, set the paginate by
+    def set_paginate_by(self):
+        num = int(self.request.GET.get("num", "25"))
+        self.paginate_by = num
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
