@@ -3,7 +3,8 @@ FROM python:3.9-slim-buster
 WORKDIR /app/massassi-django
 
 ARG APP_USER=massassi
-RUN groupadd -r ${APP_USER} && useradd --no-log-init -r -g ${APP_USER} ${APP_USER}
+RUN groupadd -r -g 1000 ${APP_USER} && \
+    useradd --no-log-init -r -g ${APP_USER} -u 1000 ${APP_USER}
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
