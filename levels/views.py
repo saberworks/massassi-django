@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.views import generic, View
 
 from massassi.httputil import get_client_ip
-from .forms import CommentForm, RatingForm, SearchForm
+from .forms import CommentForm, LevelSortForm, RatingForm, SearchForm
 from .models import Level, LevelCategory, LevelComment, LevelRating
 
 logger = logging.getLogger(__name__)
@@ -109,9 +109,21 @@ class CategoryDetailView(generic.ListView):
         # avoids a second db query
         self._category = LevelCategory.objects.get(path=path)
 
+        valid_sort_options = ("name", "author", "dl_count", "rating")
+
+        sort_key = self.request.GET.get('sortby', 'name')
+
+        sort_by = 'name' # default
+
+        if(sort_key in valid_sort_options):
+            sort_by = sort_key
+
+        if sort_by == 'dl_count' or sort_by == 'rating':
+            sort_by = '-' + sort_by
+
         return Level.objects \
             .filter(category=self._category) \
-            .order_by('name')
+            .order_by(sort_by)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -135,6 +147,9 @@ class CategoryDetailView(generic.ListView):
         ))
         
         context['page_range'] = page_range
+
+        # form to allow user to select sort by
+        context['sort_form'] = LevelSortForm(self.request.GET)
 
         return context
 

@@ -35,3 +35,11 @@ class SearchForm(forms.Form):
         help_text="enter keywords to search for",
         required=True,
     )
+
+class LevelSortForm(forms.Form):
+    sortby = forms.ChoiceField(choices=(
+            ("name", "Level Name"),
+            ("author", "Author"),
+            ("dl_count", "Downloads"),
+            ("rating", "Rating"),
+        ))

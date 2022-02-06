@@ -1,0 +1,10 @@
+<div class="form-container-inline" style="padding-top: 7px;">
+    <form method="get">
+        {% csrf_token %}
+        Sort By 
+        {% for field in sort_form %}
+            {{ field }}
+        {% endfor %}
+        <button type="submit">Go</button>
+    </form>
+</div>
