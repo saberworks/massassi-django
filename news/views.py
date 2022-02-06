@@ -25,13 +25,27 @@ class IndexView(generic.ListView):
                    .extra(select={'news_date': 'DATE(date_posted AT TIME ZONE \'America/Los_Angeles\')'}) \
                    .order_by('-date_posted')
 
+# try:
+#     comment = Comment.objects.get(pk=comment_id)
+# except Comment.DoesNotExist:
+#     comment = None
+
+
     # Look up things like recent levels list, sotd, lotw
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         context['recent_levels'] = Level.objects.order_by('-created_at')[:6]
-        context['lotw'] = LotwHistory.objects.select_related('level').latest('lotw_time')
-        context['sotd'] = SotD.objects.latest('sotd_date')
+
+        try:
+            context['lotw'] = LotwHistory.objects.select_related('level').latest('lotw_time')
+        except LotwHistory.DoesNotExist:
+            context['lotw'] = None
+
+        try:
+            context['sotd'] = SotD.objects.latest('sotd_date')
+        except SotD.DoesNotExist:
+            context['sotd'] = None
 
         if date.today().month == 12:
             context['holiday_logo'] = HolidayLogo.objects.random()

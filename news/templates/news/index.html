@@ -13,10 +13,14 @@
         <div id="feature-recent-levels">
             <div class="feature-title">Recent Levels</div>
             <div class="feature-content">
-                {% for level in recent_levels %}
-                    {{ level.created_at|date:"Y-m-d" }}
-                    <a href="{% url 'levels:level' level.pk %}">{{ level.name|truncatechars:34 }}</a><br>
-                {% endfor %}
+                {% if recent_levels %}
+                    {% for level in recent_levels %}
+                        {{ level.created_at|date:"Y-m-d" }}
+                        <a href="{% url 'levels:level' level.pk %}">{{ level.name|truncatechars:34 }}</a><br>
+                    {% endfor %}
+                {% else %}
+                    No recent levels in the database.
+                {% endif %}
             </div>
         </div>
 
@@ -57,14 +61,18 @@
         <div id="feature-sotd">
             <div class="feature-title-small">Screenshot of the Day</div>
             <div class="feature-content">
-                <a href="{% url "sotd:sotd" sotd.pk %}">
-                    <img src="{{ sotd.thumbnail.url }}" alt="SotD for {{ sotd.sotd_date }}" height=150 width=200
-                         class="sotdimage"/></a>
-                <div class="caption">
-                    {{ sotd.title }}<br>
-                    <em>{{ sotd.description }}</em><br>
-                    <a href="/sotd/">Archives</a>
-                </div>
+                {% if sotd %}
+                    <a href="{% url "sotd:sotd" sotd.pk %}">
+                        <img src="{{ sotd.thumbnail.url }}" alt="SotD for {{ sotd.sotd_date }}" height=150 width=200
+                            class="sotdimage"/></a>
+                    <div class="caption">
+                        {{ sotd.title }}<br>
+                        <em>{{ sotd.description }}</em><br>
+                        <a href="/sotd/">Archives</a>
+                    </div>
+                {% else %}
+                    <div class="caption">No SotD in the database.</div>
+                {% endif %}
             </div>
         </div>
 
@@ -81,10 +89,14 @@
         <div id="feature-lotw">
             <div class="feature-title-small">Level of the Week</div>
             <div class="feature-content">
-                <a href="{% url 'levels:level' lotw.level_id %}">
-                    <img src="{{ lotw.level.thumbnail_1.url }}" alt="LotW for {{ lotw.lotw_time|date:"Y-m-d" }}" height="150" width="200" class="lotwimage" />
-                </a>
-                <div class="caption">{{ lotw.level.name }}<br><a href="/lotw/">Archives</a></div>
+                {% if lotw %}
+                    <a href="{% url 'levels:level' lotw.level_id %}">
+                        <img src="{{ lotw.level.thumbnail_1.url }}" alt="LotW for {{ lotw.lotw_time|date:"Y-m-d" }}" height="150" width="200" class="lotwimage" />
+                    </a>
+                    <div class="caption">{{ lotw.level.name }}<br><a href="/lotw/">Archives</a></div>
+                {% else %}
+                    <div class="caption">No LotW in the database.</div>
+                {% endif %}
             </div>
         </div>
     </div>
