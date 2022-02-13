@@ -6,9 +6,9 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.massassi.org']
+ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS=['https://www.massassi.org']
+CSRF_TRUSTED_ORIGINS=['*']
 
 # SECURITY WARNING: don't allow this many fields in production
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000

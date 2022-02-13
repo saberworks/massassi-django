@@ -4,6 +4,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['www.massassi.net', 'massassi.net']
 
+CSRF_TRUSTED_ORIGINS=['https://www.massassi.net']
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
