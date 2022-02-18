@@ -25,12 +25,6 @@ class IndexView(generic.ListView):
                    .extra(select={'news_date': 'DATE(date_posted AT TIME ZONE \'America/Los_Angeles\')'}) \
                    .order_by('-date_posted')
 
-# try:
-#     comment = Comment.objects.get(pk=comment_id)
-# except Comment.DoesNotExist:
-#     comment = None
-
-
     # Look up things like recent levels list, sotd, lotw
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
