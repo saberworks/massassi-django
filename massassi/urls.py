@@ -2,12 +2,14 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 
+from .api import api
 from screenshots import views as screenshots_views
 
 urlpatterns = [
     path('', include('news.urls')),
     path('sotd/', include('sotd.urls')),
     path('admin/', admin.site.urls),
+    path('api/', api.urls),
     path('account/', include('users.urls')),
     path('levels/', include('levels.urls')),
     path('lotw/', include('lotw.urls')),

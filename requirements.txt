@@ -14,6 +14,7 @@ distro==1.4.0
 Django==4.0.2
 django-appconf==1.0.4
 django-imagekit==4.1.0
+django-ninja==0.17.0
 django-s3-storage==0.13.5
 gunicorn==20.1.0
 html5lib==1.0.1
@@ -30,6 +31,7 @@ Pillow==9.0.0
 progress==1.5
 protobuf==3.15.8
 psycopg2==2.8.6
+pydantic==1.9.0
 pyparsing==2.4.6
 python-dateutil==2.8.1
 pytoml==0.1.21
@@ -40,5 +42,6 @@ s3transfer==0.4.2
 six==1.14.0
 sqlparse==0.4.2
 toml==0.10.2
+typing-extensions==4.1.1
 urllib3==1.26.7
 webencodings==0.5.1
