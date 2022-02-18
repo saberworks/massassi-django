@@ -13,6 +13,11 @@ logger = logging.getLogger(__name__)
 
 # TODO: move the levels stuff to a separate levels api file
 
+class LevelCategoryOut(ModelSchema):
+    class Config:
+        model = LevelCategory
+        model_fields = ['path', 'name', 'description', 'game', 'enable_3dpreview']
+
 class LevelOut(ModelSchema):
     screenshot_1_url: typing.Optional[str]
     screenshot_2_url: typing.Optional[str]
@@ -29,6 +34,10 @@ class LevelOut(ModelSchema):
 
 
 api = NinjaAPI()
+
+@api.get("/level_categories", response=typing.List[LevelCategoryOut])
+def get_level_categories(request):
+    return get_list_or_404(LevelCategory)
 
 @api.get("/levels/{str:category}", response=typing.List[LevelOut])
 def get_levels(request, category: str, order_by: str = "name"):
