@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'lotw.apps.LotwConfig',
     'news.apps.NewsConfig',
     'holiday.apps.HolidayConfig',
+    'saberworks.apps.SaberworksConfig',
     'imagekit',
     'django.contrib.admin',
     'django.contrib.auth',
