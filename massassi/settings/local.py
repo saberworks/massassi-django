@@ -8,7 +8,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS=['*']
+CSRF_TRUSTED_ORIGINS=['http://*', 'https://*']
 
 # SECURITY WARNING: don't allow this many fields in production
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
