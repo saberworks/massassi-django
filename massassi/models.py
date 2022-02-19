@@ -2,6 +2,9 @@ import hashlib
 
 from django.db import models
 from django.utils import timezone
+from imagekit.models import ImageSpecField
+from pilkit.processors import Thumbnail
+
 
 #
 # All models should inherit from this, it adds fields for tracking
@@ -45,6 +48,25 @@ class MassassiModelWithFile(models.Model):
         self.file_hash = file_hash.hexdigest()
 
         super().save()
+
+    class Meta:
+        abstract = True
+
+# Every model that inherits from this _must_ provide a unique
+# get_image_upload_to method.  WARNING: Do not make the image name
+# require the image ID, because the ID won't exist on initial save of
+# each model.
+def get_image_upload_to(instance, filename):
+    return instance.get_image_upload_to(filename)
+
+class MassassiModelWithImage(models.Model):
+    image = models.ImageField(upload_to=get_image_upload_to, null=True, blank=True)
+    thumbnail = ImageSpecField(
+        source='image',
+        processors=[Thumbnail(400, 300)],
+        format='JPEG',
+        options={'quality': 85},
+    )
 
     class Meta:
         abstract = True
