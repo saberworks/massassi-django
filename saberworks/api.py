@@ -47,11 +47,11 @@ def get_project(request, project_id: int):
 # PUT edit project
 # DELETE delete project
 
-@router.get("/project/{project_id}/posts/", response=List[PostOut])
+@router.get("/project/{project_id}/posts/", response=List[PostOut], auth=django_auth)
 def get_posts_for_project(request, project_id: int):
     return get_list_or_404(Post, project_id=project_id, user=request.user)
 
-@router.get("/project/{project_id}/posts/{post_id}", response=PostOut)
+@router.get("/project/{project_id}/posts/{post_id}", response=PostOut, auth=django_auth)
 def get_post_for_project(request, project_id: int, post_id: int):
     return get_object_or_404(Post, project_id=project_id, id=post_id, user=request.user)
 
@@ -60,11 +60,11 @@ def get_post_for_project(request, project_id: int, post_id: int):
 # PUT edit post
 # DELETE delete post
 
-@router.get("/project/{project_id}/files", response=List[FileOut])
+@router.get("/project/{project_id}/files", response=List[FileOut], auth=django_auth)
 def get_files_for_project(request, project_id):
     return get_list_or_404(File, project_id=project_id, user=request.user)
 
-@router.get("/project/{project_id}/file/{file_id}", response=FileOut)
+@router.get("/project/{project_id}/file/{file_id}", response=FileOut, auth=django_auth)
 def get_file_for_project(request, project_id, file_id):
     return get_object_or_404(File, project_id=project_id, id=file_id, user=request.user)
 
