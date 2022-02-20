@@ -21,22 +21,23 @@ class TagType(MassassiBaseModel):
 # Tags (need tags_projects join table, is it automatic?)
 class Tag(MassassiBaseModel):
     type = models.ForeignKey('saberworks.TagType', null=False, blank=False, on_delete=models.RESTRICT)
-    slug = SlugField(max_length=40, null=False, blank=False)
+    slug = SlugField(max_length=40, null=False, blank=False, unique=True)
 
     def __str__(self):
         return self.type.slug + ':' + self.slug
 
 # Games
+# Adding games is an admin task so no need to autogenerate slugs.
 class Game(MassassiBaseModel, MassassiModelWithImage):
     name = models.CharField(max_length=64, null=False, blank=False)
     slug = models.SlugField(max_length=40, null=False, blank=False, unique=True)
     description = models.TextField(null=True, blank=True)
 
-    def __str__(self):
-        return self.name
-
     def get_image_upload_to(self, filename):
         return 'saberworks/game/{}'.format(filename)
+
+    def __str__(self):
+        return self.name
 
 # Projects
 class Project(MassassiBaseModel, MassassiModelWithImage):
@@ -44,9 +45,16 @@ class Project(MassassiBaseModel, MassassiModelWithImage):
     games = models.ManyToManyField('saberworks.Game')
     tags = models.ManyToManyField('saberworks.Tag')
     name = models.CharField(max_length=256, null=False, blank=False)
-    slug = models.SlugField(max_length=40, null=False, blank=False, unique=True)
+    slug = models.SlugField(max_length=40, null=False, blank=False, editable=False, unique=True)
     description = models.TextField(blank=True)
     accent_color = models.CharField(max_length=6, null=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        self.slug = slugify(str(self.pk) + '-' + self.name, allow_unicode=False)
+
+        super().save()
 
     def get_image_upload_to(self, filename):
         return 'saberworks/project/{}/{}'.format(self.slug, filename)

@@ -34,8 +34,8 @@ class GameAdmin(MassassiModelAdmin):
 class ProjectAdmin(MassassiModelAdmin):
     list_display = ('name', 'slug', 'user', 'accent_color_tag')
     ordering = ('name',)
-    readonly_fields = ('created_by', 'user',)
-    fields = ('name', 'slug', 'games', 'description', 'tags', 'image', 'accent_color',)
+    readonly_fields = ('created_by', 'user', 'slug',)
+    fields = ('name', 'games', 'description', 'tags', 'image', 'accent_color', 'slug')
 
     def accent_color_tag(self, obj):
         return format_html('<span style="color: #{0}">{0}</span>'.format(obj.accent_color))
