@@ -18,10 +18,16 @@ class TagType(MassassiBaseModel):
     def __str__(self):
         return self.slug
 
-# Tags (need tags_projects join table, is it automatic?)
+# Tags
+class TagManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().select_related('type')
+
 class Tag(MassassiBaseModel):
     type = models.ForeignKey('saberworks.TagType', null=False, blank=False, on_delete=models.RESTRICT)
     slug = SlugField(max_length=40, null=False, blank=False, unique=True)
+
+    objects = TagManager
 
     def __str__(self):
         return self.type.slug + ':' + self.slug
