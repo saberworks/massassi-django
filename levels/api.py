@@ -4,7 +4,7 @@ from django.conf import settings
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.urls import reverse
 from ninja import ModelSchema, Router
-from pydantic import typing
+from pydantic.typing import List, Optional
 
 from levels.models import Level, LevelCategory
 
@@ -18,8 +18,8 @@ class LevelCategoryOut(ModelSchema):
         ]
 
 class LevelOut(ModelSchema):
-    screenshot_1_url: typing.Optional[str]
-    screenshot_2_url: typing.Optional[str]
+    screenshot_1_url: Optional[str]
+    screenshot_2_url: Optional[str]
     download_url: str
     level_url: str
     category_name: str
@@ -34,11 +34,11 @@ class LevelOut(ModelSchema):
 
 router = Router()
 
-@router.get("/level_categories", response=typing.List[LevelCategoryOut])
-def get_level_categories(request):
+@router.get("/categories", response=List[LevelCategoryOut], tags=['levels'])
+def get_categories(request):
     return get_list_or_404(LevelCategory)
 
-@router.get("/levels/{str:category}", response=typing.List[LevelOut])
+@router.get("/{str:category}", response=List[LevelOut], tags=['levels'])
 def get_levels(request, category: str, order_by: str = "name"):
     cat = get_object_or_404(LevelCategory, path=category)
     cat_name = cat.name

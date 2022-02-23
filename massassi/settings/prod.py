@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['www.massassi.net', 'massassi.net']
+ALLOWED_HOSTS = ['www.massassi.net']
 
 CSRF_TRUSTED_ORIGINS=['https://www.massassi.net']
 

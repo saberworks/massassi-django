@@ -21,12 +21,11 @@ class MassassiBaseModel(models.Model):
 
 # If table will have a single file, always store file location, file size,
 # file checksum.
-# Problem with this approach is that I need to be able to pass a function to
-# the models.FileField so that it can dynamically get the location for the
-# uploaded file.  Maybe every child has to manually set it? :(  Example:
 #
-# FakeModel._meta.get_field('email').upload_to = some_func
-
+# Every model that inherits from this _must_ provide a unique
+# get_file_upload_to method.  WARNING: Do not make the file name generation
+# require the model's ID, because the ID won't exist yet on initial save of the
+# model.
 def get_file_upload_to(instance, filename):
     return instance.get_file_upload_to(filename)
 
@@ -54,8 +53,8 @@ class MassassiModelWithFile(models.Model):
 
 # Every model that inherits from this _must_ provide a unique
 # get_image_upload_to method.  WARNING: Do not make the image name
-# require the image ID, because the ID won't exist on initial save of
-# each model.
+# require the model's ID, because the ID won't exist on initial save of
+# model.
 def get_image_upload_to(instance, filename):
     return instance.get_image_upload_to(filename)
 

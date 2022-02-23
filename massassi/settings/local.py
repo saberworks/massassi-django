@@ -1,17 +1,10 @@
 from .base import *
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS=['http://*', 'https://*']
-
-# SECURITY WARNING: don't allow this many fields in production
-DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 
 LOGGING = {
     'version': 1,

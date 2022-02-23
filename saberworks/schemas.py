@@ -15,8 +15,8 @@ class UserOut(ModelSchema):
         model_fields = ['id', 'username']
 
 
-###
-## Game Schemas
+#
+# Game Schemas
 #
 
 class GameOut(ModelSchema):
@@ -27,8 +27,8 @@ class GameOut(ModelSchema):
         model_fields = ['id', 'name', 'slug', 'description', 'image']
 
 
-###
-## Tag Type Schemas
+#
+# Tag Type Schemas
 #
 
 class TagTypeOut(ModelSchema):
@@ -38,8 +38,8 @@ class TagTypeOut(ModelSchema):
         model = TagType
         model_fields = ['id',]
 
-###
-## Tag Schemas
+#
+# Tag Schemas
 #
 
 class TagOut(ModelSchema):
@@ -51,8 +51,8 @@ class TagOut(ModelSchema):
         model_fields = ['id',]
 
 
-###
-## Project Schemas
+#
+# Project Schemas
 #
 
 # This is here so one can request a list of projects and not cause a bunch of
@@ -70,11 +70,10 @@ class ProjectListOut(ModelSchema):
 class ProjectIn(ModelSchema):
     games: List[int] = [] # list of game IDs
     tags: List[int] = []  # list of tag IDs
-    image: Optional[UploadedFile] = None
 
     class Config:
         model = Project
-        model_fields = ['games', 'tags', 'name', 'description', 'accent_color', 'image']
+        model_fields = ['games', 'tags', 'name', 'description', 'accent_color']
 
 class ProjectOut(ModelSchema):
     games: List[GameOut] = []
@@ -86,13 +85,19 @@ class ProjectOut(ModelSchema):
         model_fields = ['id', 'user', 'games', 'tags', 'name', 'slug', 'description', 'accent_color', 'image']
 
 class NewProjectOut(Schema):
-    project: ProjectOut
+    success: bool
+    project: Optional[ProjectOut] = None
     messages: Optional[List[str]] = []
 
 
-###
-## Post Schemas
 #
+# Post Schemas
+#
+
+class PostIn(ModelSchema):
+    class Config:
+        model = Post
+        model_fields = ['title', 'text']
 
 class PostOut(ModelSchema):
     image: Optional[str]
@@ -101,10 +106,20 @@ class PostOut(ModelSchema):
         model = Post
         model_fields = ['id', 'user', 'project', 'title', 'slug', 'text', 'image']
 
+class NewPostOut(Schema):
+    success: bool
+    post: Optional[PostOut] = None
+    messages: Optional[List[str]] = []
 
-###
-## File Schemas
+
 #
+# File Schemas
+#
+
+class FileIn(ModelSchema):
+    class Config:
+        model = File
+        model_fields = ['name', 'version', 'description']
 
 class FileOut(ModelSchema):
     image: Optional[str]
@@ -112,3 +127,8 @@ class FileOut(ModelSchema):
     class Config:
         model = File
         model_fields = ['id', 'user', 'project', 'name', 'version', 'description', 'file', 'image']
+
+class NewFileOut(Schema):
+    success: bool
+    file: Optional[FileOut] = None
+    messages: Optional[List[str]] = []

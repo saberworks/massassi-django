@@ -48,8 +48,8 @@ class Game(MassassiBaseModel, MassassiModelWithImage):
 # Projects
 class Project(MassassiBaseModel, MassassiModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
-    games = models.ManyToManyField('saberworks.Game')
-    tags = models.ManyToManyField('saberworks.Tag')
+    games = models.ManyToManyField('saberworks.Game', blank=True)
+    tags = models.ManyToManyField('saberworks.Tag', blank=True)
     name = models.CharField(max_length=256, null=False, blank=False)
     slug = models.SlugField(max_length=40, null=False, blank=False, editable=False, unique=True)
     description = models.TextField(blank=True)
@@ -66,7 +66,7 @@ class Project(MassassiBaseModel, MassassiModelWithImage):
         return 'saberworks/project/{}/{}'.format(self.slug, filename)
     
     def __str__(self):
-        return self.slug + ': ' + self.name
+        return 'id=' + str(self.pk) + ' name=' + self.name
 
 # Posts (can contain text, image, or both)
 class Post(MassassiBaseModel, MassassiModelWithImage):
@@ -95,7 +95,7 @@ class Post(MassassiBaseModel, MassassiModelWithImage):
         return 'saberworks/project/{}/{}'.format(self.project.slug, filename)
 
     def __str__(self):
-        return self.slug + ': ' + self.title
+        return 'id=' + str(self.pk) + ' title=' + self.title
 
 # Files
 class File(MassassiBaseModel, MassassiModelWithFile, MassassiModelWithImage):
@@ -124,4 +124,4 @@ class File(MassassiBaseModel, MassassiModelWithFile, MassassiModelWithImage):
         )
 
     def __str__(self):
-        return self.project.name + ': ' + self.name + ' v' + self.version
+        return 'id=' + str(self.pk) + ' name=' + self.name + ' version=' + self.version
