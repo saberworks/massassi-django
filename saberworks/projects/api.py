@@ -61,24 +61,6 @@ def add_project(
 
     return { "success": True, "project": new_project }
 
-@router.post("/new", response=NewProjectOut)
-def new_add_project(
-    request,
-    payload: ProjectIn,
-    image: Optional[UploadedFile] = NinjaFile(None)
-):
-    project = payload.dict()
-
-    games = project.pop('games', [])
-    tags = project.pop('tags', [])
-
-    project['user'] = request.user
-
-    obj = Project(**project, image = image)
-    obj.image.save("filename.jpg", image) # this will save project obj
-
-    return { "success": True, "project": obj }
-
 #
 # Edit a project (not the image, that requires a separate request)
 #
