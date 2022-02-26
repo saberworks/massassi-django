@@ -13,6 +13,7 @@ distlib==0.3.0
 distro==1.4.0
 Django==4.0.2
 django-appconf==1.0.4
+django-cors-headers==3.11.0
 django-imagekit==4.1.0
 django-ninja==0.17.0
 django-s3-storage==0.13.5
