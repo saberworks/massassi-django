@@ -6,7 +6,7 @@ from pydantic.typing import List, Optional
 from pydantic import fields
 
 from users.models import User
-from .models import File, Game, Post, Project, Tag, TagType
+from .models import File, Game, Post, Project, Screenshot, Tag, TagType
 
 # UserOut schema is very restricted, just send back id and username
 class UserOut(ModelSchema):
@@ -131,4 +131,17 @@ class FileOut(ModelSchema):
 class NewFileOut(Schema):
     success: bool
     file: Optional[FileOut] = None
+    messages: Optional[List[str]] = []
+
+#
+# Screenshot Schemas
+#
+class ScreenshotOut(ModelSchema):
+    class Config:
+        model = Screenshot
+        model_fields = ['id', 'user', 'project', 'image']
+
+class NewScreenshotOut(Schema):
+    success: bool
+    screenshot: ScreenshotOut
     messages: Optional[List[str]] = []

@@ -2,11 +2,12 @@ import json
 
 from django.http.response import Http404, HttpResponse
 from ninja import NinjaAPI
+from ninja.security import django_auth
 
 from levels.api import router as levels_router
 from saberworks.api import router as saberworks_router
 
-api = NinjaAPI(csrf=True)
+api = NinjaAPI(auth=django_auth, csrf=True)
 
 api.add_router("/levels/", levels_router)
 api.add_router("/saberworks/", saberworks_router)

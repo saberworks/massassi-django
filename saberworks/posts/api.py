@@ -21,7 +21,7 @@ router = Router(tags=['posts'], auth=django_auth)
 #
 # Get a list of posts for a project
 #
-@router.get("/projects/{project_id}/posts/", response=List[PostOut])
+@router.get("/projects/{project_id}/posts", response=List[PostOut])
 def get_posts_for_project(request, project_id: int):
     return get_list_or_404(Post, project_id=project_id, user=request.user)
 

@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 # TagTypes
 class TagType(MassassiBaseModel):
     slug = SlugField(max_length=40, null=False, blank=False)
-    
+
     def __str__(self):
         return self.slug
 
@@ -64,25 +64,24 @@ class Project(MassassiBaseModel, MassassiModelWithImage):
 
     def get_image_upload_to(self, filename):
         return 'saberworks/project/{}/{}'.format(self.slug, filename)
-    
+
     def __str__(self):
         return 'id=' + str(self.pk) + ' name=' + self.name
+
+class Screenshot(MassassiBaseModel, MassassiModelWithImage):
+    user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
+    project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)
+
+    def get_image_upload_to(self, filename):
+        return 'saberworks/project/{}/images/{}'.format(self.project.slug, filename)
 
 # Posts (can contain text, image, or both)
 class Post(MassassiBaseModel, MassassiModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)
-    title = models.CharField(max_length=256, blank=False)
+    title = models.CharField(max_length=256, null=False, blank=False)
     slug = models.SlugField(max_length=40, null=False, blank=False, editable=False, unique=True)
-    text = models.TextField(blank=True)
-
-    def clean(self):
-        cleaned_data = super().clean()
-
-        if not self.text and not self.image:
-            raise ValidationError({'text': 'Please add text, an image, or both.'})
-
-        return cleaned_data
+    text = models.TextField(null=False, blank=False)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -113,7 +112,7 @@ class File(MassassiBaseModel, MassassiModelWithFile, MassassiModelWithImage):
         return os.path.join(
             "saberworks/project/{}/{}/{}".format(project_slug, version, filename)
         )
-    
+
     def get_image_upload_to(self, filename):
         # saberworks/{project_slug}/{version}/{filename}
         project_slug = self.project.slug

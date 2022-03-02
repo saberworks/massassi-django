@@ -10,6 +10,7 @@ from .schemas import GameOut, TagOut, TagTypeOut
 from .files.api import router as files_router
 from .posts.api import router as posts_router
 from .projects.api import router as projects_router
+from .screenshots.api import router as screenshots_router
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +20,7 @@ router = Router()
 router.add_router('/', projects_router)
 router.add_router('/', posts_router)
 router.add_router('/', files_router)
+router.add_router('/', screenshots_router)
 
 @router.get("/games", response=List[GameOut], tags=['games'])
 def get_games(request):
