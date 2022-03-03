@@ -96,6 +96,9 @@ class Post(MassassiBaseModel, MassassiModelWithImage):
     def __str__(self):
         return 'id=' + str(self.pk) + ' title=' + self.title
 
+    class Meta:
+        ordering = ['-created_at']
+
 # Files
 class File(MassassiBaseModel, MassassiModelWithFile, MassassiModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)

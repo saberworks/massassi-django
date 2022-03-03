@@ -65,7 +65,7 @@ class ProjectListOut(ModelSchema):
 
     class Config:
         model = Project
-        model_fields = ['id', 'user', 'name', 'slug', 'description', 'accent_color', 'image']
+        model_fields = ['id', 'user', 'name', 'slug', 'description', 'accent_color', 'image', 'created_at']
 
 class ProjectIn(ModelSchema):
     games: List[int] = [] # list of game IDs
@@ -82,7 +82,7 @@ class ProjectOut(ModelSchema):
 
     class Config:
         model = Project
-        model_fields = ['id', 'user', 'games', 'tags', 'name', 'slug', 'description', 'accent_color', 'image']
+        model_fields = ['id', 'user', 'games', 'tags', 'name', 'slug', 'description', 'accent_color', 'image', 'created_at']
 
 class NewProjectOut(Schema):
     success: bool
@@ -104,7 +104,7 @@ class PostOut(ModelSchema):
 
     class Config:
         model = Post
-        model_fields = ['id', 'user', 'project', 'title', 'slug', 'text', 'image']
+        model_fields = ['id', 'user', 'project', 'title', 'slug', 'text', 'image', 'created_at']
 
 class NewPostOut(Schema):
     success: bool
@@ -126,7 +126,7 @@ class FileOut(ModelSchema):
 
     class Config:
         model = File
-        model_fields = ['id', 'user', 'project', 'name', 'version', 'description', 'file', 'image']
+        model_fields = ['id', 'user', 'project', 'name', 'version', 'description', 'file', 'image', 'created_at']
 
 class NewFileOut(Schema):
     success: bool
@@ -139,7 +139,7 @@ class NewFileOut(Schema):
 class ScreenshotOut(ModelSchema):
     class Config:
         model = Screenshot
-        model_fields = ['id', 'user', 'project', 'image']
+        model_fields = ['id', 'user', 'project', 'image', 'created_at']
 
 class NewScreenshotOut(Schema):
     success: bool

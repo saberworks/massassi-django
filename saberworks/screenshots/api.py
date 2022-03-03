@@ -50,3 +50,34 @@ def add_screenshot(request, project_id: int, image: UploadedFile):
     new_screenshot = form.save()
 
     return { "success": True, "screenshot": new_screenshot }
+
+#
+# Delete a screenshot
+#
+@router.delete("/projects/{project_id}/screenshots/{screenshot_id}")
+def delete_screenshot(request, project_id: int, screenshot_id: int):
+    """
+    Deletes a screenshot.
+
+    WARNING: This is permanent, there is no recovery.
+    """
+
+    screenshot = get_object_or_404(
+        Screenshot, id=screenshot_id, project_id=project_id, user=request.user
+    )
+
+    # currently there are no associated objects/foreign keys for screenshots,
+    # but I guess there might be some day?
+    try:
+        screenshot.delete()
+    except RestrictedError as error:
+        message = "This {} associated with this screenshot prevents deletion: {}"
+        messages = []
+
+        for item in error.restricted_objects:
+            classname = item.__class__.__name__
+            messages.append(message.format(classname, str(item)))
+
+        return { "success": False, "messages": messages }
+
+    return { "success": True }
