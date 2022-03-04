@@ -62,24 +62,24 @@ def add_project(
     return { "success": True, "project": new_project }
 
 #
-# Edit a project (not the image, that requires a separate request)
+# Edit a project
 #
-@router.put("/projects/{project_id}", response=NewProjectOut)
+@router.post("/projects/{project_id}", response=NewProjectOut)
 def edit_project(
     request,
     project_id: int,
     payload: ProjectIn,
+    image: Optional[UploadedFile] = NinjaFile(None)
 ):
     """
-    Edit basic information about a project.  `POST` to
-    `projects/{project_id}/image` to set the project image.
+    Edit basic information about a project.
     """
 
     project = get_object_or_404(Project, id=project_id, user=request.user)
 
     data = payload.dict()
 
-    form = ProjectEditForm(data, instance=project)
+    form = ProjectEditForm(data, { "image": image }, instance=project)
 
     if not form.is_valid():
         messages = gather_error_messages(form)

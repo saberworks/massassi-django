@@ -68,6 +68,9 @@ class Project(MassassiBaseModel, MassassiModelWithImage):
     def __str__(self):
         return 'id=' + str(self.pk) + ' name=' + self.name
 
+    class Meta:
+        ordering = ['-created_at']
+
 class Screenshot(MassassiBaseModel, MassassiModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)

@@ -10,7 +10,7 @@ class ProjectForm(ModelForm):
 class ProjectEditForm(ModelForm):
     class Meta:
         model = Project
-        fields = ['games', 'tags', 'name', 'description', 'accent_color']
+        fields = ['games', 'tags', 'name', 'description', 'accent_color', 'image']
 
 class ProjectSetImageForm(ModelForm):
     class Meta:
