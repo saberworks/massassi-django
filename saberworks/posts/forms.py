@@ -10,7 +10,7 @@ class PostForm(ModelForm):
 class PostEditForm(ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'text']
+        fields = ['title', 'text', 'image']
 
 class PostSetImageForm(ModelForm):
     class Meta:

@@ -44,6 +44,29 @@ def get_project(request, project_id: int):
 def add_project(
     request,
     payload: ProjectIn,
+):
+    project = payload.dict()
+
+    project['user'] = request.user
+
+    form = ProjectForm(project)
+
+    if not form.is_valid():
+        messages = gather_error_messages(form)
+
+        return { "success": False, "messages": messages }
+
+    new_project = form.save()
+
+    return { "success": True, "project": new_project }
+
+#
+# Create a new project with image
+#
+@router.post("/projects.with_image", response=NewProjectOut)
+def add_project_with_image(
+    request,
+    payload: ProjectIn,
     image: Optional[UploadedFile] = NinjaFile(None)
 ):
     project = payload.dict()
@@ -62,19 +85,39 @@ def add_project(
     return { "success": True, "project": new_project }
 
 #
-# Edit a project
+# Edit a project without image
+#
+@router.put("/projects/{project_id}", response=NewProjectOut)
+def edit_project(
+    request,
+    project_id: int,
+    payload: ProjectIn,
+):
+    project = get_object_or_404(Project, id=project_id, user=request.user)
+
+    data = payload.dict()
+
+    form = ProjectEditForm(data, instance=project)
+
+    if not form.is_valid():
+        messages = gather_error_messages(form)
+
+        return { "success": False, "messages": messages }
+
+    edited_project = form.save()
+
+    return { "success": True, "project": edited_project }
+
+#
+# Edit a project with image
 #
 @router.post("/projects/{project_id}", response=NewProjectOut)
-def edit_project(
+def edit_project_with_image(
     request,
     project_id: int,
     payload: ProjectIn,
     image: Optional[UploadedFile] = NinjaFile(None)
 ):
-    """
-    Edit basic information about a project.
-    """
-
     project = get_object_or_404(Project, id=project_id, user=request.user)
 
     data = payload.dict()

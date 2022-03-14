@@ -42,8 +42,12 @@ def add_post(
     request,
     project_id: int,
     payload: PostIn,
-    uploaded_image: Optional[UploadedFile] = NinjaFile(None)
 ):
+    """
+    Create a new post without a post image.  This must be submitted
+    using content-type: application/json.  Note: you can use the
+    method that adds a post with an image even if you don't have an image.
+    """
     project = get_object_or_404(Project, id=project_id, user=request.user)
 
     post = payload.dict()
@@ -51,7 +55,7 @@ def add_post(
     post['user'] = request.user
     post['project'] = project.id
 
-    form = PostForm(post, { "image": uploaded_image })
+    form = PostForm(post)
 
     if not form.is_valid():
         messages = gather_error_messages(form)
@@ -63,7 +67,41 @@ def add_post(
     return { "success": True, "post": new_post }
 
 #
-# Edit a post (not the image, that requires a separate request)
+# Create a new post with image
+#
+@router.post("/projects/{project_id}/posts.with_image", response=NewPostOut)
+def add_post_with_image(
+    request,
+    project_id: int,
+    payload: PostIn,
+    image: Optional[UploadedFile] = NinjaFile(None)
+):
+    """
+    Create a new post, include a post image.  This must be submitted
+    using enctype=multipart/form-data.  Note: you can use this method even
+    if your post doesn't have an image, just leave the field blank.  But it
+    still must be submitted as form-data.
+    """
+    project = get_object_or_404(Project, id=project_id, user=request.user)
+
+    post = payload.dict()
+
+    post['user'] = request.user
+    post['project'] = project.id
+
+    form = PostForm(post, { "image": image })
+
+    if not form.is_valid():
+        messages = gather_error_messages(form)
+
+        return { "success": False, "messages": messages }
+
+    new_post = form.save()
+
+    return { "success": True, "post": new_post }
+
+#
+# Edit a post without an image
 #
 @router.put("/projects/{project_id}/posts/{post_id}", response=NewPostOut)
 def edit_post(
@@ -72,11 +110,6 @@ def edit_post(
     post_id: int,
     payload: PostIn,
 ):
-    """
-    Edit a post.  `POST` to `projects/{project_id}/posts/{post_id}/image` to
-    set the post image.
-    """
-
     post = get_object_or_404(
         Post, id=post_id, project_id=project_id, user=request.user
     )
@@ -84,6 +117,34 @@ def edit_post(
     data = payload.dict()
 
     form = PostEditForm(data, instance=post)
+
+    if not form.is_valid():
+        messages = gather_error_messages(form)
+
+        return { "success": False, "messages": messages }
+
+    edited_post = form.save()
+
+    return { "success": True, "post": edited_post }
+
+#
+# Edit a post with an image
+#
+@router.post("/projects/{project_id}/posts/{post_id}", response=NewPostOut)
+def edit_post_with_image(
+    request,
+    project_id: int,
+    post_id: int,
+    payload: PostIn,
+    image: Optional[UploadedFile] = NinjaFile(None)
+):
+    post = get_object_or_404(
+        Post, id=post_id, project_id=project_id, user=request.user
+    )
+
+    data = payload.dict()
+
+    form = PostEditForm(data, { "image": image }, instance=post)
 
     if not form.is_valid():
         messages = gather_error_messages(form)
