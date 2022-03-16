@@ -1,4 +1,5 @@
 import logging
+import pprint
 
 from django.db.models.deletion import RestrictedError
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -8,10 +9,10 @@ from ninja.security import django_auth
 from pydantic.typing import List, Optional
 
 from saberworks.models import File, Project
-from saberworks.schemas import FileOut, FileIn, NewFileOut
+from saberworks.schemas import FileOut, FileIn, NewFileOut, NewStagedFileOut
 from saberworks.util import gather_error_messages
 
-from .forms import FileForm, FileEditForm, FileSetImageForm
+from .forms import FileForm, FileEditForm, FileSetFileForm, FileSetImageForm, StageFileForm
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +35,53 @@ def get_file_for_project(request, project_id, file_id):
     )
 
 #
+# Stage a file
+#
+# This means a request comes in as a new file upload for a specific project.
+# The only metadata we have is the project_id and the user_id (from the
+# request).  We insert a blank/dummy row to get a file_id and return that.
+#
+@router.post("/projects/{project_id}/files.stage", response=NewStagedFileOut)
+def stage_file(request, project_id: int):
+    project = get_object_or_404(Project, id=project_id, user=request.user)
+
+    file_data = {
+        "project": project_id,
+        "user": request.user,
+        "title": "TEMP",
+        "version": "TEMP",
+        "description": "TEMP",
+        "image": None,
+        "file": None,
+    }
+
+    form = StageFileForm(file_data)
+
+    if not form.is_valid():
+        messages = gather_error_messages(form)
+
+        return { "success": False, "messages": messages }
+
+    staged_file = form.save()
+
+    return { "success": True, "file": staged_file }
+
+@router.post("/projects/{project_id}/files.upload/{file_id}", response=NewFileOut)
+def upload_file(request, project_id: int, file_id: int, file: UploadedFile):
+    file_row = get_object_or_404(File, project=project_id, id=file_id, user=request.user)
+
+    form = FileSetFileForm(None, { "file": file }, instance=file_row)
+
+    if not form.is_valid():
+        messages = gather_error_messages(form)
+
+        return { "success": False, "messages": messages }
+
+    staged_file = form.save()
+
+    return { "success": True, "file": staged_file }
+
+#
 # Add new file to project
 #
 @router.post("/projects/{project_id}/files", response=NewFileOut)
@@ -41,17 +89,17 @@ def add_file(
     request,
     project_id: int,
     payload: FileIn,
-    uploaded_file: UploadedFile,
-    uploaded_image: Optional[UploadedFile] = NinjaFile(None)
+    file: UploadedFile,
+    image: Optional[UploadedFile] = NinjaFile(None)
 ):
     project = get_object_or_404(Project, id=project_id, user=request.user)
 
-    file = payload.dict()
+    body = payload.dict()
 
-    file['user'] = request.user
-    file['project'] = project.id
+    body['user'] = request.user
+    body['project'] = project.id
 
-    form = FileForm(file, { "file": uploaded_file, "image": uploaded_image })
+    form = FileForm(body, { "file": file, "image": image })
 
     if not form.is_valid():
         messages = gather_error_messages(form)
@@ -63,31 +111,24 @@ def add_file(
     return { "success": True, "file": new_file }
 
 #
-# Edit a file (not the image, that requires a separate request)
+# Edit a file.  Note this is a POST not a PUT because web server doesn't accept
+# request BODY on PUT requests.
 #
-@router.put("/projects/{project_id}/files/{file_id}", response=NewFileOut)
+@router.post("/projects/{project_id}/files/{file_id}", response=NewFileOut)
 def edit_file(
     request,
     project_id: int,
     file_id: int,
     payload: FileIn,
+    image: Optional[UploadedFile] = NinjaFile(None),
 ):
-    """
-    Edit a file.  `POST` to `projects/{project_id}/files/{file_id}/image` to
-    set the file image.
-
-    Note: only name, version, and description can be changed (and image if you
-    follow the instructions above).  If you want to change the actual file,
-    you should delete this file and upload a new one.
-    """
-
     file = get_object_or_404(
         File, id=file_id, project_id=project_id, user=request.user
     )
 
     data = payload.dict()
 
-    form = FileEditForm(data, instance=file)
+    form = FileEditForm(data, { "image": image }, instance=file)
 
     if not form.is_valid():
         messages = gather_error_messages(form)
@@ -107,6 +148,7 @@ def set_file_image(request, project_id: int, file_id: int, image: UploadedFile):
     Set the file image.  If you want to delete the file image, send a
     `DELETE` request to `/projects/{project_id}/files/{file_id}/image`.
     """
+
     file = get_object_or_404(
         File, id=file_id, project_id=project_id, user=request.user
     )

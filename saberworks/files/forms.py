@@ -6,14 +6,14 @@ class FileForm(ModelForm):
     class Meta:
         model = File
         fields = [
-            'project', 'name', 'version', 'description',
+            'project', 'title', 'name', 'version', 'description',
             'file', 'image', 'user'
         ]
 
 class FileEditForm(ModelForm):
     class Meta:
         model = File
-        fields = ['name', 'version', 'description']
+        fields = ['title', 'version', 'description', 'image']
 
 class FileSetImageForm(ModelForm):
     class Meta:
@@ -24,3 +24,8 @@ class FileSetFileForm(ModelForm):
     class Meta:
         model = File
         fields = ['file']
+
+class StageFileForm(ModelForm):
+    class Meta:
+        model = File
+        fields = ['project', 'title', 'version', 'description', 'user']

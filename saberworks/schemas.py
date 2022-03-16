@@ -119,14 +119,33 @@ class NewPostOut(Schema):
 class FileIn(ModelSchema):
     class Config:
         model = File
-        model_fields = ['name', 'version', 'description']
+        model_fields = ['title', 'version', 'description']
 
 class FileOut(ModelSchema):
     image: Optional[str]
 
     class Config:
         model = File
-        model_fields = ['id', 'user', 'project', 'name', 'version', 'description', 'file', 'image', 'created_at']
+        model_fields = [
+            'id', 'user', 'project', 'title', 'name', 'version', 'description',
+            'file', 'file_size', 'file_hash', 'image', 'created_at'
+        ]
+
+class StagedFileOut(ModelSchema):
+    image: Optional[str]
+    file: Optional[str]
+
+    class Config:
+        model = File
+        model_fields = [
+            'id', 'user', 'project', 'title', 'version', 'description',
+            'created_at'
+        ]
+
+class NewStagedFileOut(Schema):
+    success: bool
+    file: Optional[StagedFileOut] = None
+    messages: Optional[List[str]]
 
 class NewFileOut(Schema):
     success: bool

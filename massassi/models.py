@@ -1,10 +1,12 @@
 import hashlib
+import logging
 
 from django.db import models
 from django.utils import timezone
 from imagekit.models import ImageSpecField
 from pilkit.processors import Thumbnail
 
+logger = logging.getLogger(__name__)
 
 #
 # All models should inherit from this, it adds fields for tracking
@@ -35,18 +37,19 @@ class MassassiModelWithFile(models.Model):
     file_hash = models.CharField(max_length=40, blank=True, editable=False)
 
     def save(self, *args, **kwargs):
-        self.file_size = self.file.file.size
-
         super().save(*args, **kwargs)
 
-        with open(self.file.path, "rb") as f:
-            file_hash = hashlib.sha1()
-            while chunk := f.read(8192):
-                file_hash.update(chunk)
+        if(self.file):
+            self.file_size = self.file.file.size
 
-        self.file_hash = file_hash.hexdigest()
+            with open(self.file.path, "rb") as f:
+                file_hash = hashlib.sha1()
+                while chunk := f.read(8192):
+                    file_hash.update(chunk)
 
-        super().save()
+            self.file_hash = file_hash.hexdigest()
+
+            super().save()
 
     class Meta:
         abstract = True

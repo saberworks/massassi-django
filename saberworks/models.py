@@ -1,5 +1,6 @@
 import logging
 import os
+import pprint
 
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -106,27 +107,34 @@ class Post(MassassiBaseModel, MassassiModelWithImage):
 class File(MassassiBaseModel, MassassiModelWithFile, MassassiModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)
+    title = models.CharField(max_length=256, null=False, blank=False)
     name = models.CharField(max_length=256, null=False, blank=False)
     version = models.CharField(max_length=16, null=False, blank=False)
     description = models.TextField(blank=False)
 
     def get_file_upload_to(self, filename):
-        # saberworks/{project_slug}/{version}/{name}.ext
         project_slug = self.project.slug
-        version = self.version
 
         return os.path.join(
-            "saberworks/project/{}/{}/{}".format(project_slug, version, filename)
+            "saberworks/project/{}/{}".format(project_slug, filename)
         )
 
     def get_image_upload_to(self, filename):
-        # saberworks/{project_slug}/{version}/{filename}
         project_slug = self.project.slug
-        version = self.version
 
         return os.path.join(
-            "saberworks/project/{}/{}/{}".format(project_slug, version, filename)
+            "saberworks/project/{}/{}".format(project_slug, filename)
         )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if(self.file):
+            self.name = os.path.basename(self.file.name)
+            super().save()
 
     def __str__(self):
         return 'id=' + str(self.pk) + ' name=' + self.name + ' version=' + self.version
+
+    class Meta:
+        ordering = ['-created_at']
