@@ -22,6 +22,19 @@ router.add_router('/', posts_router)
 router.add_router('/', files_router)
 router.add_router('/', screenshots_router)
 
+@router.get("/is_logged_in", tags=['user'])
+def is_logged_in(request):
+    response = {
+        "is_logged_in": False,
+        "username": "",
+    }
+
+    if request.user.is_authenticated:
+        response["is_logged_in"] = True
+        response["username"] = request.user.username
+
+    return response
+
 @router.get("/games", response=List[GameOut], tags=['games'])
 def get_games(request):
     return get_list_or_404(Game)
