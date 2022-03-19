@@ -6,11 +6,12 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.fields import SlugField
 from django.utils.text import slugify
+from django.utils.html import mark_safe
 
-from massassi.models import MassassiBaseModel, MassassiModelWithFile, MassassiModelWithImage
+from massassi.models import MassassiBaseModel
+from .abstract_models import SaberworksModelWithFile, SaberworksModelWithImage
 
 logger = logging.getLogger(__name__)
-
 
 # TagTypes
 class TagType(MassassiBaseModel):
@@ -35,7 +36,7 @@ class Tag(MassassiBaseModel):
 
 # Games
 # Adding games is an admin task so no need to autogenerate slugs.
-class Game(MassassiBaseModel, MassassiModelWithImage):
+class Game(MassassiBaseModel, SaberworksModelWithImage):
     name = models.CharField(max_length=64, null=False, blank=False)
     slug = models.SlugField(max_length=40, null=False, blank=False, unique=True)
     description = models.TextField(null=True, blank=True)
@@ -47,7 +48,7 @@ class Game(MassassiBaseModel, MassassiModelWithImage):
         return self.name
 
 # Projects
-class Project(MassassiBaseModel, MassassiModelWithImage):
+class Project(MassassiBaseModel, SaberworksModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     games = models.ManyToManyField('saberworks.Game', blank=True)
     tags = models.ManyToManyField('saberworks.Tag', blank=True)
@@ -72,15 +73,19 @@ class Project(MassassiBaseModel, MassassiModelWithImage):
     class Meta:
         ordering = ['-created_at']
 
-class Screenshot(MassassiBaseModel, MassassiModelWithImage):
+class Screenshot(MassassiBaseModel, SaberworksModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)
 
     def get_image_upload_to(self, filename):
         return 'saberworks/project/{}/images/{}'.format(self.project.slug, filename)
 
-# Posts (can contain text, image, or both)
-class Post(MassassiBaseModel, MassassiModelWithImage):
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="150" />' % (self.image.url))
+
+
+# Posts (must contain title and text, image is optional)
+class Post(MassassiBaseModel, SaberworksModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)
     title = models.CharField(max_length=256, null=False, blank=False)
@@ -104,7 +109,7 @@ class Post(MassassiBaseModel, MassassiModelWithImage):
         ordering = ['-created_at']
 
 # Files
-class File(MassassiBaseModel, MassassiModelWithFile, MassassiModelWithImage):
+class File(MassassiBaseModel, SaberworksModelWithFile, SaberworksModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)
     title = models.CharField(max_length=256, null=False, blank=False)

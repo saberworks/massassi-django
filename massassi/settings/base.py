@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'saberworks.apps.SaberworksConfig',
     'imagekit',
     'corsheaders',
+    'django_s3_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -168,3 +169,10 @@ EMAIL_USE_TLS = True
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 50
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1073741824 # 1GB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 1073741824 # 1GB
+
+# S3 settings for saberworks user-uploaded files.
+# The AWS region to connect to.
+AWS_REGION = "us-west-2"
+AWS_BUCKET_SABERWORKS = get_env_variable('AWS_BUCKET_SABERWORKS')
+AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')

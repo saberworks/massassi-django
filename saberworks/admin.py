@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from massassi.admin import MassassiModelAdmin
-from .models import TagType, Tag, Game, Project, Post, File
+from .models import TagType, Tag, Game, Project, Post, File, Screenshot
 
 class TagTypeAdmin(MassassiModelAdmin):
     list_display = ('slug', 'created_by')
@@ -47,11 +47,24 @@ class PostAdmin(MassassiModelAdmin):
     fields = ('title', 'project', 'text', 'image', 'user')
 
 class FileAdmin(MassassiModelAdmin):
-    list_display = ('project', 'name', 'version', 'user', 'name', 'version')
+    list_display = ('name', 'version', 'file_size', 'user', 'get_project_name',)
     ordering = ('-created_at',)
     readonly_fields = ('file_hash', 'file_size', 'created_by',)
-    fields = ('project', 'name', 'description', 'image', 'version', 'file')
+    fields = ('project', 'name', 'description', 'image', 'version', 'file', 'file_size', 'file_hash')
 
+    @admin.display(description='Project', ordering='project__name')
+    def get_project_name(self, obj):
+        return obj.project.name
+
+class ScreenshotAdmin(MassassiModelAdmin):
+    list_display = ('image_tag', 'get_project_name', 'user', 'created_at',)
+    ordering = ('-created_at',)
+    readonly_fields = ('created_at', 'created_by',)
+    fields = ('image',)
+
+    @admin.display(description='Project', ordering='project__name')
+    def get_project_name(self, obj):
+        return obj.project.name
 
 admin.site.register(TagType, TagTypeAdmin)
 admin.site.register(Tag, TagAdmin)
@@ -59,3 +72,4 @@ admin.site.register(Game, GameAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(File, FileAdmin)
+admin.site.register(Screenshot, ScreenshotAdmin)
