@@ -22,7 +22,13 @@ router = Router(tags=['projects'], auth=django_auth)
 #
 @router.get("/projects", response=List[ProjectListOut])
 def get_projects(request):
-    return get_list_or_404(Project, user=request.user)
+    return get_list_or_404(
+        Project.objects
+            .prefetch_related("tags__type")
+            .select_related('user')
+            .prefetch_related("games"),
+        user=request.user,
+    )
 
 #
 # Get a single project

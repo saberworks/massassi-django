@@ -61,11 +61,16 @@ class TagOut(ModelSchema):
 # values. (and it doesn't look up anything in many-to-many relationships -- so
 # no games or tags)
 class ProjectListOut(ModelSchema):
+    games: List[GameOut] = []
+    tags: List[TagOut] = []
     image: Optional[str]
 
     class Config:
         model = Project
-        model_fields = ['id', 'user', 'name', 'slug', 'description', 'accent_color', 'image', 'created_at']
+        model_fields = [
+            'id', 'user', 'name', 'slug', 'description', 'accent_color',
+            'created_at',
+        ]
 
 class ProjectIn(ModelSchema):
     games: List[int] = [] # list of game IDs
@@ -82,7 +87,10 @@ class ProjectOut(ModelSchema):
 
     class Config:
         model = Project
-        model_fields = ['id', 'user', 'games', 'tags', 'name', 'slug', 'description', 'accent_color', 'image', 'created_at']
+        model_fields = [
+            'id', 'user', 'name', 'slug', 'description', 'accent_color',
+            'created_at'
+        ]
 
 class NewProjectOut(Schema):
     success: bool
