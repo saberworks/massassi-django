@@ -9,7 +9,9 @@ from imagekit.models import ImageSpecField
 from pilkit.processors import Thumbnail
 from pprint import pprint
 
-s3storage = S3Storage(aws_s3_bucket_name=settings.AWS_BUCKET_SABERWORKS)
+s3bucket = settings.AWS_BUCKET_SABERWORKS
+s3storage = S3Storage(aws_s3_bucket_name=s3bucket)
+
 
 logger = logging.getLogger(__name__)
 
@@ -49,8 +51,17 @@ class SaberworksModelWithFile(models.Model):
             #     file_hash = hashlib.sha1()
             #     while chunk := f.read(8192):
             #         file_hash.update(chunk)
-
+            #
             # self.file_hash = file_hash.hexdigest()
+
+            conn = s3storage.s3_connection
+
+            details = conn.head_object(
+                Bucket=s3bucket,
+                Key=str(self.file.file),
+            )
+
+            self.file_hash = details.get("ETag").replace('"', '')
 
             super().save()
 

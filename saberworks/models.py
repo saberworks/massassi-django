@@ -42,7 +42,7 @@ class Game(MassassiBaseModel, SaberworksModelWithImage):
     description = models.TextField(null=True, blank=True)
 
     def get_image_upload_to(self, filename):
-        return 'saberworks/game/{}'.format(filename)
+        return 'saberworks/games/{}'.format(filename)
 
     def __str__(self):
         return self.name
@@ -65,7 +65,7 @@ class Project(MassassiBaseModel, SaberworksModelWithImage):
         super().save()
 
     def get_image_upload_to(self, filename):
-        return 'saberworks/project/{}/{}'.format(self.slug, filename)
+        return 'saberworks/projects/{}/{}'.format(self.slug, filename)
 
     def __str__(self):
         return 'id=' + str(self.pk) + ' name=' + self.name
@@ -78,7 +78,7 @@ class Screenshot(MassassiBaseModel, SaberworksModelWithImage):
     project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)
 
     def get_image_upload_to(self, filename):
-        return 'saberworks/project/{}/images/{}'.format(self.project.slug, filename)
+        return 'saberworks/projects/{}/images/{}'.format(self.project.slug, filename)
 
     def image_tag(self):
         return mark_safe('<img src="%s" width="150" />' % (self.image.url))
@@ -100,7 +100,7 @@ class Post(MassassiBaseModel, SaberworksModelWithImage):
         super().save()
 
     def get_image_upload_to(self, filename):
-        return 'saberworks/project/{}/{}'.format(self.project.slug, filename)
+        return 'saberworks/projects/{}/{}'.format(self.project.slug, filename)
 
     def __str__(self):
         return 'id=' + str(self.pk) + ' title=' + self.title
@@ -121,14 +121,14 @@ class File(MassassiBaseModel, SaberworksModelWithFile, SaberworksModelWithImage)
         project_slug = self.project.slug
 
         return os.path.join(
-            "saberworks/project/{}/{}".format(project_slug, filename)
+            "saberworks/projects/{}/{}".format(project_slug, filename)
         )
 
     def get_image_upload_to(self, filename):
         project_slug = self.project.slug
 
         return os.path.join(
-            "saberworks/project/{}/{}".format(project_slug, filename)
+            "saberworks/projects/{}/{}".format(project_slug, filename)
         )
 
     def save(self, *args, **kwargs):
