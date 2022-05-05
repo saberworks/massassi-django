@@ -23,7 +23,11 @@ router = Router(tags=['files'], auth=django_auth)
 #
 @router.get("/projects/{project_id}/files", response=List[FileOut])
 def get_files_for_project(request, project_id):
-    return get_list_or_404(File, project_id=project_id, user=request.user)
+    return get_list_or_404(
+        File.objects,
+        project_id=project_id,
+        user=request.user,
+    )
 
 #
 # Get a single file from project

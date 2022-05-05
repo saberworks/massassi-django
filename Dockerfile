@@ -36,6 +36,6 @@ RUN chown -R massassi:massassi /app/massassi-django/massassi-django
 
 USER ${APP_USER}:${APP_USER}
 
-ENTRYPOINT ["/entrypoint.sh"]
+# ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["gunicorn", "--chdir", "/app/massassi-django/massassi-django", "massassi.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["pipenv", "run", "gunicorn", "--workers", "4", "--worker-class", "gevent", "--timeout", "300", "--graceful-timeout", "60", "--chdir", "/app/massassi-django/massassi-django", "--bind", "0.0.0.0:8000", "massassi.wsgi:application"]

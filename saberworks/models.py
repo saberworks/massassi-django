@@ -131,13 +131,6 @@ class File(MassassiBaseModel, SaberworksModelWithFile, SaberworksModelWithImage)
             "saberworks/projects/{}/{}".format(project_slug, filename)
         )
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        if(self.file):
-            self.name = os.path.basename(self.file.name)
-            super().save()
-
     def __str__(self):
         return 'id=' + str(self.pk) + ' name=' + self.name + ' version=' + self.version
 

@@ -1,5 +1,6 @@
 import hashlib
 import logging
+import os
 
 from django.conf import settings
 from django.db import models
@@ -41,29 +42,22 @@ class SaberworksModelWithFile(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
+
         if(self.file):
-            self.file_size = self.file.file.size
-
-            # TODO TODO TODO
-            # figure out how to get a file hash now that the files are
-            # sent to s3 and don't exist on the filesystem... urgh.
-            # with open(self.file.path, "rb") as f:
-            #     file_hash = hashlib.sha1()
-            #     while chunk := f.read(8192):
-            #         file_hash.update(chunk)
-            #
-            # self.file_hash = file_hash.hexdigest()
-
             conn = s3storage.s3_connection
 
             details = conn.head_object(
                 Bucket=s3bucket,
-                Key=str(self.file.file),
+                Key=str(self.file.name),
             )
 
-            self.file_hash = details.get("ETag").replace('"', '')
+            pprint(details)
 
-            super().save()
+            self.file_hash = details.get("ETag").replace('"', '')
+            self.file_size = details.get("ContentLength")
+            self.name = os.path.basename(self.file.name)
+
+            super().save(update_fields=['file_hash', 'file_size', 'name'])
 
     class Meta:
         abstract = True
