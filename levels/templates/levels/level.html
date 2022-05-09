@@ -5,11 +5,6 @@
 {% block content %}
     <h1>{% block title %}{{ level.name|safe }}{% endblock %}</h1>
 
-    <!-- This is here so 3dpreview can download the level without incrementing
-         the counter.  It caches levels anyway so it was only 1 download per
-         level, but make it easy anyway. -->
-    <!-- DIRECT DOWNLOAD: {{ level.pk }} {{ level.file.url }} -->
-
     {% include "levels/level_crumb.html" %}
 
     <div class="level-info-top-container">
