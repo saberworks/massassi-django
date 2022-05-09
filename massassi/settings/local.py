@@ -10,6 +10,9 @@ ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS=['*']
 
+SITE_URL = "http://localhost"
+THREE_DEE_PREVIEW_URL = "https://3dpreview.massassi.org"
+
 # SECURITY WARNING: don't allow this many fields in production
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
 

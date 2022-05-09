@@ -6,6 +6,9 @@ ALLOWED_HOSTS = ['www.massassi.net', 'massassi.net']
 
 CSRF_TRUSTED_ORIGINS=['https://www.massassi.net']
 
+SITE_URL = "https://www.massassi.net"
+THREE_DEE_PREVIEW_URL = "https://3dpreview.massassi.net"
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

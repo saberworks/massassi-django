@@ -103,8 +103,8 @@
             <div class="level-3d-preview">
                 <h2>3D Preview</h2>
 
-                <p><a href="https://3dpreview.massassi.net/level/{{ level.pk }}/?ownsgame=1">Full Size 3D Preview for {{ level.name|safe }}</a></p>
-                <iframe src="https://3dpreview.massassi.net/level/{{ level.pk }}/?ownsgame=1" width="640" height="480" scrolling="no"></iframe>
+                <p><a href="{{ settings.THREE_DEE_PREVIEW_URL }}/level/?ownsgame=1&amp;url={{ settings.SITE_URL }}{{ level.file.url|urlencode }}">Full Size 3D Preview for {{ level.name|safe }}</a></p>
+                <iframe src="{{ settings.THREE_DEE_PREVIEW_URL }}/level/?ownsgame=1&amp;url={{ settings.SITE_URL }}{{ level.file.url|urlencode }}" width="640" height="480" scrolling="no"></iframe>
             </div>
         {% endif %}
     </div>
