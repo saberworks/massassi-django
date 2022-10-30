@@ -67,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django_settings_export.settings_export',
             ],
         },
     },
@@ -177,3 +178,10 @@ AWS_BUCKET_SABERWORKS = get_env_variable('AWS_BUCKET_SABERWORKS')
 AWS_ACCESS_KEY_ID = get_env_variable('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = get_env_variable('AWS_SECRET_ACCESS_KEY')
 AWS_S3_BUCKET_AUTH = False
+
+# Anything in here will be available to TEMPLATES so be careful
+SETTINGS_EXPORT = [
+    'SITE_URL',
+    'THREE_DEE_PREVIEW_URL',
+]
+

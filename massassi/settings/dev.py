@@ -6,6 +6,12 @@ ALLOWED_HOSTS = ['www.massassi.org']
 
 CSRF_TRUSTED_ORIGINS=['https://www.massassi.org']
 
+SITE_URL = "https://www.massassi.org"
+THREE_DEE_PREVIEW_URL = "https://3dpreview.massassi.org"
+
+# SECURITY WARNING: don't allow this many fields in production
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 5000
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

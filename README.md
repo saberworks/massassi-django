@@ -15,7 +15,7 @@ This is a python/django project that replaces decades-old php3/4/5 code on [The 
 To get it up and running (these were from memory so hopefully they work):
 
 * Clone the repo and `cd` into the `massassi-django` directory
-* Create a virutal environment so you can install dependencies without interfering with your system python: `python3 -m venv ./env`
+* Create a virtual environment so you can install dependencies without interfering with your system python: `python3 -m venv ./env`
 * Activate your virtual environment: `source env/bin/activate`
 * Now when you use `python` from the command line in a terminal that has been "activated", it will use your virtual environment's python and you can safely install modules without interfering with any other project
 * Install the python dependencies: `pip install -r requirements.txt`
