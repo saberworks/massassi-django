@@ -92,7 +92,9 @@ class LevelComment(MassassiBaseModel):
     date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)
 
     class Meta:
+        verbose_name_plural = 'Level Comments'
         db_table = 'level_comments'
+
 
 class LevelRating(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
