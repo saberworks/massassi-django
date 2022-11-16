@@ -6,16 +6,16 @@ from .models import User
 
 class UserAdmin(BaseUserAdmin):
     list_display = (
-        'username', 'email', 'is_staff', 'is_superuser',
+        'username', 'email', 'is_active', 'is_staff', 'is_superuser',
         'date_joined', 'created_at', 'last_modified_at'
     )
-    list_filter = ('is_staff', 'is_superuser',)
+    list_filter = ('is_active', 'is_staff', 'is_superuser',)
     # I don't know what filter_horizontal was for but it's crashing
     #filter_horizontal = ('is_staff', 'is_superuser')
     readonly_fields = ('date_joined', 'created_at',)
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password',)}),
-        ('Permissions', {'fields': ('is_staff', 'is_superuser', 'groups', 'date_joined', 'created_at')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'date_joined', 'created_at')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
