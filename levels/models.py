@@ -84,6 +84,7 @@ class Level(MassassiBaseModel, MassassiModelWithFile):
     class Meta:
         db_table = 'levels'
 
+
 class LevelComment(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)

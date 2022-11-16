@@ -24,7 +24,6 @@ admin.site.register(Level, LevelAdmin)
 
 class LevelCommentAdmin(MassassiModelAdmin):
     list_display = ('id', 'level', 'user', 'comment', 'ip', 'date_created')
-    # list_display_links = ('id', 'level', 'user')
     search_fields = ('id', 'level__name', 'user__username', 'comment', 'ip', 'date_created')
     readonly_fields = ('id', 'level', 'user', 'comment', 'ip', 'date_created')
     fields = ('id', 'level', 'user', 'comment', 'ip', 'date_created')
