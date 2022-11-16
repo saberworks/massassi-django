@@ -48,3 +48,4 @@ class MassassiModelWithFile(models.Model):
 
     class Meta:
         abstract = True
+
