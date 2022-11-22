@@ -1,11 +1,14 @@
 from django.urls import path
 
+from rss.views import NewsFeed
+
 from . import views
 
 app_name = 'news'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
+    path('news_feed.xml', NewsFeed()),
     path('news_archive.html', views.OldNewsView.as_view(), name='oldnews'),
     path('news_search.html', views.SearchView.as_view(), name='oldsearch'),
     path('news_archive_<int:year>.html', views.YearView.as_view(), name='oldyear'),
