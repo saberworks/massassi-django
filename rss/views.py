@@ -17,7 +17,7 @@ class NewsFeed(Feed):
     description_template = "news/feed_item.html"
 
     def link(self):
-        return settings.SITE_URL
+        return settings.SITE_URL + "/"
 
     def feed_url(self):
         return settings.SITE_URL + "/news_feed.xml"
