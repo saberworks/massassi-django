@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib.syndication.views import Feed
 from django.urls import reverse
 from django.utils.feedgenerator import Atom1Feed
@@ -14,6 +15,12 @@ class NewsFeed(Feed):
     description = "Latest news from The Massassi Temple"
     feed_type = Atom1Feed
     description_template = "news/feed_item.html"
+
+    def link(self):
+        return settings.SITE_URL
+
+    def feed_url(self):
+        return settings.SITE_URL + "/news_feed.xml"
 
     def items(self):
         return News.objects.order_by('-date_posted')[:100]
