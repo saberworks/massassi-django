@@ -2,7 +2,7 @@ import logging
 
 from django.conf import settings
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.db import connection
 from django.http import HttpResponse
@@ -39,7 +39,7 @@ class RandomUrlView(generic.View):
     def get(self, request):
         random_logo = HolidayLogo.objects.random()
         random_logo_url = settings.SITE_URL + random_logo.logo.url
-        return HttpResponse(random_logo_url)
+        return redirect(random_logo_url)
 
 class YearView(generic.View):
     template_name = 'holiday/year.html'
