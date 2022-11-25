@@ -23,13 +23,13 @@ class TagAdmin(MassassiModelAdmin):
     fields = ('type', 'slug',)
 
 class GameAdmin(MassassiModelAdmin):
-    list_display = ('name', 'slug', 'created_by')
+    list_display = ('name', 'slug', 'color', 'created_by')
     list_filter = (
         ('created_by', admin.RelatedOnlyFieldListFilter),
     )
     ordering = ('name',)
     readonly_fields = ('created_by',)
-    fields = ('name', 'slug', 'description', 'image',)
+    fields = ('name', 'slug', 'color', 'description', 'image',)
 
 class ProjectAdmin(MassassiModelAdmin):
     list_display = ('name', 'slug', 'user', 'accent_color_tag')

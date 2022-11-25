@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'saberworks.apps.SaberworksConfig',
     'imagekit',
     'corsheaders',
+    'colorfield',
     'django_s3_storage',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -184,4 +185,3 @@ SETTINGS_EXPORT = [
     'SITE_URL',
     'THREE_DEE_PREVIEW_URL',
 ]
-

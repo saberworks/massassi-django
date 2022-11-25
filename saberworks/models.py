@@ -9,12 +9,12 @@ from django.utils.text import slugify
 from django.utils.html import mark_safe
 
 from massassi.models import MassassiBaseModel
-from .abstract_models import SaberworksModelWithFile, SaberworksModelWithImage
+from .abstract_models import SaberworksModelWithFile, SaberworksModelWithImage, SaberworksModelWithColor
 
 logger = logging.getLogger(__name__)
 
 # TagTypes
-class TagType(MassassiBaseModel):
+class TagType(MassassiBaseModel, SaberworksModelWithColor):
     slug = SlugField(max_length=40, null=False, blank=False)
 
     def __str__(self):
@@ -25,7 +25,7 @@ class TagManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().select_related('type')
 
-class Tag(MassassiBaseModel):
+class Tag(MassassiBaseModel, SaberworksModelWithColor):
     type = models.ForeignKey('saberworks.TagType', null=False, blank=False, on_delete=models.RESTRICT)
     slug = SlugField(max_length=40, null=False, blank=False, unique=True)
 
@@ -36,7 +36,7 @@ class Tag(MassassiBaseModel):
 
 # Games
 # Adding games is an admin task so no need to autogenerate slugs.
-class Game(MassassiBaseModel, SaberworksModelWithImage):
+class Game(MassassiBaseModel, SaberworksModelWithImage, SaberworksModelWithColor):
     name = models.CharField(max_length=64, null=False, blank=False)
     slug = models.SlugField(max_length=40, null=False, blank=False, unique=True)
     description = models.TextField(null=True, blank=True)
@@ -89,7 +89,7 @@ class Post(MassassiBaseModel, SaberworksModelWithImage):
     user = models.ForeignKey('users.User', null=False, blank=False, on_delete=models.RESTRICT)
     project = models.ForeignKey('saberworks.Project', null=False, blank=False, on_delete=models.RESTRICT)
     title = models.CharField(max_length=256, null=False, blank=False)
-    slug = models.SlugField(max_length=40, null=False, blank=False, editable=False, unique=True)
+    slug = models.SlugField(max_length=300, null=False, blank=False, editable=False, unique=True)
     text = models.TextField(null=False, blank=False)
 
     def save(self, *args, **kwargs):

@@ -24,7 +24,7 @@ class GameOut(ModelSchema):
 
     class Config:
         model = Game
-        model_fields = ['id', 'name', 'slug', 'description', 'image']
+        model_fields = ['id', 'name', 'slug', 'description', 'image', 'color']
 
 
 #
@@ -36,7 +36,7 @@ class TagTypeOut(ModelSchema):
 
     class Config:
         model = TagType
-        model_fields = ['id',]
+        model_fields = ['id', 'color']
 
 #
 # Tag Schemas
@@ -48,7 +48,7 @@ class TagOut(ModelSchema):
 
     class Config:
         model = Tag
-        model_fields = ['id',]
+        model_fields = ['id', 'color']
 
 
 #

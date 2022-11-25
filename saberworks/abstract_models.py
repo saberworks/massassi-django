@@ -2,6 +2,7 @@ import hashlib
 import logging
 import os
 
+from colorfield.fields import ColorField
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -77,6 +78,12 @@ class SaberworksModelWithImage(models.Model):
         format='JPEG',
         options={'quality': 85},
     )
+
+    class Meta:
+        abstract = True
+
+class SaberworksModelWithColor(models.Model):
+    color = ColorField(null=True, blank=True, default=None)
 
     class Meta:
         abstract = True
