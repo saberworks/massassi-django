@@ -57,10 +57,10 @@ class Level(MassassiBaseModel, MassassiModelWithFile):
     def save(self, *args, **kwargs):
         # If this block isn't here, the screenshot name ends up as None_1.jpg,
         # None_2.jpg.  It's because the `get_screenshot_*_upload_path`
-        # functions require an id, and if this instance has been saved before,
-        # the id will be none.  So this caches the screenshots, sets
-        # screenshots to None, saves the model, then sets the screenshots and
-        # resaves the model.  It seems like it would be better to use a
+        # functions require an id, and if this instance has not been saved
+        # before, the id will be none.  So this caches the screenshots, sets
+        # screenshots to None, saves the model, then re-sets the screenshots
+        # and resaves the model.  It seems like it would be better to use a
         # different file name that didn't require the id/pk.
         if self.pk is None:
             saved_screenshot_1 = self.screenshot_1
