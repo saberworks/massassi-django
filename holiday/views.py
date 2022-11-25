@@ -1,11 +1,17 @@
+import logging
+
+from django.conf import settings
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.db import connection
+from django.http import HttpResponse
 
 from massassi.dbutil import dictfetchall
 
 from .models import HolidayLogo
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.View):
@@ -28,6 +34,12 @@ class IndexView(generic.View):
 
             return dictfetchall(cursor)
 
+
+class RandomUrlView(generic.View):
+    def get(self, request):
+        random_logo = HolidayLogo.objects.random()
+        random_logo_url = settings.SITE_URL + random_logo.logo.url
+        return redirect(random_logo_url)
 
 class YearView(generic.View):
     template_name = 'holiday/year.html'

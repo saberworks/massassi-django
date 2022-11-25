@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from massassi.admin import MassassiModelAdmin
-from .models import LevelCategory, Level
+from .models import Level, LevelCategory, LevelComment
 
 class LevelCategoryAdmin(MassassiModelAdmin):
     list_display = ('id', 'name', 'path', 'game', 'enable_3dpreview')
@@ -21,3 +21,11 @@ class LevelAdmin(MassassiModelAdmin):
     )
 
 admin.site.register(Level, LevelAdmin)
+
+class LevelCommentAdmin(MassassiModelAdmin):
+    list_display = ('id', 'level', 'user', 'comment', 'ip', 'date_created')
+    search_fields = ('id', 'level__name', 'user__username', 'comment', 'ip', 'date_created')
+    readonly_fields = ('id', 'level', 'user', 'comment', 'ip', 'date_created')
+    fields = ('id', 'level', 'user', 'comment', 'ip', 'date_created')
+
+admin.site.register(LevelComment, LevelCommentAdmin)

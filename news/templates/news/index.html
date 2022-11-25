@@ -2,6 +2,12 @@
 
 {% block title %}The Massassi Temple: #1 Source For Everything Jedi Knight{% endblock %}
 
+{% block description %}Dark Forces II: Jedi Knight, Jedi Outcast, and Jedi Academy news, levels, mods, and tutorials.{% endblock %}
+
+{% block extrahead %}
+        <link rel="alternate" type="application/atom+xml" href="/news_feed.xml" />
+{% endblock %}
+
 {% block content %}
     {% if holiday_logo %}
         <div id="logo"><img src="{{ holiday_logo.logo.url }}" alt="Holiday Logo" title="Logo by {{ holiday_logo.author }}!"></div>

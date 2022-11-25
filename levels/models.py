@@ -89,6 +89,7 @@ class Level(MassassiBaseModel, MassassiModelWithFile):
     class Meta:
         db_table = 'levels'
 
+
 class LevelComment(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
@@ -97,7 +98,9 @@ class LevelComment(MassassiBaseModel):
     date_created = models.DateTimeField(null=False, blank=False, default=timezone.now)
 
     class Meta:
+        verbose_name_plural = 'Level Comments'
         db_table = 'level_comments'
+
 
 class LevelRating(MassassiBaseModel):
     level = models.ForeignKey('Level', on_delete=models.CASCADE)
