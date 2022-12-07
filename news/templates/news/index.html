@@ -10,7 +10,7 @@
 
 {% block content %}
     {% if holiday_logo %}
-        <div id="logo"><img src="{{ holiday_logo.logo.url }}" alt="Holiday Logo" title="Logo by {{ holiday_logo.author }}!"></div>
+        <div id="logo"><img src="{{ holiday_logo.logo.url }}" alt="Holiday Logo" title="Logo by {{ holiday_logo.author }}!" style="max-width: 100%"></div>
     {% else %}
         <div id="logo"><img src="/static/images/logo1.jpg" height="154" width="384" alt="Massassi Logo" title="Logo By Ewok!"></div>
     {% endif %}
