@@ -12,9 +12,7 @@ def get_holiday_upload_path(instance, filename):
 
 class HolidayLogoManager(models.Manager):
     def random(self):
-        count = self.count()
-        random_index = randint(0, count - 1)
-        return self.filter(is_in_rotation=True)[random_index]
+        return self.filter(is_in_rotation=True).order_by('?').first
 
 class HolidayLogo(MassassiBaseModel):
     author = models.CharField(max_length=32, null=False, blank=False)
