@@ -108,13 +108,13 @@ class CategoryDetailView(generic.ListView):
         # avoids a second db query
         self._category = LevelCategory.objects.get(path=path)
 
-        sort_by = self.get_sort_by()
+        sort_by_tuple = self.get_sort_by()
 
         self.set_paginate_by()
 
         return Level.objects \
             .filter(category=self._category) \
-            .order_by(sort_by)
+            .order_by(*(sort_by_tuple))
 
     # based on the "sortby" GET param, return the sort order
     def get_sort_by(self):
@@ -122,16 +122,22 @@ class CategoryDetailView(generic.ListView):
 
         sort_key = self.request.GET.get('sortby', 'name')
 
-        sort_by = 'name' # default
+        sort_by_tuple = ('name',) # default
 
         if(sort_key in valid_sort_options):
-            sort_by = sort_key
+            sort_by_tuple = (sort_key,)
 
-        # descending sort for downloads and rating
-        if sort_by == 'dl_count' or sort_by == 'rating':
-            sort_by = '-' + sort_by
+        # descending sort for downloads
+        if sort_key == 'dl_count':
+            sort_by_tuple = ('-dl_count',)
 
-        return sort_by
+        # descending sort for ratings; nulls go at the end
+        # sort by rating first, then number of ratings
+        if sort_key == 'rating':
+            sort_by_tuple = F("rating").desc(nulls_last=True), \
+                            F('rate_count').desc()
+
+        return sort_by_tuple
 
     # based on the "num" GET param, set the paginate by
     def set_paginate_by(self):
@@ -158,11 +164,16 @@ class CategoryDetailView(generic.ListView):
         page_range = list(paginator.get_elided_page_range(
             page, on_each_side=3, on_ends=2
         ))
-        
+
         context['page_range'] = page_range
 
         # form to allow user to select sort by
         context['sort_form'] = LevelSortForm(self.request.GET)
+
+        # if user used the sort form, put the values in the context so
+        # the fancy_pager can include them in page links
+        context['sortby'] = self.request.GET.get('sortby', '')
+        context['num'] = self.request.GET.get('num', '')
 
         return context
 

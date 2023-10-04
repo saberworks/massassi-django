@@ -1,8 +1,8 @@
 <div class="pagination-container pagination-container-fancy">
     <div class="paging-prev-links">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; previous</a>
+            <a href="?page=1&amp;sortby={{sortby}}&amp;num={{num}}">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}&amp;sortby={{sortby}}&amp;num={{num}}">&lsaquo; previous</a>
         {% else %}
             <span class="disabled">&laquo; first</span>
             <span class="disabled">&lsaquo; previous</span>
@@ -17,7 +17,7 @@
                 {% if i == page_obj.paginator.ELLIPSIS %}
                     <span>{{ i }}</span>
                 {% else %}
-                    <a href="?page={{ i }}">{{ i }}</a>
+                    <a href="?page={{ i }}&amp;sortby={{sortby}}&amp;num={{num}}">{{ i }}</a>
                 {% endif %}
             {% endif %}
         {% endfor %}
@@ -25,8 +25,8 @@
 
     <div class="paging-next-links">
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next &rsaquo;</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            <a href="?page={{ page_obj.next_page_number }}&amp;sortby={{sortby}}&amp;num={{num}}">next &rsaquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&amp;sortby={{sortby}}&amp;num={{num}}">last &raquo;</a>
         {% else %}
             <span class="disabled">next &rsaquo;</span>
             <span class="disabled">last &raquo;</span>
