@@ -5,7 +5,7 @@
 
     {% for post in news %}
         {% ifchanged post.news_date %}
-            <h1 class="news-date" style="margin-top: 0px;">{{ post.news_date }}</h1>
+            <h1 class="news-date" style="margin-top: 0px;">{{ post.news_date|date:"l, F j, Y" }}</h1>
         {% endifchanged %}
 
         <a name="news-item-{{post.id}}"></a>
