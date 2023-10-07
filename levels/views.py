@@ -100,6 +100,7 @@ class CategoryDetailView(generic.ListView):
     template_name = 'levels/category.html'
     context_object_name = 'levels'
     _category = None
+    valid_sort_options = ("name", "author", "dl_count", "rating")
     default_sortby = 'name'
     default_page_size = '25'
 
@@ -120,13 +121,11 @@ class CategoryDetailView(generic.ListView):
 
     # based on the "sortby" GET param, return the sort order
     def get_sort_by(self):
-        valid_sort_options = ("name", "author", "dl_count", "rating")
-
         sort_key = self.request.GET.get('sortby', self.default_sortby)
 
         sort_by_tuple = ('name',) # default
 
-        if(sort_key in valid_sort_options):
+        if(sort_key in self.valid_sort_options):
             sort_by_tuple = (sort_key,)
 
         # descending sort for downloads
@@ -172,10 +171,15 @@ class CategoryDetailView(generic.ListView):
         # form to allow user to select sort by
         context['sort_form'] = LevelSortForm(self.request.GET)
 
-        # if user used the sort form, put the values in the context so
+        # Put the sort form values in the context so
         # the fancy_pager can include them in page links
-        context['sortby'] = self.request.GET.get('sortby', self.default_sortby)
-        context['num'] = self.request.GET.get('num', self.default_page_size)
+        sort_key = self.request.GET.get('sortby', self.default_sortby)
+
+        clean_page_size = int(self.request.GET.get('num', self.default_page_size))
+        clean_sort_key = sort_key if sort_key in self.valid_sort_options else self.default_sortby
+
+        context['sortby'] = clean_sort_key
+        context['num'] = clean_page_size
 
         return context
 
