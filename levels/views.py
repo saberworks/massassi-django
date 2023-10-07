@@ -100,6 +100,8 @@ class CategoryDetailView(generic.ListView):
     template_name = 'levels/category.html'
     context_object_name = 'levels'
     _category = None
+    default_sortby = 'name'
+    default_page_size = '25'
 
     def get_queryset(self):
         path = self.kwargs['path']
@@ -120,7 +122,7 @@ class CategoryDetailView(generic.ListView):
     def get_sort_by(self):
         valid_sort_options = ("name", "author", "dl_count", "rating")
 
-        sort_key = self.request.GET.get('sortby', 'name')
+        sort_key = self.request.GET.get('sortby', self.default_sortby)
 
         sort_by_tuple = ('name',) # default
 
@@ -141,7 +143,7 @@ class CategoryDetailView(generic.ListView):
 
     # based on the "num" GET param, set the paginate by
     def set_paginate_by(self):
-        num = int(self.request.GET.get("num", "25"))
+        num = int(self.request.GET.get("num", self.default_page_size))
         self.paginate_by = num
 
     def get_context_data(self, **kwargs):
@@ -172,8 +174,8 @@ class CategoryDetailView(generic.ListView):
 
         # if user used the sort form, put the values in the context so
         # the fancy_pager can include them in page links
-        context['sortby'] = self.request.GET.get('sortby', '')
-        context['num'] = self.request.GET.get('num', '')
+        context['sortby'] = self.request.GET.get('sortby', self.default_sortby)
+        context['num'] = self.request.GET.get('num', self.default_page_size)
 
         return context
 
