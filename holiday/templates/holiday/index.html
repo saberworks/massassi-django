@@ -5,10 +5,11 @@
 
     {% include "holiday/holiday_crumb.html" %}
 
-    <p>For many years we ran a holiday logo "contest."  Any festive logo that
-        met the requirements would be featured here and rotated on the main
-        page in November, December, and some of January.  Here is a history
-        of everything that was accepted.</p>
+    <p>We run a holiday logo "contest."  Any festive logo that
+       meets the requirements will be featured here and rotated on the main
+       page in December.  Here is a history of everything that was accepted.</p>
+
+    <p><a href="{% url 'holiday:enter' %}">Enter this year's contest!</a></p>
 
     {% if years %}
         <table class="news-oldnewstable">

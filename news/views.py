@@ -41,7 +41,10 @@ class IndexView(generic.ListView):
         except SotD.DoesNotExist:
             context['sotd'] = None
 
-        if date.today().month == 12:
+        month = date.today().month
+        day = date.today().day
+
+        if month == 12 or (month == 11 and day > 22):
             context['holiday_logo'] = HolidayLogo.objects.random()
 
         return context
