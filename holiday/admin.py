@@ -39,7 +39,7 @@ class HolidayLogoAdmin(MassassiModelAdmin):
             headline_fmt = "New Holiday Logo by {}!"
             story_fmt = """
                 {author} has submitted this logo for the <a href="/holiday/">Holiday Logo Contest</a>, thank you!<br><br>
-                <img border="1" vspace="4" src="{logo.url}"></a>
+                <img border="1" vspace="4" src="{logo.url}">
             """
             news_post = News(
                 user = request.user,
