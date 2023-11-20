@@ -1,0 +1,37 @@
+{% extends 'outer.html' %}
+
+{% block content %}
+    <h1>{% block title %}Enter {% now "Y" %} Holiday Logo Contest{% endblock %}</h1>
+
+    {% include "holiday/holiday_crumb.html" %}
+
+    <p>This isn't really a contest!  Any logo that meets the requirements and
+       shows some effort will be accepted and added to rotation.  I do
+       appreciate when the logos are Massassi-related but it's not required!</p>
+
+    <ul>
+        <li>Images must be (Star Wars|gaming) and Holiday related (any holiday!)</li>
+        <li>Max 1000 pixels wide and 500 pixels tall (original logo is 384x154)</li>
+        <li>File size limit is 2MB</li>
+        <li>Animations are allowed (nothing too flashy, please!)</li>
+        <li>Valid file formats are <tt>jpg</tt>, <tt>gif</tt>, and <tt>png</tt></li>
+        <li>The author field is just the name/nickname you want listed on the holiday logos page</li>
+        <li>Submissions are manually reviewed and will show up once approved.</li>
+    </ul>
+
+    <div class="form-container">
+        <p><span class="required"></span> denotes a required field.</p>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field.label_tag }}
+                {% for error in field.errors %}
+                    <div class="field-error">{{ error }}</div>
+                {% endfor %}
+                {{ field }}
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}

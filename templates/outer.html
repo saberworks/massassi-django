@@ -70,18 +70,6 @@
             </nav>
 
             <div id="content">
-                {% if messages %}
-                    <div class="messages">
-                        {% for message in messages %}
-                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-                        {% endfor %}
-                    </div>
-                {% endif %}
-
-                {% if original %}
-                    <p class="note">Note: This is an old page that has been updated/formatted, you can view the original <a href="{{ original }}">here</a>.
-                {% endif %}
-
                 {% if user.is_authenticated %}
                     <div id="user-block">Logged in as: {{ user.username }}
                         &nbsp; <a href="{% url "users:profile" %}">Profile</a>
@@ -96,6 +84,18 @@
                         <a href="{% url "users:login" %}">Log In</a> or
                         <a href="{% url "users:register" %}">Register</a>
                     </div>
+                {% endif %}
+
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <p {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if original %}
+                    <p class="note">Note: This is an old page that has been updated/formatted, you can view the original <a href="{{ original }}">here</a>.
                 {% endif %}
 
                 {% block content %}

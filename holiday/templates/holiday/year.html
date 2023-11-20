@@ -5,24 +5,26 @@
 
     {% include "holiday/holiday_crumb.html" %}
 
-    {% if logos %}
-        <table class="news-oldnewstable">
-            <thead>
-            <tr>
-                <th>Logo</th>
-                <th>Author</th>
-            </tr>
-            </thead>
+    <p><a href="{% url 'holiday:enter' %}">Enter the current contest!</a></p>
 
-            <tbody>
-            {% for logo in logos %}
-                <tr>
-                    <td><img src="{{ logo.logo.url }}"></td>
-                    <td>{{ logo.author }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+    <table class="news-oldnewstable">
+        <thead>
+        <tr>
+            <th>Logo</th>
+            <th>Author</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for logo in logos %}
+            <tr>
+                <td><img src="{{ logo.logo.url }}"></td>
+                <td>{{ logo.author }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan=2><em>No logos to display</em></td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
