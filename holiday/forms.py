@@ -2,6 +2,7 @@ import logging
 from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
 from django.forms import ModelForm
+from django.utils.html import strip_tags
 
 from .models import HolidayLogo
 
@@ -13,6 +14,9 @@ class EnterForm(ModelForm):
     class Meta:
         model = HolidayLogo
         fields = ['author', 'logo']
+
+    def clean_author(self):
+        return strip_tags(self.cleaned_data.get('author'))
 
     def clean_logo(self):
         image = self.cleaned_data.get('logo', False)
