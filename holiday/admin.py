@@ -31,15 +31,15 @@ class HolidayLogoAdmin(MassassiModelAdmin):
         should_post_news = change == False or ('is_in_rotation' in form.changed_data and obj.is_in_rotation==True)
 
         today = datetime.date.today()
-        year = today.year
-        month = today.month
+        current_year = today.year
+        current_month = today.month
 
         # If the logo is for a non-current year, do not post news
-        if obj.year != year:
+        if obj.year != current_year:
             should_post_news = False
 
         # Only post news in November & December
-        if month < 11:
+        if current_month < 11:
             should_post_news = False
 
         if should_post_news:
