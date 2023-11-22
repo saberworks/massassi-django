@@ -30,10 +30,17 @@ class HolidayLogoAdmin(MassassiModelAdmin):
         # If it's an existing logo but the is_in_rotation field changed from False to True, post news.
         should_post_news = change == False or ('is_in_rotation' in form.changed_data and obj.is_in_rotation==True)
 
-        year = datetime.date.today().year
+        today = datetime.date.today()
+        year = today.year
+        month = today.month
 
         # If the logo is for a non-current year, do not post news
-        should_post_news = False if obj.year != year else True
+        if obj.year != year:
+            should_post_news = False
+
+        # Only post news in November & December
+        if month < 11:
+            should_post_news = False
 
         if should_post_news:
             headline_fmt = "New Holiday Logo by {}!"
