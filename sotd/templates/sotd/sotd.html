@@ -11,6 +11,6 @@
         {% endif %}
     </p>
 
-    <img src="{{ sotd.image.url }}" />
+    <a href="{{ sotd.image.url }}" class="sotdimage"><img style="max-width: 100%" src="{{ sotd.image.url }}" /></a>
     <p><a href="{% url 'sotd:index' %}">Back to SotD Index</a></p>
 {% endblock %}
