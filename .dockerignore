@@ -1,7 +1,10 @@
 .git
+.gitignore
+.dockerignore
+Dockerfile
 share
 include
 media
 static
 env
-
+venv
