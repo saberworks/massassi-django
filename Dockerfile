@@ -1,4 +1,4 @@
-FROM python:3.10.14-slim-bullseye
+FROM python:3.10.15-slim-bullseye
 
 WORKDIR /app/massassi-django
 
