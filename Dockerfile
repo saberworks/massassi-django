@@ -1,4 +1,4 @@
-FROM python:3.10.15-slim-bullseye
+FROM python:3.10.18-slim-bullseye
 
 WORKDIR /app/massassi-django
 
@@ -20,8 +20,12 @@ RUN mkdir /massassi-user-data && chown massassi:massassi /massassi-user-data
 RUN mkdir /jedibird-static && chown massassi:massassi /jedibird-static
 
 ENV VIRTUAL_ENV=/app/massassi-django
-RUN virtualenv -p python3 /app/massassi-django
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+RUN python3 -m venv /app/massassi-django/venv
+SHELL ["/bin/bash", "-c"]
+RUN ls -lh /app/massassi-django
+RUN ls -lh /app/massassi-django/venv
+RUN ls -lh /app/massassi-django/venv/bin
+RUN source /app/massassi-django/venv/bin/activate
 
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
