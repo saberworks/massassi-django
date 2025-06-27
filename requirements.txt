@@ -10,7 +10,7 @@ colorama==0.4.3
 contextlib2==0.6.0
 distlib==0.3.0
 distro==1.4.0
-Django==4.2.18
+Django==4.2.22
 django-appconf==1.0.4
 django-colorfield==0.7.2
 django-cors-headers==3.11.0
