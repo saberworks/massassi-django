@@ -42,4 +42,4 @@ USER ${APP_USER}:${APP_USER}
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["gunicorn", "--chdir", "/app/massassi-django/massassi-django", "massassi.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "--timeout", "300", "--chdir", "/app/massassi-django/massassi-django", "massassi.wsgi:application", "--bind", "0.0.0.0:8000"]
